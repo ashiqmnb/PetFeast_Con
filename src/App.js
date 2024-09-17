@@ -22,11 +22,13 @@ import Footer from './Components/Footer';
 import AdminHome from './Admin/AdminHome';
 import UserDetails from './Admin/UserDetails';
 import ProductDetails from './Admin/ProductDetails';
+import ProductCategory from './Admin/ProductCategory';
+import AddNewProduct from './Admin/AddNewProduct';
 
 function App() {
   return (
     <div className='App'>
-      <Navbar/>
+      {/* <Navbar/> */}
       
       <Routes>
         <Route path='/' element={<Home />}/>
@@ -54,6 +56,8 @@ function App() {
         <Route path='/adminhome' element={<AdminHome />} />
         <Route path='/userdetails/:id' element={<UserDetails />} />
         <Route path='/productdetails/:id' element={<ProductDetails />} />
+        <Route path='/productcategory' element={<ProductCategory />} />
+        <Route path='/addnewproduct' element={<AddNewProduct />} />
       </Routes>
 
       {/* <Footer /> */}

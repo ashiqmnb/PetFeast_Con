@@ -52,8 +52,8 @@ const Registration = () => {
     else {
       console.log(formData);
       axios.post("http://localhost:5000/users",{...formData,cart:[]})
-          .then((res)=> console.log(res)
-          ).catch((err)=>console.log(err))
+          .then((res)=> console.log(res))
+          .catch((err)=>console.log(err))
       alert("User Registered Successfully...")
       navigate('/login')
     }

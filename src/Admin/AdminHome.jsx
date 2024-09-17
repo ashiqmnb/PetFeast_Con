@@ -34,9 +34,9 @@ const AdminHome = () => {
         <div className=" md:w-1/2 w-full space-y-4 bg-slate-100  border rounded-lg shadow-lg p-2">
 			<h1 style={{color:'#052560'}} className="text-center font-bold text-xl">Product Details</h1>
 			<div className="space-y-5  max-h-[500px] overflow-auto bg-slate-100 scrollbarHidden">
-			{products.map((item)=>(
+			{products.map((item, index)=>(
 				<div
-					onClick={()=> navigate(`/productdetails/:${item.id}`)}
+					onClick={()=> navigate(`/productdetails/${item.id}`)}
 					key={item.id}
 					className="bg-white flex justify-start items-center p-3 border rounded-lg shadow space-x-2 hover:bg-slate-200">
 					<img 
@@ -51,10 +51,16 @@ const AdminHome = () => {
 			))}
 			
 			</div>
-			<div className="flex justify-center">
+			<div className="flex justify-center space-x-3">
 				<button 
+					onClick={()=> navigate("/addnewproduct")}
 					className="bg-green-500 p-2 px-3 text-white font-semibold rounded-lg hover:bg-green-700 transition">
 					Add New Product
+				</button>
+				<button 
+					onClick={()=> navigate('/productcategory')}
+					className="bg-blue-500 p-2 px-3 text-white font-semibold rounded-lg hover:bg-blue-700 transition">
+					View By Category
 				</button>
 			</div>
 		</div>
@@ -66,7 +72,7 @@ const AdminHome = () => {
         <div className="bg-slate-100 rounded-lg shadow-lg border md:w-1/2 w-full space-y-5 p-2">			
 			<h1 style={{color:'#052560'}} className="font-bold text-center text-xl">User Details</h1>
 			<div className="space-y-5  max-h-[500px] overflow-auto bg-slate-100 scrollbarHidden">
-			{users.map((user)=>(
+			{users.map((user,index)=>(
 				<div 
 					key={user.id}
 					onClick={()=> navigate(`/userdetails/${user.id}`)}

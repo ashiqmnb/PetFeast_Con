@@ -784,6 +784,24 @@
       "catogory": "cat-treat",
       "price": 3,
       "rating": 4.5
+    },
+    {
+      "id": "10af",
+      "heading": "Applaws Natural Wet Adult Cat Food Fish Selection in Broth 12x70g Tins",
+      "discription": "Natural ingredients and 75% tuna fillet offer a high-quality, omega-3 rich diet for adult cats.",
+      "url": "https://cdn.petsathome.com/public/images/products/900_7114822.jpg",
+      "catogory": "cat-food",
+      "price": "12.90",
+      "rating": "3.5"
+    },
+    {
+      "id": "e21d",
+      "heading": "Catit Creamy Lickable Cat Treats Chicken & Lamb 15x10g",
+      "discription": "All-natural, nutrient-rich treats, free from corn, grain, wheat, soy, and artificial additives. Ideal for sensitive cats, can be served alone or as a food topper.",
+      "url": "https://cdn.petsathome.com/public/images/products/900_7141089.jpg",
+      "catogory": "cat-treat",
+      "price": "7.20",
+      "rating": "4.5"
     }
   ]
 }

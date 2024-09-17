@@ -4,43 +4,38 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const ProductDetails = () => {
   
-  	const [item, setItem] = useState({})
+  	const  [item, setItem ] = useState({})
+    const [ products, setProducts ] = useState([])
   	const navigate = useNavigate()
 
   	const {id} = useParams();
 
-  	// const addToCart = async(product, qty)=>{
+    // useEffect(()=>{
+    //   axios.get(`http://localhost:5000/items`)
+    //       .then((res)=> setProducts(res.data))
+    //       .catch((err)=>console.log("aaa",err))
+    // },[])
 
-    // 	const currentCart = await getCart(userId);
-    //   	const existingProd = currentCart.find((item) => item.id === product.id);
-    //   	let updatedCart;
+    useEffect(()=>{
+        axios.get(`http://localhost:5000/items/${id}`)
+            .then((res)=> setItem(res.data))
+            .catch((err)=>console.log("aaa",err))
+    },[id])
 
-    //   	if(existingProd){
-    //   	  updatedCart = currentCart.map((item)=>
-    //   	    item.id === product.id ? {...item, quantity: item.quantity + qty} : item
-    //   	  );
-    //   	}
-    //   	else{
-    //   	  updatedCart = [...currentCart, {...product, quantity: qty}]
-    //   	}
-
-    //   	axios.patch(`http://localhost:5000/users/${userId}`,{cart: updatedCart})
-    //   	  .then((res)=> console.log(res)
-    //   	  )
-    //   	alert('item added to cart')
-  	// }
-
-    	useEffect(()=>{
-    	    axios.get(`http://localhost:5000/items/${id}`)
-    	        .then((res)=> setItem(res.data))
-    	        .catch((err)=>console.log("aaa",err))
-    	},[id])
-
+  const handleRemoveProduct = async (id) => {
+    // const removedProducts = products.filter((item, index)=> item.id !== id)
+    await axios.delete(`http://localhost:5000/items/${id}`)
+      .then((res)=>{
+        alert("item deleted ");
+        navigate('/productcategory');
+      })
+      .catch((err)=> console.error(err))
+  }
 
 
         
   return (
-    <div className='bg-blue-100 w-full flex items-center p-10 md:mt-24 mt-60'>
+    <div className='bg-white w-full flex items-center p-10 md:mt-24 mt-60'>
         <div  className="w-8/12 mx-auto  p-4 flex gap-2 flex-col md:flex-row shadow-lg rounded-xl border bg-white">
       {/* Product Image and Title */}
       <div className="md:w-1/2 p-4 flex flex-col items-center border rounded-xl">
@@ -66,14 +61,19 @@ const ProductDetails = () => {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-4 h-12">
+        <div className="flex-col space-y-3">
+          <button
+              className="px-5 w-full bg-red-600 text-white font-semibold py-2 rounded hover:bg-red-700 transition"
+              onClick={()=> handleRemoveProduct(item.id)}>
+              Remove Product
+          </button>
           <button
             className="w-full bg-green-600 text-white font-semibold py-2 rounded hover:bg-green-700 transition"
            >
             Edit Product
           </button>
           <button
-              className="px-5 bg-red-600 text-white font-semibold py-2 rounded hover:bg-red-700 transition"
+              className="px-5 w-full bg-red-600 text-white font-semibold py-2 rounded hover:bg-red-700 transition"
               onClick={()=> navigate(-1)}>
               Back
           </button>
