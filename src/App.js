@@ -1,8 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import Navbar from './Components/Navbar';
 import Home from './Pages/Home';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import DogItems from './Pages/DogItems';
 import CatsItems from './Pages/CatsItems';
 import DogFood from './Components/DogFood';
@@ -20,17 +19,27 @@ import Payment from './Pages/Payment';
 import OrderConfirm from './Pages/OrderConfirm';
 import Footer from './Components/Footer';
 import AdminHome from './Admin/AdminHome';
-import UserDetails from './Admin/UserDetails';
-import ProductDetails from './Admin/ProductDetails';
-import ProductCategory from './Admin/ProductCategory';
+import SideBar from './Admin/SideBar';
+import Categories from './Admin/Categories';
 import AddNewProduct from './Admin/AddNewProduct';
+import ProductDetails from './Admin/ProductDetails';
+import UserDetails from './Admin/UserDetails';
+import Dashboard from './Admin/Dashboard';
+
 
 function App() {
+
+  const location = useLocation()
+  const sholudHidden = location.pathname.startsWith("/admin")
+
   return (
     <div className='App'>
-      {/* <Navbar/> */}
+      {!sholudHidden&&<Navbar/>}
       
       <Routes>
+
+        {/* User */}
+
         <Route path='/' element={<Home />}/>
         <Route path='/register' element={<Registration />}/>
         <Route path='/login' element={<LoginPage />}/>
@@ -38,6 +47,7 @@ function App() {
         <Route path='/cart' element={<Cart />} />
         <Route path='/payment' element={<Payment />} />
         <Route path='orderConfirm' element={<OrderConfirm />} />
+        <Route path='/itemdetails/:id' element={<ItemDetails2 />} />
 
         <Route path='/dogsitem' element={<DogItems />}/>
         <Route path='/dogsitem/' element={<DogAll />}/>
@@ -49,18 +59,20 @@ function App() {
         <Route path='/catsitem/food' element={<CatFood />}/>
         <Route path='/catsitem/treats' element={<CatTrats />}/>
 
-        <Route path='/itemdetails/:id' element={<ItemDetails2 />} />
 
-        {/* ____________________________________________________ */}
 
-        <Route path='/adminhome' element={<AdminHome />} />
-        <Route path='/userdetails/:id' element={<UserDetails />} />
-        <Route path='/productdetails/:id' element={<ProductDetails />} />
-        <Route path='/productcategory' element={<ProductCategory />} />
-        <Route path='/addnewproduct' element={<AddNewProduct />} />
+        <Route path='/admin/home' element={<AdminHome />} />
+        <Route path='/admin/categories' element={<Categories />} />
+        <Route path='/admin/addnewproduct' element={<AddNewProduct />} />
+        <Route path='/admin/productdetails/:id' element={<ProductDetails />} />
+        <Route path='/admin/userdetails/:id' element={<UserDetails />} />
+        <Route path='/admin/dashboard' element={<Dashboard />} />
+
+
+
       </Routes>
 
-      {/* <Footer /> */}
+      {!sholudHidden&&<Footer/>}
     </div>
   );
 }

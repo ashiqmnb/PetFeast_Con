@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import SideBar from './SideBar';
 
 const UserDetails = () => {
 
@@ -29,7 +30,13 @@ console.log(userData);
 
 
   return (
-    <div className="flex justify-center my-20">
+    <div>
+        <div>
+            <SideBar />
+        </div>
+
+
+        <div className="flex justify-center my-20 md:ms-44">
       <div className="w-4/6 lg:space-y-0 space-y-7 lg:flex block">
         
         {/* User Details */}
@@ -131,6 +138,7 @@ console.log(userData);
         </div>
 
       </div>
+    </div>
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import SideBar from './SideBar';
 
 const ProductDetails = () => {
   
@@ -27,7 +28,7 @@ const ProductDetails = () => {
     await axios.delete(`http://localhost:5000/items/${id}`)
       .then((res)=>{
         alert("item deleted ");
-        navigate('/productcategory');
+        navigate('/admin/categories');
       })
       .catch((err)=> console.error(err))
   }
@@ -35,7 +36,12 @@ const ProductDetails = () => {
 
         
   return (
-    <div className='bg-white w-full flex items-center p-10 md:mt-24 mt-60'>
+    <div className="flex justify-center">
+        <div>
+            <SideBar />
+        </div>
+
+        <div className='bg-white w-full flex items-center p-10 mt-14 md:ms-40 ms-10'>
         <div  className="w-8/12 mx-auto  p-4 flex gap-2 flex-col md:flex-row shadow-lg rounded-xl border bg-white">
       {/* Product Image and Title */}
       <div className="md:w-1/2 p-4 flex flex-col items-center border rounded-xl">
@@ -79,6 +85,7 @@ const ProductDetails = () => {
           </button>
         </div>
       </div>
+    </div>
     </div>
     </div>
   );

@@ -1,8 +1,9 @@
 import React,{useEffect, useState} from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import SideBar from './SideBar'
 
-const ProductCategory = () => {
+const Categories = () => {
 
     const navigate = useNavigate()
     const [items, setItems] = useState([])
@@ -41,7 +42,13 @@ const ProductCategory = () => {
 
 
   return (
-    <div className="flex justify-center my-20">
+    <div className="flex justify-start">
+        <div>
+            <SideBar />
+        </div>
+
+
+        <div className="flex justify-center my-20 mt-20 md:ms-64  ms-24">
       <div className="w-5/6 space-y-10 md:space-y-0 md:flex block space-x-2">
 
 	    {/* Products for Dogs */}
@@ -51,7 +58,7 @@ const ProductCategory = () => {
             {/* Navigation Buttons */}
             <div className='flex justify-center space-x-3'>
                 <button 
-                    onClick={()=>setDogFilteredAll('dog-food','dog-treat')}
+                    onClick={()=>setDogFilteredAll('dog-food','dog-beds')}
                     className='bg-blue-500 p-2 px-3 text-white font-semibold rounded-lg hover:bg-blue-700 transition'>
                         All
                 </button>
@@ -70,7 +77,7 @@ const ProductCategory = () => {
 			<div className="space-y-5  max-h-[500px] overflow-auto bg-slate-100 scrollbarHidden">
 			{dogFiltered.map((item)=>(
 				<div
-					onClick={()=> navigate(`/productdetails/${item.id}`)}
+					onClick={()=> navigate(`/admin/productdetails/${item.id}`)}
 					key={item.id}
 					className="bg-white flex justify-start items-center p-3 border rounded-lg shadow space-x-2 hover:bg-slate-200">
 					<img 
@@ -116,7 +123,7 @@ const ProductCategory = () => {
 			<div className="space-y-5  max-h-[500px] overflow-auto bg-slate-100 scrollbarHidden">
 			{catFiltered.map((item)=>(
 				<div
-					onClick={()=> navigate(`/productdetails/${item.id}`)}
+					onClick={()=> navigate(`/admin/productdetails/${item.id}`)}
 					key={item.id}
 					className="bg-white flex justify-start items-center p-3 border rounded-lg shadow space-x-2 hover:bg-slate-200">
 					<img 
@@ -135,7 +142,8 @@ const ProductCategory = () => {
 		</div>
       </div>
     </div>
+    </div>
   )
 }
 
-export default ProductCategory
+export default Categories

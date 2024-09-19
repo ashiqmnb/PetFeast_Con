@@ -22,7 +22,7 @@ const TopRatedProducts = () => {
             <div className='flex gap-4 flex-wrap justify-center mt-7 px-6'>
                 {topRatedProducts.map((item)=>{
                   return(
-                    <div onClick={()=> navigate(`/itemdetails/${item.id}`)} className='sm:w-72 w-44 rounded-2xl bg-white p-3 shadow-lg text-start '>
+                    <div key={item.id} onClick={()=> navigate(`/itemdetails/${item.id}`)} className='sm:w-72 w-44 rounded-2xl bg-white p-3 shadow-lg text-start '>
                       <img src={item.url} alt="item" className='rounded-2xl hover:scale-105 transition-transform'/>
                       <h1 className='font-sans text-lg pt-5'>{item.heading}</h1>
                       <h1 className='font-sans text-lg font-bold text-blue-950'>$ {item.price}</h1>

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import SideBar from './SideBar';
 
 const AddNewProduct = () => {
 
@@ -52,15 +53,21 @@ const AddNewProduct = () => {
                 .catch((err)=> console.error(err))
 
             alert("Product Added Successfully")
-            navigate('/productcategory')
+            navigate('/admin')
         }
     }
 
 
 
   return (
-    <div className="flex justify-center my-20">
-        <div className="md:w-3/6 w-5/6 bg-slate-300 py-5 rounded-lg shadow-lg">
+    <div>
+        <div>
+            <SideBar />
+        </div>
+
+
+        <div className="flex justify-center my-20  mt-20 md:ms-64  ms-24">
+        <div className="md:w-3/6 w-5/6 bg-slate-200 py-5 rounded-lg shadow-lg">
             <h1  style={{color:'#052560'}} className="text-center font-bold text-xl">Add New Product</h1>
             
             <form onSubmit={handleSubmit}>
@@ -160,6 +167,7 @@ const AddNewProduct = () => {
                 </div>
             </form>
         </div>
+    </div>
     </div>
   )
 }

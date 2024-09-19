@@ -20,8 +20,14 @@ const LoginPage = () => {
     try{
       const response = await axios.get("http://localhost:5000/users")
       const user = response.data.find((user)=> user.username === username && user.password === password );
+      const isAdmin = user.isAdmin;
       
-      if(user){
+      if(isAdmin){
+        localStorage.setItem("id",user.id)
+        alert("Admin Login Successfull");
+        navigate('/admin/dashboard')
+      }
+      else if(user){
         alert("login successfull");
         localStorage.setItem('user',user.id)
         localStorage.setItem('username',user.username)

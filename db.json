@@ -1,6 +1,12 @@
 {
   "users": [
     {
+      "id": "5d49",
+      "username": "admin",
+      "password": "admin123",
+      "isAdmin": true
+    },
+    {
       "id": "5d46",
       "fullName": "asq",
       "email": "asq@gmail.com",
@@ -57,50 +63,20 @@
       "orderDetails": {
         "items": [
           {
-            "id": "5",
-            "heading": "Wainwright's Sensitive Adult Dry Dog Food Atlantic Salmon With Superfoods",
-            "discription": "A hypoallergenic, balanced dry food with no added wheat, pork, dairy, or artificial additives, made from a single protein source.",
-            "url": "https://cdn.petsathome.com/public/images/products/900_7145754.jpg",
-            "catogory": "dog-food",
-            "price": 9.6,
-            "rating": 3.5,
-            "quantity": 2
-          },
-          {
-            "id": "6",
-            "heading": "Harringtons Complete Natural Adult Dry Dog Food Turkey & Veg 15kg",
-            "discription": "This improved recipe food contains Vitamins, minerals and Omega 3 & 6 in the form of salmon oil to support overall health, maintain a healthy coat and reduce flatulence odour.",
-            "url": "https://cdn.petsathome.com/public/images/products/900_37036.jpg",
-            "catogory": "dog-food",
-            "price": 34.9,
+            "id": "40",
+            "heading": "Dreamies Cat Treat Biscuits with Catnip 200g",
+            "discription": "Packed with vitamins and minerals, these two-calorie treats come in a handy resealable bag for convenience.",
+            "url": "https://cdn.petsathome.com/public/images/products/900_7145028.jpg",
+            "catogory": "cat-treat",
+            "price": 3,
             "rating": 4.5,
-            "quantity": 1
-          },
-          {
-            "id": "19",
-            "heading": "Pets at Home Square Puppy Bed Spotty Grey",
-            "discription": "Eco-friendly bed with a removable, reversible cushion. Matching items available for a coordinated look.",
-            "url": "https://cdn.petsathome.com/public/images/products/900_7146438.jpg",
-            "catogory": "dog-beds",
-            "price": 20,
-            "rating": 2.5,
-            "quantity": 1
-          },
-          {
-            "id": "10",
-            "heading": "Butcher's Joints & Coat Wet Adult Dog Food 18x390g",
-            "discription": "Promotes healthy joints, skin, and coat with a balanced, grain-free recipe. Vet endorsed for adult dogs",
-            "url": "https://cdn.petsathome.com/public/images/products/900_7135238.jpg",
-            "catogory": "dog-food",
-            "price": 15,
-            "rating": 4.5,
-            "quantity": 4
+            "quantity": 6
           }
         ],
-        "paymentMethod": "Debit/Credit Card",
-        "totalPrice": "120.69",
-        "orderDate": "Sat Sep 14 2024",
-        "orderTime": "14:27:45"
+        "paymentMethod": "Cash On Delivery",
+        "totalPrice": "16.20",
+        "orderDate": "Wed Sep 18 2024",
+        "orderTime": "14:26:21"
       }
     },
     {
