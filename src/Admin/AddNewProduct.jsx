@@ -53,7 +53,7 @@ const AddNewProduct = () => {
                 .catch((err)=> console.error(err))
 
             alert("Product Added Successfully")
-            navigate('/admin')
+            navigate('/admin/home')
         }
     }
 

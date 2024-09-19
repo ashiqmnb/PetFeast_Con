@@ -25,6 +25,7 @@ import AddNewProduct from './Admin/AddNewProduct';
 import ProductDetails from './Admin/ProductDetails';
 import UserDetails from './Admin/UserDetails';
 import Dashboard from './Admin/Dashboard';
+import UpdateProduct from './Admin/UpdateProduct';
 
 
 function App() {
@@ -67,6 +68,8 @@ function App() {
         <Route path='/admin/productdetails/:id' element={<ProductDetails />} />
         <Route path='/admin/userdetails/:id' element={<UserDetails />} />
         <Route path='/admin/dashboard' element={<Dashboard />} />
+
+        <Route path='/admin/updateproduct/:id' element={<UpdateProduct />} />
 
 
 

@@ -1,8 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaUserGroup } from "react-icons/fa6";
-import { GiShoppingBag } from "react-icons/gi";
 import SideBar from "./SideBar";
 
 

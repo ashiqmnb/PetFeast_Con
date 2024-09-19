@@ -407,8 +407,8 @@
       "discription": "Easily carry and hygienically dispose of dog waste with tie-handle bags. Portable, quick-dispensing pack offers great value with 20 extra bags.",
       "url": "https://cdn.petsathome.com/public/images/products/900_7137876.jpg",
       "catogory": "dog-food",
-      "price": 1.5,
-      "rating": 3.5
+      "price": "14",
+      "rating": "3.5"
     },
     {
       "id": "2",
@@ -417,7 +417,7 @@
       "url": "https://cdn.petsathome.com/public/images/products/900_7118367.jpg",
       "catogory": "dog-food",
       "price": 55.19,
-      "rating": 4
+      "rating": "3"
     },
     {
       "id": "3",
@@ -425,8 +425,8 @@
       "discription": "Royal Canin Veterinary Hypoallergenic Adult Dry Dog Food is expertly formulated to support dogs with food sensitivities. This vet-recommended diet features hydrolyzed proteins",
       "url": "https://cdn.petsathome.com/public/images/products/900_7103687.jpg",
       "catogory": "dog-food",
-      "price": 20.2,
-      "rating": 4.5
+      "price": "2",
+      "rating": "2"
     },
     {
       "id": "4",
@@ -498,7 +498,7 @@
       "url": "https://cdn.petsathome.com/public/images/products/900_P70983.jpg",
       "catogory": "dog-beds",
       "price": 26,
-      "rating": 4.5
+      "rating": "4.5"
     },
     {
       "id": "12",
@@ -623,7 +623,7 @@
       "discription": "Supports gut balance with soluble fibres, nourishes bones, muscles, joint health, and promotes radiant skin and coat. Delicious, high-quality protein included.",
       "url": "https://cdn.petsathome.com/public/images/products/900_7135257.jpg",
       "catogory": "cat-food",
-      "price": 16.2,
+      "price": "18",
       "rating": 4.5
     },
     {
@@ -713,8 +713,8 @@
       "discription": "Scientifically designed, crunchy treats that effectively clean teeth, reduce tartar build-up, and promote overall feline well-being.",
       "url": "https://cdn.petsathome.com/public/images/products/900_7137991.jpg",
       "catogory": "cat-treat",
-      "price": 4.3,
-      "rating": 4.5
+      "price": "4.2",
+      "rating": "3"
     },
     {
       "id": "36",
@@ -778,6 +778,15 @@
       "catogory": "cat-treat",
       "price": "7.20",
       "rating": "4.5"
+    },
+    {
+      "id": "d188",
+      "heading": "Felix Goody Bag Cat Treats Mixed Grill 60g",
+      "discription": "Savoury beef, chicken, and salmon treats, perfect for a treat or reward anytime.",
+      "url": "https://cdn.petsathome.com/public/images/products/900_29099.jpg",
+      "catogory": "cat-treat",
+      "price": "1.6",
+      "rating": "4"
     }
   ]
 }
