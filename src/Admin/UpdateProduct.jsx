@@ -23,8 +23,7 @@ const UpdateProduct = () => {
     const [error, setError] = useState("");
 
     useEffect(() => {
-        axios
-          .get(`http://localhost:5000/items/${id}`) // Fetch product from JSON server
+        axios.get(`http://localhost:5000/items/${id}`) // Fetch product from JSON server
           .then((res) => {
             setProduct(res.data); // Set the fetched product data
             console.log(res.data);

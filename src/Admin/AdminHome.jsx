@@ -82,16 +82,19 @@ const AdminHome = () => {
 				<div 
 					key={user.id}
 					onClick={()=> navigate(`/admin/userdetails/${user.id}`)}
-					className="bg-white flex justify-start items-center p-3 border rounded-lg shadow space-x-3 hover:bg-slate-200">
-					<div 
-						className=" rounded-full bg-slate-300 py-4 text-center h-14 w-14 font-semibold">
-						{user.id}
-					</div>
-					<div>
-						<h1 className="font-semibold text-lg">Full name : {user.fullName}</h1>
-						<p className="font-semibold">Email : {user.email}</p>
-						<p className="font-semibold text-sm text-gray-600">User Name : {user.username}</p>
-					</div>
+					className={` flex justify-start items-center p-3 border rounded-lg shadow space-x-3 bg-white hover:bg-slate-200 ${user.isAllowed ? 'hover:bg-green-200' : 'hover:bg-red-200'} `}>
+						{/* ${user.isAllowed ? 'bg-green-200 hover:bg-green-400' : 'bg-red-200 hover:bg-red-400'} */}
+						{/* ${user.isAllowed ? 'hover:bg-green-400' : 'hover:bg-red-400'} */}
+						<div 
+							className=" rounded-full bg-slate-300 py-4 text-center h-14 w-14 font-semibold my-2">
+							{user.id}
+						</div>
+						<div>
+							<h1 className="font-semibold text-lg">Full name : {user.fullName}</h1>
+							<p className="font-semibold">Email : {user.email}</p>
+							<p className="font-semibold text-sm">User Name : {user.username}</p>
+							{!user.isAllowed ? <p className="font-semibold">Status : <span className="font-bold text-md text-red-600">Blocked</span></p> : <p className="font-semibold">Status : <span className="font-bold text-md text-green-600">Active</span></p>}
+						</div>
 				</div>
 			))}
 

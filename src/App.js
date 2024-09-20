@@ -61,14 +61,14 @@ function App() {
         <Route path='/catsitem/treats' element={<CatTrats />}/>
 
 
-
+        {/* Admin */}
+        
         <Route path='/admin/home' element={<AdminHome />} />
         <Route path='/admin/categories' element={<Categories />} />
         <Route path='/admin/addnewproduct' element={<AddNewProduct />} />
         <Route path='/admin/productdetails/:id' element={<ProductDetails />} />
         <Route path='/admin/userdetails/:id' element={<UserDetails />} />
         <Route path='/admin/dashboard' element={<Dashboard />} />
-
         <Route path='/admin/updateproduct/:id' element={<UpdateProduct />} />
 
 

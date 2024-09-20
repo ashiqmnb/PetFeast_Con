@@ -43,7 +43,7 @@ const OrderConfirm = () => {
          <p>Order Date: <span style={{border:'1px solid lightgrey'}} className="px-5 font-mono bg-white">{orderDetails.orderDate}</span></p>
          <p>Order Time: <span style={{border:'1px solid lightgrey'}} className="px-5 font-mono bg-white">{orderDetails.orderTime}</span></p>
          <p>Payment Method: <span style={{border:'1px solid lightgrey'}} className="px-5 font-mono bg-white">{orderDetails.paymentMethod}</span></p>
-         <p>Expected Delivery: <span style={{border:'1px solid lightgrey'}} className="px-5 font-mono bg-white">Before 5 Days After Order Placed </span></p>
+         <p>Expected Delivery: <span style={{border:'1px solid lightgrey'}} className="px-5 font-mono bg-white">5 Days After Order Placed</span></p>
        </div>
      </div>
 

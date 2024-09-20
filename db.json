@@ -13,6 +13,7 @@
       "username": "asshhq",
       "password": "asq123",
       "confirmPassword": "asq123",
+      "isAllowed": true,
       "cart": [],
       "address": {
         "fullName": "Mohammed Ashiq A",
@@ -26,20 +27,20 @@
       "orderDetails": {
         "items": [
           {
-            "id": "7",
-            "heading": "Pro Plan Sensitive Skin Medium Adult Dry Dog Food Salman",
-            "discription": "High-quality salmon-rich food, ideal for medium dogs aged 1-7 years, supports healthy teeth, gums, and sensitive skin. High protein for strong muscles.",
-            "url": "https://cdn.petsathome.com/public/images/products/900_P4652.jpg",
-            "catogory": "dog-food",
-            "price": 16,
-            "rating": 3,
+            "id": "11",
+            "heading": "Pets at Home Teddy Oval Dog Bed Dark Grey",
+            "discription": "Enjoy a cosy, easy-to-clean bed with a removable dual-sided cushion and super soft lining for your dogs ultimate comfort.",
+            "url": "https://cdn.petsathome.com/public/images/products/900_P70983.jpg",
+            "catogory": "dog-beds",
+            "price": 26,
+            "rating": "4.5",
             "quantity": 1
           }
         ],
         "paymentMethod": "Debit/Credit Card",
-        "totalPrice": "14.40",
-        "orderDate": "Sat Sep 14 2024",
-        "orderTime": "19:48:07"
+        "totalPrice": "23.40",
+        "orderDate": "Fri Sep 20 2024",
+        "orderTime": "10:51:35"
       }
     },
     {
@@ -49,6 +50,7 @@
       "username": "basi",
       "password": "basi123",
       "confirmPassword": "basi123",
+      "isAllowed": false,
       "cart": [],
       "address": {
         "fullName": "Basila Narghees",
@@ -86,6 +88,7 @@
       "username": "nah",
       "password": "nah123",
       "confirmPassword": "nah123",
+      "isAllowed": false,
       "cart": [],
       "orderDetails": {
         "items": [
@@ -122,6 +125,7 @@
       "username": "salm",
       "password": "sal123",
       "confirmPassword": "sal123",
+      "isAllowed": true,
       "cart": [],
       "address": {
         "fullName": "Salman",
@@ -158,6 +162,7 @@
       "username": "munuu",
       "password": "munuu123",
       "confirmPassword": "munuu123",
+      "isAllowed": true,
       "cart": [],
       "address": {
         "fullName": "Muhammed Munavvir",
@@ -194,6 +199,7 @@
       "username": "san",
       "password": "san123",
       "confirmPassword": "san123",
+      "isAllowed": true,
       "cart": [],
       "address": {
         "fullName": "Sansan",
@@ -240,6 +246,7 @@
       "username": "farzin",
       "password": "farzin123",
       "confirmPassword": "farzin123",
+      "isAllowed": true,
       "cart": [],
       "address": {
         "fullName": "Farzin Mohammed B",
@@ -276,6 +283,7 @@
       "username": "azeem",
       "password": "azeem123",
       "confirmPassword": "azeem123",
+      "isAllowed": true,
       "cart": [
         {
           "id": "6",
@@ -343,6 +351,7 @@
       "username": "aaa",
       "password": "aaa123",
       "confirmPassword": "aaa123",
+      "isAllowed": false,
       "cart": [],
       "address": {
         "fullName": "aaaaaaaaa",
@@ -361,6 +370,7 @@
       "username": "shaa",
       "password": "shaa123",
       "confirmPassword": "shaa123",
+      "isAllowed": false,
       "cart": [],
       "orderDetails": {
         "items": [
@@ -397,7 +407,18 @@
       "username": "aasshhiiqq",
       "password": "asq123",
       "confirmPassword": "asq123",
-      "cart": []
+      "cart": [],
+      "isAllowed": false
+    },
+    {
+      "id": "341b",
+      "fullName": "vvvv",
+      "email": "vvvv@gmail.com",
+      "username": "vvvv",
+      "password": "vvvv123",
+      "confirmPassword": "vvvv123",
+      "cart": [],
+      "isAllowed": false
     }
   ],
   "items": [
@@ -416,7 +437,7 @@
       "discription": "Give your dog the ultimate care with Pro Plan Vet Diet Hypoallergenic Dry Dog Food. Specially formulated for dogs with food sensitivities and allergies,",
       "url": "https://cdn.petsathome.com/public/images/products/900_7118367.jpg",
       "catogory": "dog-food",
-      "price": 55.19,
+      "price": "55",
       "rating": "3"
     },
     {

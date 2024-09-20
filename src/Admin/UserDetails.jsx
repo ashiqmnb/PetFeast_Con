@@ -13,6 +13,16 @@ const UserDetails = () => {
 
   const {id} = useParams()
 
+  const handleBlock = async()=>{
+  
+    await axios.patch(`http://localhost:5000/users/${id}`,{isAllowed:!userData.isAllowed})
+      .then((res)=> console.log("bbb", res.data))
+      .catch((err)=> console.error(err))
+      
+    await axios.get(`http://localhost:5000/users/${id}`)
+      .then((res)=> setUserData(res.data))
+      .catch((err)=> console.error("aaaa",err))
+  }
 
   useEffect(()=>{
     axios.get(`http://localhost:5000/users/${id}`)
@@ -25,8 +35,7 @@ const UserDetails = () => {
         
       })
 			.catch((err)=> console.error("aaaa",err))
-  },[userData])
-console.log(userData);
+  },[])
 
 
   return (
@@ -36,7 +45,7 @@ console.log(userData);
         </div>
 
 
-        <div className="flex justify-center my-20 md:ms-44">
+        <div className="flex justify-center my-16 md:ms-44">
       <div className="w-4/6 lg:space-y-0 space-y-7 lg:flex block">
         
         {/* User Details */}
@@ -47,7 +56,7 @@ console.log(userData);
                 {userData.id}
               </div>
             </div>
-            <div className='p-5 text-lg bg-white rounded-lg shadow-md'>
+            <div className='p-5 text-lg bg-white rounded-lg shadow-md relative'>
               <p className='font-semibold text-gray-600'>
                 Full Name :{" "}
                 <span className='text-black'>{userData.fullName}</span>
@@ -58,6 +67,16 @@ console.log(userData);
               <p className='font-semibold text-gray-600'>
                 Username :{" "}
                 <span className='text-black'>{userData.username}</span></p>
+
+
+              <button
+                onClick={handleBlock}
+                className={`mt-2 px-3 py-1 w-full rounded-lg text-white text-md font-semibold transition ${
+                userData.isAllowed ? 'bg-red-500' : 'bg-blue-500'
+                }`}
+                 >
+                  {userData.isAllowed ? 'Block User' : 'Unblock User'}
+              </button>
             </div>
 
             {/* Shipping Address */}

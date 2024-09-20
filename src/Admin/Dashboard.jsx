@@ -37,7 +37,7 @@ const Dashboard = () => {
             <SideBar />
         </div>
 
-        <div  className='md:ms-72 ms-28 me-10 my-10 rounded-xl text-white'>
+        <div  className='md:ms-72 ms-28 me-10  rounded-xl text-white'>
         <div className='m-8' >
 
             {/* Products & Users */}

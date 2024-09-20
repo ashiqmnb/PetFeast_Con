@@ -47,7 +47,6 @@ const AddNewProduct = () => {
         }
         else{
             console.log(formData);
-            
             axios.post("http://localhost:5000/items", {...formData})
                 .then((res)=> console.log(res))
                 .catch((err)=> console.error(err))

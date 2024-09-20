@@ -27,7 +27,10 @@ const LoginPage = () => {
         alert("Admin Login Successfull");
         navigate('/admin/dashboard')
       }
-      else if(user){
+      else if(!user.isAllowed){
+        setError('You Are Restricted Or Blocked')
+      }
+      else if(user && user.isAllowed){
         alert("login successfull");
         localStorage.setItem('user',user.id)
         localStorage.setItem('username',user.username)
