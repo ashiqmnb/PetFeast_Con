@@ -9,7 +9,7 @@ const OrderConfirm = () => {
    const [orderDetails, sertOrderDetails] = useState({})
    const [userAddress, setUserAddress] = useState({})
    const [items, setItems] = useState([])
-   const userId = localStorage.getItem('user')
+   const userId = localStorage.getItem('id')
 
 
    useEffect(()=>{

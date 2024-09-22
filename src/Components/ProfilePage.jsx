@@ -8,7 +8,7 @@ const ProfilePage = () => {
 
   const navigate = useNavigate()
   const [userData, setUserData] = useState([])
-  const userId = localStorage.getItem('user')
+  const userId = localStorage.getItem('id')
 
   useEffect(()=>{
     if(userId){

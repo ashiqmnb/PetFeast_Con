@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import SideBar from './SideBar';
+import access from '../assets/access.png';
 
 const ProductDetails = () => {
   
   	const  [item, setItem ] = useState({})
+    const [admin, setAdmin] = useState(false);
+    const id = localStorage.getItem('adminId')
   	const navigate = useNavigate()
 
-  	const {id} = useParams();
+  	const {itemId} = useParams();
 
     // useEffect(()=>{
     //   axios.get(`http://localhost:5000/items`)
@@ -17,13 +20,27 @@ const ProductDetails = () => {
     // },[])
 
     useEffect(()=>{
-        axios.get(`http://localhost:5000/items/${id}`)
+        axios.get(`http://localhost:5000/items/${itemId}`)
             .then((res)=> setItem(res.data))
             .catch((err)=>console.log("aaa",err))
-    },[id])
+    },[itemId])
 
-  const handleRemoveProduct = async (id) => {
-    await axios.delete(`http://localhost:5000/items/${id}`)
+    useEffect(()=>{
+      axios.get(`http://localhost:5000/users/${id}`)
+          .then((res)=>{
+              
+              console.log("aaa",res.data.isAdmin);
+              // setUser(res.data)
+              if(res.data?.isAdmin){
+                  setAdmin(true)
+              }
+              console.log("bbbbbbbbb",admin);
+          })
+          .catch((err)=> console.error(err))
+  },[id])
+
+  const handleRemoveProduct = async (itemId) => {
+    await axios.delete(`http://localhost:5000/items/${itemId}`)
       .then((res)=>{
         alert("item deleted ");
         navigate('/admin/categories');
@@ -31,8 +48,19 @@ const ProductDetails = () => {
       .catch((err)=> console.error(err))
   }
 
+  
+  if(!id && !admin){
+    return(
+        <div className='flex justify-center'>
+            <div className='text-center h-96 w-96 shadow-sm'>
+                <img className='w-96 mt-44' src={access} alt="access denied" />
+                <p className='text-red-500 font-bold text-2xl font-serif'>You don't have permission</p>
+                <p className='text-red-500 font-bold text-2xl font-serif'>to access this page !!</p>
+            </div>
+        </div>
+    )
+}
 
-        
   return (
     <div className="flex justify-center">
         <div>

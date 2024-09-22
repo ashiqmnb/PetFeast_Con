@@ -6,7 +6,7 @@ const ItemDetails2 = () => {
   
   	const [item, setItem] = useState({})
   	const [quantity, setQuantity] = useState(1)
-  	const userId = localStorage.getItem('user')
+  	const userId = localStorage.getItem('id')
   	const navigate = useNavigate()
 
   	const getCart = async(userId)=>{

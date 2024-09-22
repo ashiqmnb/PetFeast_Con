@@ -2,13 +2,12 @@ import React,{useState, useEffect} from 'react'
 import axios from 'axios';
 import SideBar from './SideBar';
 import { useNavigate, useParams } from 'react-router-dom';
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import access from '../assets/access.png';
 
 
 const UpdateProduct = () => {
 
-    const {id} = useParams()
+    const {itemId} = useParams()
  
     const [product, setProduct] = useState({
         heading: "",
@@ -21,13 +20,13 @@ const UpdateProduct = () => {
 
     const navigate = useNavigate()
     const [error, setError] = useState("");
+    const [admin, setAdmin] = useState(false);
+    const id = localStorage.getItem('adminId')
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/items/${id}`) // Fetch product from JSON server
+        axios.get(`http://localhost:5000/items/${itemId}`) // Fetch product from JSON server
           .then((res) => {
-            setProduct(res.data); // Set the fetched product data
-            console.log(res.data);
-            
+            setProduct(res.data);
         })
           .catch((err) => {
             console.error("Error fetching product", err);
@@ -56,6 +55,20 @@ const UpdateProduct = () => {
     }
 
 
+    useEffect(()=>{
+        axios.get(`http://localhost:5000/users/${id}`)
+            .then((res)=>{
+                
+                console.log("aaa",res.data.isAdmin);
+                // setUser(res.data)
+                if(res.data?.isAdmin){
+                    setAdmin(true)
+                }
+                console.log("bbbbbbbbb",admin);
+            })
+            .catch((err)=> console.error(err))
+    },[id])
+
 //   Handle form submission for updating the product
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -65,13 +78,13 @@ const UpdateProduct = () => {
             setError(validationErrors)
         }
         else{
-            axios.put(`http://localhost:5000/items/${id}`, product) // Send the updated data to the server
+            axios.put(`http://localhost:5000/items/${itemId}`, product) // Send the updated data to the server
             .then((res) => {
                 alert("Product updated successfully");
                 // toast.success("Product Updated")
                 console.log(id);
                 
-                navigate(`/admin/productdetails/${id}`,{ replace: true }); // Redirect after update
+                navigate(`/admin/productdetails/${itemId}`,{ replace: true }); // Redirect after update
                 // navigate(`/admin/home`);
             })
             .catch((err) => {
@@ -81,6 +94,18 @@ const UpdateProduct = () => {
         }
     };
 
+
+    if(!id && !admin){
+        return(
+            <div className='flex justify-center'>
+                <div className='text-center h-96 w-96 shadow-sm'>
+                    <img className='w-96 mt-44' src={access} alt="access denied" />
+                    <p className='text-red-500 font-bold text-2xl font-serif'>You don't have permission</p>
+                    <p className='text-red-500 font-bold text-2xl font-serif'>to access this page !!</p>
+                </div>
+            </div>
+        )
+    }
 
   return (
     <div>

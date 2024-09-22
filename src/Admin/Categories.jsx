@@ -2,6 +2,7 @@ import React,{useEffect, useState} from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import SideBar from './SideBar'
+import access from '../assets/access.png';
 
 const Categories = () => {
 
@@ -9,6 +10,9 @@ const Categories = () => {
     const [items, setItems] = useState([])
     const [dogFiltered, setDogFiltered] = useState([])
     const [catFiltered, setCatFiltered] = useState([])
+    const [admin, setAdmin] = useState(false);
+    const id = localStorage.getItem('adminId')
+
 
     useEffect(()=>{
         axios.get(`http://localhost:5000/items`)
@@ -20,6 +24,16 @@ const Categories = () => {
         setDogFiltered(items.filter((item, index)=> item.catogory === 'dog-food' || item.catogory === 'dog-beds'))
         setCatFiltered(items.filter((item, index)=> item.catogory === 'cat-food' || item.catogory === 'cat-treat'))
     },[items])
+
+    useEffect(()=>{
+        axios.get(`http://localhost:5000/users/${id}`)
+            .then((res)=>{
+                if(res.data?.isAdmin){
+                    setAdmin(true)
+                }
+            })
+            .catch((err)=> console.error(err))
+    },[id])
 
 
     const handleDogCategory = (category)=>{
@@ -39,7 +53,17 @@ const Categories = () => {
     }
 
 
-
+  if(!id && !admin){
+      return(
+          <div className='flex justify-center'>
+              <div className='text-center h-96 w-96 shadow-sm'>
+                  <img className='w-96 mt-44' src={access} alt="access denied" />
+                  <p className='text-red-500 font-bold text-2xl font-serif'>You don't have permission</p>
+                  <p className='text-red-500 font-bold text-2xl font-serif'>to access this page !!</p>
+              </div>
+          </div>
+      )
+  }
 
   return (
     <div className="flex justify-start">

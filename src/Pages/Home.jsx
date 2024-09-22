@@ -14,7 +14,7 @@ import axios from 'axios'
 const Home = () => {
   // const {userId, setUserId} = useContext(MyContext)
   const {userData, setUserData} = useContext(MyContext)
-  const [userId, setUserId] = useState(localStorage.getItem('user'))
+  const [userId, setUserId] = useState(localStorage.getItem('id'))
 
 
 

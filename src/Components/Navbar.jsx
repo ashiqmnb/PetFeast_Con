@@ -36,7 +36,7 @@ const Navbar = () => {
   }
 
   useEffect(()=>{
-    setUserId(localStorage.getItem("user"))
+    setUserId(localStorage.getItem("id"))
     setUserName(localStorage.getItem("username"))
     if(userId){
       axios.get(`http://localhost:5000/users/${userId}`)

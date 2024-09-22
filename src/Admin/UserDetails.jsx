@@ -3,6 +3,7 @@ import { useState } from 'react'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import SideBar from './SideBar';
+import access from '../assets/access.png';
 
 const UserDetails = () => {
 
@@ -10,33 +11,55 @@ const UserDetails = () => {
   const [ orderDetails, setOrderDetails ] = useState({});
   const [ orderItems, setOrderItems ] = useState([]);
   const [ address, setAddress ] = useState({})
+  const [admin, setAdmin] = useState(false);
+  const id = localStorage.getItem('adminId')
 
-  const {id} = useParams()
+  const {userId} = useParams()
 
   const handleBlock = async()=>{
   
-    await axios.patch(`http://localhost:5000/users/${id}`,{isAllowed:!userData.isAllowed})
+    await axios.patch(`http://localhost:5000/users/${userId}`,{isAllowed:!userData.isAllowed})
       .then((res)=> console.log("bbb", res.data))
       .catch((err)=> console.error(err))
       
-    await axios.get(`http://localhost:5000/users/${id}`)
+    await axios.get(`http://localhost:5000/users/${userId}`)
       .then((res)=> setUserData(res.data))
       .catch((err)=> console.error("aaaa",err))
   }
 
   useEffect(()=>{
-    axios.get(`http://localhost:5000/users/${id}`)
+    axios.get(`http://localhost:5000/users/${userId}`)
 			.then((res)=> {
         setUserData(res.data);
         setOrderDetails(res.data.orderDetails)
         setOrderItems(res.data.orderDetails.items)
         setAddress(res.data.address)
-        console.log(address);
-        
       })
 			.catch((err)=> console.error("aaaa",err))
   },[])
 
+  useEffect(()=>{
+    axios.get(`http://localhost:5000/users/${id}`)
+        .then((res)=>{
+            if(res.data?.isAdmin){
+                setAdmin(true)
+            }
+        })
+        .catch((err)=> console.error(err))
+},[id])
+
+
+  if(!id && !admin){
+    return(
+        <div className='flex justify-center'>
+            <div className='text-center h-96 w-96 shadow-sm'>
+                <img className='w-96 mt-44' src={access} alt="access denied" />
+                <p className='text-red-500 font-bold text-2xl font-serif'>You don't have permission</p>
+                <p className='text-red-500 font-bold text-2xl font-serif'>to access this page !!</p>
+            </div>
+        </div>
+    )
+  }
 
   return (
     <div>

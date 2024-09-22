@@ -2,19 +2,16 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SideBar from "./SideBar";
+import access from '../assets/access.png';
 
 
 const AdminHome = () => {
 
 	const [products, setProducts] = useState([]);
 	const [users, setUsers] = useState([]);
-
+	const [admin, setAdmin] = useState(false);
+    const id = localStorage.getItem('adminId')
 	const navigate = useNavigate();
-
-	// const toUserDetails = (id)=>{
-	// 	navigate(`/userdetails/${id}`)
-	// }
-
 
 	useEffect(()=>{
 		axios.get("http://localhost:5000/items")
@@ -25,6 +22,28 @@ const AdminHome = () => {
 			.then((res)=> setUsers(res.data.filter((user,index)=> user.isAdmin !== true)))
 			.catch((err)=> console.error("aaaa",err))
 	},[])
+
+	useEffect(()=>{
+        axios.get(`http://localhost:5000/users/${id}`)
+            .then((res)=>{
+                if(res.data?.isAdmin){
+                    setAdmin(true)
+                }
+            })
+            .catch((err)=> console.error(err))
+    },[id])
+
+	if(!id && !admin){
+        return(
+            <div className='flex justify-center'>
+                <div className='text-center h-96 w-96 shadow-sm'>
+                    <img className='w-96 mt-44' src={access} alt="access denied" />
+                    <p className='text-red-500 font-bold text-2xl font-serif'>You don't have permission</p>
+                    <p className='text-red-500 font-bold text-2xl font-serif'>to access this page !!</p>
+                </div>
+            </div>
+        )
+    }
 
   return (
     <div className="flex justify-start">
@@ -82,7 +101,7 @@ const AdminHome = () => {
 				<div 
 					key={user.id}
 					onClick={()=> navigate(`/admin/userdetails/${user.id}`)}
-					className={` flex justify-start items-center p-3 border rounded-lg shadow space-x-3 bg-white hover:bg-slate-200 ${user.isAllowed ? 'hover:bg-green-200' : 'hover:bg-red-200'} `}>
+					className={` flex justify-start items-center p-3 border rounded-lg shadow space-x-3 bg-white  ${user.isAllowed ? 'hover:bg-green-200' : 'hover:bg-red-200'}`}>
 						{/* ${user.isAllowed ? 'bg-green-200 hover:bg-green-400' : 'bg-red-200 hover:bg-red-400'} */}
 						{/* ${user.isAllowed ? 'hover:bg-green-400' : 'hover:bg-red-400'} */}
 						<div 

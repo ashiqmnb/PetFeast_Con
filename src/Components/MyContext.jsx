@@ -7,7 +7,7 @@ export const MyContext = createContext();
 
 export const MyProvider = ({ children }) => {
 
-  const [userId, setUserId] = useState(localStorage.getItem("user"));
+  const [userId, setUserId] = useState(localStorage.getItem("id"));
   const [userName, setUserName] = useState(localStorage.getItem("username"));
 
   return (

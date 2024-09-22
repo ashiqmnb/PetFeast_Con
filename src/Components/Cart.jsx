@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const Cart = () => {
 
   const [cart, setCart] = useState([])
-  const userId = localStorage.getItem('user')
+  const userId = localStorage.getItem('id')
   const navigate = useNavigate()
 
   const handleRemoveItem = async (id) => {

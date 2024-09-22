@@ -1,12 +1,15 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SideBar from './SideBar';
+import access from '../assets/access.png';
 
 const AddNewProduct = () => {
 
     const navigate = useNavigate();
 
+    const [admin, setAdmin] = useState(false);
+    const id = localStorage.getItem('adminId')
     const [ formData, setFormData ] = useState({
         heading: '',
         discription: '',
@@ -56,7 +59,27 @@ const AddNewProduct = () => {
         }
     }
 
+    useEffect(()=>{
+        axios.get(`http://localhost:5000/users/${id}`)
+            .then((res)=>{
+                if(res.data?.isAdmin){
+                    setAdmin(true)
+                }
+            })
+            .catch((err)=> console.error(err))
+    },[id])
 
+    if(!id && !admin){
+        return(
+            <div className='flex justify-center'>
+                <div className='text-center h-96 w-96 shadow-sm'>
+                    <img className='w-96 mt-44' src={access} alt="access denied" />
+                    <p className='text-red-500 font-bold text-2xl font-serif'>You don't have permission</p>
+                    <p className='text-red-500 font-bold text-2xl font-serif'>to access this page !!</p>
+                </div>
+            </div>
+        )
+    }
 
   return (
     <div>

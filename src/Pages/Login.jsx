@@ -23,7 +23,7 @@ const LoginPage = () => {
       const isAdmin = user.isAdmin;
       
       if(isAdmin){
-        localStorage.setItem("id",user.id)
+        localStorage.setItem("adminId",user.id)
         alert("Admin Login Successfull");
         navigate('/admin/dashboard')
       }
@@ -32,13 +32,12 @@ const LoginPage = () => {
       }
       else if(user && user.isAllowed){
         alert("login successfull");
-        localStorage.setItem('user',user.id)
+        localStorage.setItem('id',user.id)
         localStorage.setItem('username',user.username)
         setUserId(localStorage.getItem('user'))
         navigate('/')
       }
       else{
-        // console.log("login failed");\
         setError('Invalid username or password')
       }
     }

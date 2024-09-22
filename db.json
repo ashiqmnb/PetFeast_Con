@@ -419,6 +419,36 @@
       "confirmPassword": "vvvv123",
       "cart": [],
       "isAllowed": false
+    },
+    {
+      "id": "2331",
+      "fullName": "Afrooja",
+      "email": "afroo@gmal.com",
+      "username": "afroo",
+      "password": "afroo123",
+      "confirmPassword": "afroo123",
+      "cart": [],
+      "isAllowed": true
+    },
+    {
+      "id": "eab4",
+      "fullName": "shanoof",
+      "email": "shanoof@gmail.com",
+      "username": "shanoof123",
+      "password": "shanoof123",
+      "confirmPassword": "shanoof123",
+      "cart": [],
+      "isAllowed": true
+    },
+    {
+      "id": "7c7b",
+      "fullName": "shajal",
+      "email": "shajal@gmail.com",
+      "username": "shajal",
+      "password": "shajal123",
+      "confirmPassword": "shajal123",
+      "cart": [],
+      "isAllowed": true
     }
   ],
   "items": [
@@ -808,6 +838,51 @@
       "catogory": "cat-treat",
       "price": "1.6",
       "rating": "4"
+    },
+    {
+      "id": "5526",
+      "heading": "Paikka Recovery Burrow Dog Bed Pink Medium",
+      "discription": "Supports restful sleep with a warm, wool-mix fabric and special FIR lining. Memory foam moulds to body shape, with washable covers",
+      "url": "https://cdn.petsathome.com/public/images/products/900_7143598.jpg",
+      "catogory": "dog-beds",
+      "price": "124",
+      "rating": "4.5"
+    },
+    {
+      "id": "5daf",
+      "heading": "Wainwright's Dual Sided Cushion Square Dog Bed",
+      "discription": "Chin-rest sides that block out the draughts for a snuggly sleep Chin-rest sides that block out the draughts for a snuggly sleep",
+      "url": "https://cdn.petsathome.com/public/images/products/900_P71640.jpg",
+      "catogory": "dog-beds",
+      "price": "33",
+      "rating": "3"
+    },
+    {
+      "id": "4921",
+      "heading": "Thrive Freeze Dried Cat Treats Chicken 25g",
+      "discription": "100% chicken breast fillet treats, freeze-dried for flavour, free from additives, preservatives, and sugar. Ideal for cats of all ages.",
+      "url": "https://cdn.petsathome.com/public/images/products/900_68744.jpg",
+      "catogory": "cat-treat",
+      "price": "4.5",
+      "rating": "3"
+    },
+    {
+      "id": "0896",
+      "heading": "Pets at Home Cat Treat Sticks Chicken & Liver 10x5g",
+      "discription": "Individually portioned, chicken and liver flavoured treats, free from artificial colours and flavours, with no added sugar. Suitable for kittens from 3 months.",
+      "url": "https://cdn.petsathome.com/public/images/products/900_7145427.jpg",
+      "catogory": "cat-treat",
+      "price": "3.25",
+      "rating": "4"
+    },
+    {
+      "id": "fb5d",
+      "heading": "Royal Canin Veterinary Hypoallergenic Adult Wet Dog Food 12x400g",
+      "discription": "Veterinary-approved dietetic food only to be used based on recommendation of a vet.",
+      "url": "https://cdn.petsathome.com/public/images/products/900_7136406.jpg",
+      "catogory": "dog-food",
+      "price": "46.60",
+      "rating": "4.5"
     }
   ]
 }

@@ -31,11 +31,13 @@ import UpdateProduct from './Admin/UpdateProduct';
 function App() {
 
   const location = useLocation()
-  const sholudHidden = location.pathname.startsWith("/admin")
+  console.log(location);
+  
+  const shouldHidden = location.pathname.startsWith("/admin")
 
   return (
     <div className='App'>
-      {!sholudHidden&&<Navbar/>}
+      {!shouldHidden && <Navbar/>}
       
       <Routes>
 
@@ -66,16 +68,14 @@ function App() {
         <Route path='/admin/home' element={<AdminHome />} />
         <Route path='/admin/categories' element={<Categories />} />
         <Route path='/admin/addnewproduct' element={<AddNewProduct />} />
-        <Route path='/admin/productdetails/:id' element={<ProductDetails />} />
-        <Route path='/admin/userdetails/:id' element={<UserDetails />} />
+        <Route path='/admin/productdetails/:itemId' element={<ProductDetails />} />
+        <Route path='/admin/userdetails/:userId' element={<UserDetails />} />
         <Route path='/admin/dashboard' element={<Dashboard />} />
-        <Route path='/admin/updateproduct/:id' element={<UpdateProduct />} />
-
-
+        <Route path='/admin/updateproduct/:itemId' element={<UpdateProduct />} />
 
       </Routes>
 
-      {!sholudHidden&&<Footer/>}
+      {!shouldHidden&&<Footer/>}
     </div>
   );
 }

@@ -6,7 +6,7 @@ const Payment = () => {
   const [paymentMethod, setPaymentMethod] = useState("Cash On Delivery");
   const [cart, setCart] = useState([]);
   const [currentAdress, setCurrentAddress] = useState({});
-  const userId = localStorage.getItem("user");
+  const userId = localStorage.getItem("id");
   const [errors, setErrors] = useState({});
   const [delAddress, setDelAddress] = useState({
     fullName: "",
