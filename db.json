@@ -8,13 +8,44 @@
     },
     {
       "id": "5d46",
-      "fullName": "asq",
+      "fullName": "Ashiq",
       "email": "asq@gmail.com",
       "username": "asshhq",
       "password": "asq123",
       "confirmPassword": "asq123",
       "isAllowed": true,
-      "cart": [],
+      "cart": [
+        {
+          "id": "5",
+          "heading": "Wainwright's Sensitive Adult Dry Dog Food Atlantic Salmon With Superfoods",
+          "discription": "A hypoallergenic, balanced dry food with no added wheat, pork, dairy, or artificial additives, made from a single protein source.",
+          "url": "https://cdn.petsathome.com/public/images/products/900_7145754.jpg",
+          "catogory": "dog-food",
+          "price": 9.6,
+          "rating": 3.5,
+          "quantity": 1
+        },
+        {
+          "id": "40",
+          "heading": "Dreamies Cat Treat Biscuits with Catnip 200g",
+          "discription": "Packed with vitamins and minerals, these two-calorie treats come in a handy resealable bag for convenience.",
+          "url": "https://cdn.petsathome.com/public/images/products/900_7145028.jpg",
+          "catogory": "cat-treat",
+          "price": 3,
+          "rating": 4.5,
+          "quantity": 1
+        },
+        {
+          "id": "14",
+          "heading": "3 Peaks Nevis Dog Bed Green",
+          "discription": "Water-resistant, tough and comfortable for resting after adventures",
+          "url": "https://cdn.petsathome.com/public/images/products/900_P71626.jpg",
+          "catogory": "dog-beds",
+          "price": 35,
+          "rating": 4.5,
+          "quantity": 1
+        }
+      ],
       "address": {
         "fullName": "Mohammed Ashiq A",
         "phoneNumber": "9072050026",
@@ -27,20 +58,40 @@
       "orderDetails": {
         "items": [
           {
-            "id": "11",
-            "heading": "Pets at Home Teddy Oval Dog Bed Dark Grey",
-            "discription": "Enjoy a cosy, easy-to-clean bed with a removable dual-sided cushion and super soft lining for your dogs ultimate comfort.",
-            "url": "https://cdn.petsathome.com/public/images/products/900_P70983.jpg",
-            "catogory": "dog-beds",
-            "price": 26,
+            "id": "e21d",
+            "heading": "Catit Creamy Lickable Cat Treats Chicken & Lamb 15x10g",
+            "discription": "All-natural, nutrient-rich treats, free from corn, grain, wheat, soy, and artificial additives. Ideal for sensitive cats, can be served alone or as a food topper.",
+            "url": "https://cdn.petsathome.com/public/images/products/900_7141089.jpg",
+            "catogory": "cat-treat",
+            "price": "7.20",
             "rating": "4.5",
-            "quantity": 1
+            "quantity": 3
+          },
+          {
+            "id": "40",
+            "heading": "Dreamies Cat Treat Biscuits with Catnip 200g",
+            "discription": "Packed with vitamins and minerals, these two-calorie treats come in a handy resealable bag for convenience.",
+            "url": "https://cdn.petsathome.com/public/images/products/900_7145028.jpg",
+            "catogory": "cat-treat",
+            "price": 3,
+            "rating": 4.5,
+            "quantity": 4
+          },
+          {
+            "id": "22",
+            "heading": "Pets at Home Adult Cat Wet Food Chunks in Jelly Variety 24x400g",
+            "discription": "Four tasty flavours, supporting heart, eyes, and immune health with no artificial additives for a complete and balanced meal",
+            "url": "https://cdn.petsathome.com/public/images/products/900_7142129.jpg",
+            "catogory": "cat-food",
+            "price": 16,
+            "rating": 4.5,
+            "quantity": 4
           }
         ],
-        "paymentMethod": "Debit/Credit Card",
-        "totalPrice": "23.40",
-        "orderDate": "Fri Sep 20 2024",
-        "orderTime": "10:51:35"
+        "paymentMethod": "Cash On Delivery",
+        "totalPrice": "87.84",
+        "orderDate": "Mon Sep 23 2024",
+        "orderTime": "09:53:39"
       }
     },
     {
@@ -449,6 +500,27 @@
       "confirmPassword": "shajal123",
       "cart": [],
       "isAllowed": true
+    },
+    {
+      "id": "69de",
+      "fullName": "azz",
+      "email": "azz@gmail.com",
+      "username": "azz",
+      "password": "azz123",
+      "confirmPassword": "azz123",
+      "cart": [
+        {
+          "id": "10",
+          "heading": "Butcher's Joints & Coat Wet Adult Dog Food 18x390g",
+          "discription": "Promotes healthy joints, skin, and coat with a balanced, grain-free recipe. Vet endorsed for adult dogs",
+          "url": "https://cdn.petsathome.com/public/images/products/900_7135238.jpg",
+          "catogory": "dog-food",
+          "price": 15,
+          "rating": 4.5,
+          "quantity": 1
+        }
+      ],
+      "isAllowed": true
     }
   ],
   "items": [
@@ -477,7 +549,7 @@
       "url": "https://cdn.petsathome.com/public/images/products/900_7103687.jpg",
       "catogory": "dog-food",
       "price": "2",
-      "rating": "2"
+      "rating": "3.5"
     },
     {
       "id": "4",
@@ -549,7 +621,7 @@
       "url": "https://cdn.petsathome.com/public/images/products/900_P70983.jpg",
       "catogory": "dog-beds",
       "price": 26,
-      "rating": "4.5"
+      "rating": "3.5"
     },
     {
       "id": "12",
@@ -649,15 +721,6 @@
       "catogory": "cat-food",
       "price": 16,
       "rating": 4.5
-    },
-    {
-      "id": "23",
-      "heading": "Sheba Fresh Cuisine Wet Adult Cat Food Taste of Rome 6x50g",
-      "discription": "Delight your feline with fine, delicate pieces, providing complete nutrition. High-quality ingredients, no artificial colours or preservatives.",
-      "url": "https://cdn.petsathome.com/public/images/products/900_7143260.jpg",
-      "catogory": "cat-food",
-      "price": 2.15,
-      "rating": 3.5
     },
     {
       "id": "24",
@@ -846,7 +909,7 @@
       "url": "https://cdn.petsathome.com/public/images/products/900_7143598.jpg",
       "catogory": "dog-beds",
       "price": "124",
-      "rating": "4.5"
+      "rating": "4"
     },
     {
       "id": "5daf",
@@ -882,7 +945,16 @@
       "url": "https://cdn.petsathome.com/public/images/products/900_7136406.jpg",
       "catogory": "dog-food",
       "price": "46.60",
-      "rating": "4.5"
+      "rating": "4"
+    },
+    {
+      "id": "3b01",
+      "heading": "Pets at Home Christmas Rockin' Reindeer Donut Pet Bed Beige",
+      "discription": "Gift your little Christmas helper a place to snooze over the festive period. This cute reindeer bed will provide your feline friend with a soft and cosy place to rest and recharge from all the festive fun.",
+      "url": "https://cdn.petsathome.com/public/images/products/900_7151708.jpg",
+      "catogory": "dog-beds",
+      "price": "18",
+      "rating": "3.5"
     }
   ]
 }

@@ -76,39 +76,12 @@ const Dashboard = () => {
                 </div>
             </div>
 
-
-
-            {/* Products & Users */}
-            {/* <div className='flex justify-center w-full '>
-                <div className='flex justify-center space-x-2 bg-white p-2 me-1 mt-2 border border-gray-300 rounded-lg shadow-lg'>
-                    
-                    <div style={{backgroundColor:'#052560'}} className=' h-40 w-48 m-2 text-center rounded-lg border shadow'>
-                        <p className='font-serif font-bold text-6xl mt-5'>{products.length}</p>
-                        <div className='flex justify-center mt-2 space-x-1'>
-                            <MdFoodBank className='text-3xl' />
-                            <p className='font-semibold text-xl'>Products</p>
-                        </div>
-                    </div>
-
-                    <div 
-                        style={{backgroundColor:'#052560'}}
-                        className=' h-40 w-48 m-2 text-center rounded-lg border shadow'>
-                        <p className='font-serif font-bold text-6xl mt-5'>{users.length}</p>
-                        <div className='flex justify-center mt-2 space-x-1'>
-                            <FaUserTie className='text-2xl' />
-                            <p className='font-semibold text-xl'>Users</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div> */}
-
             {/* Order Dashboard */}
-            <div className='flex flex-wrap justify-center w-ful md:mt-2 mt-96'>
+            {/* <div className='flex flex-wrap justify-center w-ful md:mt-2 mt-96'>
                 <div className='flex justify-center space-x-2  p-2 me-1 bg-white border border-gray-300 rounded-lg shadow-lg  md:mt-2 mt-96'>
 
                     <div style={{backgroundColor:'#052560'}} className=' h-40 w-52 text-center rounded-lg border shadow'>
-                        <p className='font-serif font-bold text-6xl mt-5'>493</p>
+                        <p className='font-serif font-bold text-6xl mt-5'>247</p>
                         <div className='flex justify-center mt-2 space-x-1'>
                             <GrInProgress className='text-2xl' />
                             <p className='font-semibold text-xl'>Order in Progresss</p>
@@ -116,7 +89,7 @@ const Dashboard = () => {
                     </div>
 
                     <div style={{backgroundColor:'#052560'}} className=' -40 w-52 text-center rounded-lg border shadow'>
-                        <p className='font-serif font-bold text-6xl mt-5'>895</p>
+                        <p className='font-serif font-bold text-6xl mt-5'>581</p>
                         <div className='flex justify-center mt-2 space-x-1'>
                             <AiOutlineFileDone className='text-3xl' />
                             <p className='font-semibold text-xl'>Order Shipped</p>
@@ -134,16 +107,15 @@ const Dashboard = () => {
                     </div>
 
                     <div style={{backgroundColor:'#052560'}} className=' h-40 w-52 text-center rounded-lg border shadow'>
-                        <p className='font-serif font-bold text-6xl mt-5'>146</p>
+                        <p className='font-serif font-bold text-6xl mt-5'>126</p>
                         <div className='flex justify-center mt-2 space-x-1'>
                             <MdCancelScheduleSend className='text-2xl' />
                             <p className='font-semibold text-xl'>Cancelled</p>
                         </div>
                     </div>
                 </div>
+            </div> */}
 
-
-            </div>
             </div>
 
             {/* Top Sales */}

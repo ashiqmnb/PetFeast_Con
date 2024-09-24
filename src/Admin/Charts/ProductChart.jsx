@@ -15,9 +15,8 @@ const ProductChart = () => {
               borderRadius:'10px',
               fontWeight:'500',
               padding: '5px',
-              fontSize: '15px'  // Adjust the font size to reduce the tooltip size
+              fontSize: '15px'
             }}>
-              {/* <p className='text-black'>{"cat"}</p> */}
               {payload.map((data, index) => (
                 <div>
                     <p key={index} style={{color: data.fill}}>{`${data.name}: ${data.value}`}</p>
@@ -30,7 +29,6 @@ const ProductChart = () => {
         return null;
       };
 
-    // const [ items, setItems ] = useState([]);
     const [ dogFood,setDogFood] = useState(0)
     const [ dogBed,setDogBed] = useState(0)
     const [ catFood,setCatFood] = useState(0)
@@ -39,7 +37,6 @@ const ProductChart = () => {
     useEffect(()=>{
         axios.get("http://localhost:5000/items")
             .then((res)=> {
-                // setItems(res.data);
                 const items = res.data;
                 console.log('from product chart');
                 setDogFood(items.filter((item)=> item.catogory === 'dog-food').length)
@@ -54,12 +51,12 @@ const ProductChart = () => {
         {
           "name": `Cat (${catFood+catTreat})`,
           "food": catFood,
-          "bed or treat": catTreat
+          "bed/treat": catTreat
         },
         {
           "name": `Dog (${dogBed+dogFood})`,
           "food": dogFood,
-          "bed or treat": dogBed
+          "bed/treat": dogBed
         }
       ]
 
@@ -79,11 +76,11 @@ const ProductChart = () => {
             <Tooltip content={<CustomTooltip />} />
             <Legend items/>
             <Bar dataKey="food" fill="blue" />
-            <Bar dataKey="bed or treat" fill="green" />
+            <Bar dataKey="bed/treat" fill="green" />
         </BarChart>
         <h1 className='text-black text-lg font-semibold'>Total Products : {dogBed+dogFood+catFood+catTreat}</h1>
     </>
   )
-}
+} 
 
 export default ProductChart

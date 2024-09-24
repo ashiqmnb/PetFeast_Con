@@ -1,4 +1,4 @@
-import React,{useContext, useState, useEffect, useRef} from "react";
+import React,{  useContext, useState, useEffect } from "react";
 import axios from "axios";
 import logo from '../assets/logo.png';
 import { NavLink, useNavigate } from "react-router-dom";
@@ -8,6 +8,9 @@ const Navbar = () => {
 
   const {userId, setUserId} = useContext(MyContext)
   const {userName, setUserName} = useContext(MyContext)
+  // const [userId, setUserId] = useState(localStorage.getItem("id"))
+  // const [userName, setUserName] = useState(localStorage.getItem("username"))
+
   const navigate = useNavigate()
 
   // for search items
@@ -17,22 +20,14 @@ const Navbar = () => {
 
   const [cart, setCart] = useState([])
 
-
-
-  
   const itemDetails = (e,id)=>{
     navigate(`/itemdetails/${id}`)
     setQuery("")
-    
   }
 
   const handleCart = ()=>{
-    if (userId) {
-      navigate('/cart')
-    }
-    else{
-      navigate('/login')
-    }
+    if (userId) navigate('/cart')
+    else navigate('/login')
   }
 
   useEffect(()=>{
@@ -42,11 +37,10 @@ const Navbar = () => {
       axios.get(`http://localhost:5000/users/${userId}`)
       .then((res)=> {
         setCart(res.data.cart);
-        // console.log(res.data.cart);
      })
      .catch((err)=>console.error("Error fetching cart:", err))
     }
- },[cart, userId])
+ },[userId, cart  ])
 
 
   useEffect(() => {
@@ -77,7 +71,7 @@ const Navbar = () => {
                       onClick={(e)=> itemDetails(e,item.id)} 
                       key={item.id}
                       style={{border:'1px solid gray'}}
-                      className="p-1 hover:bg-slate-100 bg-white text-black h-max  flex border justify-between"
+                      className="p-1 hover:bg-blue-100 bg-white text-black h-max flex border justify-between"
                       >
                         <img className="h-10 w-auto" src={item.url} alt="img" />
                         <p className="text-sm font-semibold">{item.heading}</p>

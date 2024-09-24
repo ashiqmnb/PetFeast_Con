@@ -28,13 +28,9 @@ const ProductDetails = () => {
     useEffect(()=>{
       axios.get(`http://localhost:5000/users/${id}`)
           .then((res)=>{
-              
-              console.log("aaa",res.data.isAdmin);
-              // setUser(res.data)
               if(res.data?.isAdmin){
                   setAdmin(true)
               }
-              console.log("bbbbbbbbb",admin);
           })
           .catch((err)=> console.error(err))
   },[id])
@@ -42,6 +38,7 @@ const ProductDetails = () => {
   const handleRemoveProduct = async (itemId) => {
     await axios.delete(`http://localhost:5000/items/${itemId}`)
       .then((res)=>{
+        console.log(res);
         alert("item deleted ");
         navigate('/admin/categories');
       })

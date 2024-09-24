@@ -31,7 +31,7 @@ import UpdateProduct from './Admin/UpdateProduct';
 function App() {
 
   const location = useLocation()
-  console.log(location);
+  // console.log(location);
   
   const shouldHidden = location.pathname.startsWith("/admin")
 

@@ -11,6 +11,7 @@ const LoginPage = () => {
 
 
   const {userId, setUserId} = useContext(MyContext)
+  const adminId = localStorage.getItem("adminId")
 
   const navigate = useNavigate()
 
@@ -34,7 +35,7 @@ const LoginPage = () => {
         alert("login successfull");
         localStorage.setItem('id',user.id)
         localStorage.setItem('username',user.username)
-        setUserId(localStorage.getItem('user'))
+        setUserId(localStorage.getItem('id'))
         navigate('/')
       }
       else{
@@ -45,6 +46,12 @@ const LoginPage = () => {
       setError('Something went wrong. Please try again later.')
     }
   };
+
+  useEffect(()=>{
+    if(adminId){
+      navigate('/admin/dashboard')
+    }
+  },[])
 
   return (
     <div  className='flex justify-center py-28 shadow md:mt-20 mt-60'>

@@ -69,8 +69,8 @@ const UpdateProduct = () => {
             .catch((err)=> console.error(err))
     },[id])
 
-//   Handle form submission for updating the product
-    const handleSubmit = (e) => {
+
+    const HandleUpdateProduct = (e) => {
         e.preventDefault();
         const validationErrors = validate();
 
@@ -78,14 +78,10 @@ const UpdateProduct = () => {
             setError(validationErrors)
         }
         else{
-            axios.put(`http://localhost:5000/items/${itemId}`, product) // Send the updated data to the server
+            axios.put(`http://localhost:5000/items/${itemId}`, product)
             .then((res) => {
                 alert("Product updated successfully");
-                // toast.success("Product Updated")
-                console.log(id);
-                
-                navigate(`/admin/productdetails/${itemId}`,{ replace: true }); // Redirect after update
-                // navigate(`/admin/home`);
+                navigate(`/admin/productdetails/${itemId}`,{ replace: true });
             })
             .catch((err) => {
                 console.error("Error updating product", err);
@@ -117,7 +113,7 @@ const UpdateProduct = () => {
         <div className="md:w-3/6 w-5/6 bg-slate-200 py-5 rounded-lg shadow-lg">
             <h1  style={{color:'#052560'}} className="text-center font-bold text-xl">Update Product</h1>
             
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={HandleUpdateProduct}>
                 <div className='px-5'>
                     <label className='text-lg font-semibold' htmlFor="">
                         Heading
@@ -158,9 +154,9 @@ const UpdateProduct = () => {
                 </div>
 
                 {/* Image and Category */}
-                <div className='flex justify-between p-5'>
-                    <div className='w-1/2'>
-                        <img className='h-20 rounded-lg' src={product.url} alt="" />
+                <div className='flex justify-between p-5 space-x-10'>
+                    <div className='w-1/2 '>
+                        <img className='h-20 rounded-lg bg-white' src={product.url} alt="" />
                     </div>
                     <div className='w-1/2'>
                         <label className='text-lg font-semibold' htmlFor="">

@@ -15,9 +15,8 @@ const UserChart = () => {
               borderRadius:'10px',
               fontWeight:'500',
               padding: '5px',
-              fontSize: '15px'  // Adjust the font size to reduce the tooltip size
+              fontSize: '15px'
             }}>
-              {/* <p className='text-black'>{"cat"}</p> */}
               {payload.map((data, index) => (
                 <div>
                     <p key={index} style={{color: data.fill}}>{`${data.name}: ${data.value}`}</p>
@@ -42,11 +41,11 @@ const UserChart = () => {
 
     const data = [
       {
-        "name": `Jul (${5})`,  // Correct month name
+        "name": `Jul (${5})`,
         "users": 5
       },
       {
-        "name": `Aug (${7})`,  // The missing curly bracket was added
+        "name": `Aug (${7})`,
         "users": 7
       },
       {

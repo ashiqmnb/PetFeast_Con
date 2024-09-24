@@ -132,7 +132,31 @@ const AddNewProduct = () => {
                         {errors.url && <span className="text-red-500 text-sm">{errors.url}</span>}
                 </div>
 
-                <div className='p-5'>
+                <div className='flex justify-between p-5 space-x-10'>
+                    <div className='w-1/2 '>
+                        <img className='h-20 rounded-lg bg-white' src={formData.url} alt="Product Image" />
+                    </div>
+                    <div className='w-1/2 '>
+                        <label className='text-lg font-semibold' htmlFor="">
+                            Category
+                        </label><br />
+                        <select
+                            onChange={handleChange}
+                            className='w-full p-1 rounded-lg placeholder:text-black'
+                            name='catogory'
+                            value={formData.catogory}>
+
+                            <option value={''}>Select Category</option>
+                            <option value={'dog-food'}>Dog Food</option>
+                            <option value={'dog-beds'}>Dog Bed</option>
+                            <option value={'cat-food'}>Cat Food</option>
+                            <option value={'cat-treat'}>Cat Treat</option>
+                        </select>
+                        {errors.catogory && <span className="text-red-500 text-sm">{errors.catogory}</span>}
+                    </div>
+                </div>
+
+                {/* <div className='p-5'>
                     <label className='text-lg font-semibold' htmlFor="">
                         Category
                     </label><br />
@@ -149,7 +173,7 @@ const AddNewProduct = () => {
                         <option value={'cat-treat'}>Cat Treat</option>
                     </select>
                     {errors.catogory && <span className="text-red-500 text-sm">{errors.catogory}</span>}
-                </div>
+                </div> */}
 
                 {/* Price and Rating */}
                 <div className='flex '>

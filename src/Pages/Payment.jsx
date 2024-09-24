@@ -103,6 +103,7 @@ const Payment = () => {
     return calculateTotalPrice() - calculateDiscount();
   };
 
+  
   useEffect(() => {
     axios.get(`http://localhost:5000/users/${userId}`).then((res) => {
       setCart(res.data.cart);
