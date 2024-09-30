@@ -3,22 +3,27 @@ import axios from "axios";
 import logo from '../assets/logo.png';
 import { NavLink, useNavigate } from "react-router-dom";
 import { MyContext } from "./MyContext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCart } from "../Redux/cartSlice";
+
 
 const Navbar = () => {
 
-  const {userId, setUserId} = useContext(MyContext)
-  const {userName, setUserName} = useContext(MyContext)
-  // const [userId, setUserId] = useState(localStorage.getItem("id"))
-  // const [userName, setUserName] = useState(localStorage.getItem("username"))
 
-  const navigate = useNavigate()
+  const userRe = useSelector(state => state.user)
+
+  const userId = userRe.id
+  const userName = userRe.name
+  const cart = useSelector(state => state.cart)
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // for search items
   const [query, setQuery] = useState(""); // store the search query
   const [items, setItems] = useState([]); // store the items
   const [filteredItems, setFilteredItems] = useState([]); // store the filtered items
 
-  const [cart, setCart] = useState([])
 
   const itemDetails = (e,id)=>{
     navigate(`/itemdetails/${id}`)
@@ -30,18 +35,15 @@ const Navbar = () => {
     else navigate('/login')
   }
 
-  useEffect(()=>{
-    setUserId(localStorage.getItem("id"))
-    setUserName(localStorage.getItem("username"))
-    if(userId){
-      axios.get(`http://localhost:5000/users/${userId}`)
-      .then((res)=> {
-        setCart(res.data.cart);
-     })
-     .catch((err)=>console.error("Error fetching cart:", err))
-    }
- },[userId, cart  ])
+  // const fetchCart = async(userId)=>{
+  //   const response = await axios.get(`http://localhost:5000/users/${userId}`)
+  //   const cart = response.data.cart;
+  //   dispatch(setCart({cart}))
+  // }
 
+  useEffect(()=>{
+    dispatch(fetchCart(userId));
+  },[userId])
 
   useEffect(() => {
     axios.get("http://localhost:5000/items")
@@ -86,6 +88,10 @@ const Navbar = () => {
         <div className="container mx-auto flex justify-between items-center">
           {/* Logo */}
           <div className="text-white font-bold text-xl">
+
+
+            {userRe.id ? <p>Logged In : {userRe.id}</p> : <p>Logged Out</p>}
+
             <img 
               onClick={()=> navigate('/')}
               className="h-12 w-auto hover:scale-105 transition-transform" 
@@ -103,6 +109,7 @@ const Navbar = () => {
             <NavLink to={'/catsitem'} className="text-white hover:text-gray-300">
               Cats
             </NavLink>
+            
           </div>
 
           {/* Search Bar */}

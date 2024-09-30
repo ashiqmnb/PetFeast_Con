@@ -2,19 +2,31 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaShoppingCart } from "react-icons/fa";
+import { useDispatch, useSelector } from 'react-redux';
+import { clearUser } from '../Redux/userSlice';
+import { setUserData } from '../Redux/userDataSlice';
 
 
 const ProfilePage = () => {
 
+  const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [userData, setUserData] = useState([])
+  const userData = useSelector(state => state.userData)
+  // const [userData, setUserData] = useState([])
   const userId = localStorage.getItem('id')
+
+
+  const fetchUserData = async (userId)=>{
+    const response = await axios.get(`http://localhost:5000/users/${userId}`)
+    dispatch(setUserData(response.data))
+  }
 
   useEffect(()=>{
     if(userId){
-      axios.get(`http://localhost:5000/users/${userId}`)
-        .then((res)=> setUserData(res.data))
-        .catch((err)=>console.error("Error fetching user data:", err))
+      fetchUserData(userId)
+      // axios.get(`http://localhost:5000/users/${userId}`)
+      //   .then((res)=> setUserData(res.data))
+      //   .catch((err)=>console.error("Error fetching user data:", err))
     }
  },[userId])
 
@@ -47,6 +59,7 @@ const ProfilePage = () => {
               localStorage.clear();
               navigate('/');
               setUserData({});
+              dispatch(clearUser())
               alert("Logged Out");
             }}
             className="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-600"

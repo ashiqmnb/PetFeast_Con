@@ -34,16 +34,6 @@
           "price": 3,
           "rating": 4.5,
           "quantity": 1
-        },
-        {
-          "id": "14",
-          "heading": "3 Peaks Nevis Dog Bed Green",
-          "discription": "Water-resistant, tough and comfortable for resting after adventures",
-          "url": "https://cdn.petsathome.com/public/images/products/900_P71626.jpg",
-          "catogory": "dog-beds",
-          "price": 35,
-          "rating": 4.5,
-          "quantity": 1
         }
       ],
       "address": {
@@ -101,8 +91,19 @@
       "username": "basi",
       "password": "basi123",
       "confirmPassword": "basi123",
-      "isAllowed": false,
-      "cart": [],
+      "isAllowed": true,
+      "cart": [
+        {
+          "id": "10",
+          "heading": "Butcher's Joints & Coat Wet Adult Dog Food 18x390g",
+          "discription": "Promotes healthy joints, skin, and coat with a balanced, grain-free recipe. Vet endorsed for adult dogs",
+          "url": "https://cdn.petsathome.com/public/images/products/900_7135238.jpg",
+          "catogory": "dog-food",
+          "price": 15,
+          "rating": 4.5,
+          "quantity": 1
+        }
+      ],
       "address": {
         "fullName": "Basila Narghees",
         "phoneNumber": "9876579392",
@@ -139,7 +140,7 @@
       "username": "nah",
       "password": "nah123",
       "confirmPassword": "nah123",
-      "isAllowed": false,
+      "isAllowed": true,
       "cart": [],
       "orderDetails": {
         "items": [

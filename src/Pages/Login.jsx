@@ -3,12 +3,15 @@ import logoImg from '../assets/logo.png'
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { MyContext } from '../Components/MyContext';
+import { setUser } from '../Redux/userSlice';
+import { useDispatch } from 'react-redux';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
   const [error, setError] = useState('')
 
+  const dispatch = useDispatch()
 
   const {userId, setUserId} = useContext(MyContext)
   const adminId = localStorage.getItem("adminId")
@@ -36,6 +39,7 @@ const LoginPage = () => {
         localStorage.setItem('id',user.id)
         localStorage.setItem('username',user.username)
         setUserId(localStorage.getItem('id'))
+        dispatch(setUser({id:user.id, name:user.username}))
         navigate('/')
       }
       else{

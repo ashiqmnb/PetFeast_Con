@@ -5,6 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom';
 import { MyProvider } from './Components/MyContext';
+import { Provider } from 'react-redux';
+import store from './Redux/store'
 // import fontAwsome
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
@@ -14,7 +16,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <MyProvider>
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </MyProvider>
     </BrowserRouter>
   </React.StrictMode>
