@@ -43,7 +43,7 @@ const Navbar = () => {
 
   useEffect(()=>{
     dispatch(fetchCart(userId));
-  },[userId])
+  },[userId, cart])
 
   useEffect(() => {
     axios.get("http://localhost:5000/items")

@@ -14,8 +14,8 @@ const cartSlice = createSlice({
     name:'cart',
     initialState:[],
     reducers:{
-        setCart:( state, action )=>{
-            // console.log("===",action)
+        removeCart:( state, action )=>{
+            console.log("from redux====>",action.payload)
         }
     },
     extraReducers: (builder) => {
@@ -33,5 +33,5 @@ const cartSlice = createSlice({
 })
 
 
-export const { setCart } = cartSlice.actions
+export const { removeCart } = cartSlice.actions
 export default cartSlice.reducer

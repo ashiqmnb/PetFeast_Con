@@ -1,12 +1,24 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserData } from "../Redux/userDataSlice";
+
 
 const Payment = () => {
-  const [paymentMethod, setPaymentMethod] = useState("Cash On Delivery");
-  const [cart, setCart] = useState([]);
-  const [currentAdress, setCurrentAddress] = useState({});
-  const userId = localStorage.getItem("id");
+
+
+  const dispatch = useDispatch()
+  const cart = useSelector(state => state.cart)
+  const userId = useSelector(state => state.user.id)
+  const currentAdress = useSelector(state => state.userData.address)
+
+  const fetchUserData = async (userId)=>{
+    const response = await axios.get(`http://localhost:5000/users/${userId}`)
+    dispatch(setUserData(response.data))
+  }
+
+  const [paymentMethod, setPaymentMethod] = useState("Cash On Delivery")
   const [errors, setErrors] = useState({});
   const [delAddress, setDelAddress] = useState({
     fullName: "",
@@ -20,7 +32,6 @@ const Payment = () => {
 
   const navigate = useNavigate();
   const date = new Date();
-  console.log("aaaaaaaaaaa");
 
   const handleAddrss = (e) => {
     const { name, value } = e.target;
@@ -53,13 +64,6 @@ const Payment = () => {
         .patch(`http://localhost:5000/users/${userId}`, { address: delAddress })
         .then((res) => console.log(res))
         .catch((err) => console.error(err));
-
-      await axios
-        .get(`http://localhost:5000/users/${userId}`)
-        .then((res) => setCurrentAddress(res.data.address))
-        .catch((err) => console.error(err));
-
-      console.log(currentAdress);
     }
   };
 
@@ -105,11 +109,7 @@ const Payment = () => {
 
   
   useEffect(() => {
-    axios.get(`http://localhost:5000/users/${userId}`).then((res) => {
-      setCart(res.data.cart);
-      setCurrentAddress(res.data.address);
-      console.log(currentAdress.length);
-    });
+    fetchUserData(userId)
   }, []);
 
   return (

@@ -2,27 +2,33 @@ import React, { useEffect, useState } from 'react';
 import { MdRemoveShoppingCart } from "react-icons/md";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { fetchCart, removeCart } from '../Redux/cartSlice'
+import { useDispatch, useSelector } from 'react-redux';
 
 const Cart = () => {
 
+  const cartRe = useSelector(state => state.cart)
+
+  const dispatch = useDispatch()
   const [cart, setCart] = useState([])
-  const userId = localStorage.getItem('id')
+  const userId = useSelector(state => state.user.id)
   const navigate = useNavigate()
 
   const handleRemoveItem = async (id) => {
-    const removedCart = cart.filter(item => item.id !== id);
+    const removedCart = cartRe.filter(item => item.id !== id);
     setCart(removedCart)
-    
     await axios.patch(`http://localhost:5000/users/${userId}`,{cart: removedCart})
-      .then((res)=> console.log(res))
+      .then((res)=> {
+        console.log("Removed ==>",res)
+        dispatch(fetchCart(userId))
+      })
   };
 
   const calculateTotalPrice = () => {
-    return cart.reduce((total, item) => total + item.price * Number(item.quantity), 0);
+    return cartRe.reduce((total, item) => total + item.price * Number(item.quantity), 0);
   };
 
   const calculateDiscount = () => {
-    //0% discount
     return calculateTotalPrice() * 0.1;
   };
 
@@ -31,7 +37,7 @@ const Cart = () => {
   };
 
   const handlePlaceOrder = () => {
-    if(cart.length > 0 ){
+    if(cartRe.length > 0 ){
       navigate('/payment')
       console.log('Proceeding to checkout');
     }
@@ -41,8 +47,9 @@ const Cart = () => {
   };
 
   useEffect(()=>{
-     axios.get(`http://localhost:5000/users/${userId}`)
-      .then((res)=> setCart(res.data.cart))
+    //  axios.get(`http://localhost:5000/users/${userId}`)
+    //   .then((res)=> setCart(res.data.cart))
+    dispatch(fetchCart(userId))
   },[])
  
   return (
@@ -51,7 +58,7 @@ const Cart = () => {
       <div style={{}} className="md:w-3/6 md:max-h-[400px] overflow-auto bg-white shadow-lg rounded-lg p-4 scrollbarHidden">
         <h2 style={{color:'#052560'}} className="text-2xl font-bold mb-4">Shopping Cart</h2>
         
-        {cart.length === 0 ? (
+        {cartRe.length === 0 ? (
           <div className='flex flex-col items-center text-center bg-gray-100 p-10 rounded-lg space-y-3'>
             <MdRemoveShoppingCart className='h-14 w-14'/>
             <p style={{color:'#052560'}} className='font-semibold text-xl'>Cart is Empty</p>
@@ -59,7 +66,7 @@ const Cart = () => {
           ):(null)
         }
 
-        {cart.map((item) => (
+        {cartRe.map((item) => (
           <div key={item.id} className="flex items-center justify-between border-b py-4">
             <img onClick={()=>navigate(`/itemdetails/${item.id}`)} src={item.url} alt={item.title} className="w-20 h-20 object-cover rounded-lg hover:scale-110 transition-transform" />
             <div className="flex-1 ml-4 space-y-2">
@@ -85,12 +92,12 @@ const Cart = () => {
       </div>
 
       {/* Cart Summary */}
-      {cart.length !== 0 ? (
+      {cartRe.length !== 0 ? (
         <div className="md:w-2/6 bg-white shadow-lg rounded-lg p-4">
         <h2 style={{color:'#052560'}} className="text-2xl font-bold mb-4">Cart Summary</h2>
         <div className="flex justify-between mb-2">
           <span>Total Items:</span>
-          <span>{cart.length}</span>
+          <span>{cartRe.length}</span>
         </div>
         <div className="flex justify-between mb-2">
           <span>Total Price:</span>
