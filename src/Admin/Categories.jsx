@@ -120,7 +120,7 @@ const Categories = () => {
 		</div>
 
 
-
+        
 
 		{/* Products for Cats */}
         <div className="md:w-1/2 w-full space-y-4 bg-slate-100 border rounded-lg shadow-lg p-2">
