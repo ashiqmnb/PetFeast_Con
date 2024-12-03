@@ -7,10 +7,11 @@ import access from '../assets/access.png';
 
 const AdminHome = () => {
 
+	const [role, setRole] = useState('');
+
 	const [products, setProducts] = useState([]);
 	const [users, setUsers] = useState([]);
-	const [admin, setAdmin] = useState(false);
-    const id = localStorage.getItem('adminId')
+
 	const navigate = useNavigate();
 
 	useEffect(()=>{
@@ -23,17 +24,13 @@ const AdminHome = () => {
 			.catch((err)=> console.error("aaaa",err))
 	},[])
 
+	
 	useEffect(()=>{
-        axios.get(`http://localhost:5000/users/${id}`)
-            .then((res)=>{
-                if(res.data?.isAdmin){
-                    setAdmin(true)
-                }
-            })
-            .catch((err)=> console.error(err))
-    },[id])
+        setRole(localStorage.getItem('role'));
+        console.log("Role ===", role)
+    },[])
 
-	if(!id && !admin){
+	if(role === "Admin"){
         return(
             <div className='flex justify-center'>
                 <div className='text-center h-96 w-96 shadow-sm'>

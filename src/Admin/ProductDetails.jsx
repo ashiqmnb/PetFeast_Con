@@ -6,18 +6,14 @@ import access from '../assets/access.png';
 
 const ProductDetails = () => {
   
+	const [role, setRole] = useState('');
+
   	const  [item, setItem ] = useState({})
-    const [admin, setAdmin] = useState(false);
-    const id = localStorage.getItem('adminId')
+
   	const navigate = useNavigate()
 
   	const {itemId} = useParams();
 
-    // useEffect(()=>{
-    //   axios.get(`http://localhost:5000/items`)
-    //       .then((res)=> setProducts(res.data))
-    //       .catch((err)=>console.log("aaa",err))
-    // },[])
 
     useEffect(()=>{
         axios.get(`http://localhost:5000/items/${itemId}`)
@@ -25,15 +21,7 @@ const ProductDetails = () => {
             .catch((err)=>console.log("aaa",err))
     },[itemId])
 
-    useEffect(()=>{
-      axios.get(`http://localhost:5000/users/${id}`)
-          .then((res)=>{
-              if(res.data?.isAdmin){
-                  setAdmin(true)
-              }
-          })
-          .catch((err)=> console.error(err))
-  },[id])
+
 
   const handleRemoveProduct = async (itemId) => {
     await axios.delete(`http://localhost:5000/items/${itemId}`)
@@ -45,8 +33,13 @@ const ProductDetails = () => {
       .catch((err)=> console.error(err))
   }
 
+  useEffect(()=>{
+    setRole(localStorage.getItem('role'));
+    console.log("Role ===", role)
+  },[])
+
   
-  if(!id && !admin){
+  if(role === "Admin"){
     return(
         <div className='flex justify-center'>
             <div className='text-center h-96 w-96 shadow-sm'>

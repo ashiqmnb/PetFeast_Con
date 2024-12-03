@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserData } from "../Redux/userDataSlice";
+import { setUserData } from "../Redux/Slices/userDataSlice";
 
 
 const Payment = () => {

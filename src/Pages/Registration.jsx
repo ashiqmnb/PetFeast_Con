@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import logoImg from '../assets/logo.png'
-import axios from 'axios';
+import logoImg from '../assets/logo.png';
 import { useNavigate } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../Redux/Slices/AuthSlice';
 
 
 
 const Registration = () => {
 
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
-    username: '',
     password: '',
     confirmPassword: '',
   });
@@ -26,36 +27,61 @@ const Registration = () => {
 
   const validate = () => {
     const newErrors = {};
+
+    // Full Name Validation
     if (!formData.fullName) newErrors.fullName = 'Full Name is required';
+
+    // Email Validation
     if (!formData.email) {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email is invalid';
     }
-    if (!formData.username) newErrors.username = 'Username is required';
-    if (!formData.password) newErrors.password = 'Password is required';
-    if (formData.password.length <= 4) newErrors.password = 'Password must contain 5 charecter';
+
+    // Password Validation
+    if (!formData.password) {
+      newErrors.password = 'Password is required';
+    } else if (formData.password.length < 8) {
+      newErrors.password = 'Password must be at least 8 characters long';
+    } else {
+      const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      if (!regex.test(formData.password)) {
+        newErrors.password = 'Password must contain at least one letter, one number, and one special character';
+      }
+    }
+
+    // Confirm Password Validation
     if (!formData.confirmPassword) {
       newErrors.confirmPassword = 'Confirm Password is required';
     } else if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match';
     }
+
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const  handleSubmit = async (e) => {
     e.preventDefault();
-    const validationErrors = validate();
+    const validationErrors = await validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
     } 
     else {
-      console.log(formData);
-      axios.post("http://localhost:5000/users",{...formData,cart:[], isAllowed: true})
-          .then((res)=> console.log(res))
-          .catch((err)=>console.log(err))
-      alert("User Registered Successfully...")
-      navigate('/login')
+      try{
+        await dispatch(registerUser({
+          name: formData.fullName,
+          email: formData.email,
+          password: formData.password
+        })).unwrap();
+
+        alert("User Registered Successfully...")
+        navigate('/login')
+
+      }
+      catch(error){
+        alert(error.error);
+        console.log("////",error)
+      }
     }
   };
 
@@ -66,6 +92,7 @@ const Registration = () => {
       <div className="w-full md:w-1/2 flex flex-col justify-center items-center bg-gray-100 p-8 rounded-2xl">
         <h2 style={{color:'#052560'}} className="text-2xl font-bold mb-6">User Registeration</h2>
         <form onSubmit={handleSubmit} className="w-full max-w-sm">
+
           <div className="mb-4">
             <label className="block text-gray-700">Full Name</label>
             <input
@@ -77,6 +104,7 @@ const Registration = () => {
             />
             {errors.fullName && <span className="text-red-500 text-sm">{errors.fullName}</span>}
           </div>
+
           <div className="mb-4">
             <label className="block text-gray-700">Email</label>
             <input
@@ -86,9 +114,10 @@ const Registration = () => {
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded mt-1"
             />
-            {errors.email && <span className="text-red-500 text-sm">{errors.email}</span>}
+              
           </div>
-          <div className="mb-4">
+
+          {/* <div className="mb-4">
             <label className="block text-gray-700">Username</label>
             <input
               type="text"
@@ -98,7 +127,8 @@ const Registration = () => {
               className="w-full p-2 border border-gray-300 rounded mt-1"
             />
             {errors.username && <span className="text-red-500 text-sm">{errors.username}</span>}
-          </div>
+          </div> */}
+
           <div className="mb-4">
             <label className="block text-gray-700">Password</label>
             <input
@@ -110,6 +140,7 @@ const Registration = () => {
             />
             {errors.password && <span className="text-red-500 text-sm">{errors.password}</span>}
           </div>
+
           <div className="mb-6">
             <label className="block text-gray-700">Confirm Password</label>
             <input
@@ -121,6 +152,7 @@ const Registration = () => {
             />
             {errors.confirmPassword && <span className="text-red-500 text-sm">{errors.confirmPassword}</span>}
           </div>
+
           <button 
             style={{backgroundColor:'#052560'}}
             type="submit"

@@ -4,59 +4,57 @@ import logo from '../assets/logo.png';
 import { NavLink, useNavigate } from "react-router-dom";
 import { MyContext } from "./MyContext";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCart } from "../Redux/cartSlice";
+import { fetchCart } from "../Redux/Slices/cartSlice";
 
 
 const Navbar = () => {
 
+  const cart = useSelector(state => state.cart.cart);
+  const userRe = useSelector(state => state.user);
+  const wishlist = useSelector(state => state.wishlist.wishlist);
+  const loginStatus = localStorage.getItem("name");
 
-  const userRe = useSelector(state => state.user)
-
-  const userId = userRe.id
-  const userName = userRe.name
-  const cart = useSelector(state => state.cart)
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // for search items
   const [query, setQuery] = useState(""); // store the search query
-  const [items, setItems] = useState([]); // store the items
   const [filteredItems, setFilteredItems] = useState([]); // store the filtered items
 
 
   const itemDetails = (e,id)=>{
-    navigate(`/itemdetails/${id}`)
-    setQuery("")
+    navigate(`/itemdetails/${id}`);
+    setQuery("");
+    setFilteredItems([])
   }
 
   const handleCart = ()=>{
-    if (userId) navigate('/cart')
-    else navigate('/login')
+    if (loginStatus) navigate('/cart');
+    else navigate('/login');
   }
 
-  // const fetchCart = async(userId)=>{
-  //   const response = await axios.get(`http://localhost:5000/users/${userId}`)
-  //   const cart = response.data.cart;
-  //   dispatch(setCart({cart}))
-  // }
-
-  useEffect(()=>{
-    dispatch(fetchCart(userId));
-  },[userId, cart])
-
-  useEffect(() => {
-    axios.get("http://localhost:5000/items")
-      .then(response => setItems(response.data))
-      .catch(error => console.error("Error fetching data:", error));
-  }, []);
+  const handleWishlist = ()=>{
+    if(loginStatus) navigate('/wishlist');
+    else navigate('/login');
+  }
 
   useEffect(() => {
     // Filter the items based on the search query
-      setFilteredItems(
-        items.filter((item) => item.heading.toLowerCase().includes(query.toLowerCase()))
-      );
-  }, [query, items]);
+    if(query.length > 0){
+      axios.get(`https://localhost:7109/api/Product/SearchProduct?search=${query}`)
+    .then((res)=>{
+      // console.log("search res", res.data.data);
+      setFilteredItems(res.data.data);
+    })
+    }
+  }, [query]);
+
+  useEffect(()=>{
+    if(loginStatus){
+      dispatch(fetchCart());
+    }
+  },[])
 
 
   return (
@@ -67,16 +65,16 @@ const Navbar = () => {
             <div 
                 style={{display:{filteredItems}? 'hidden' : 'block'}} 
                 className="max-h-40 w-2/5 overflow-y-auto text-center  mt-2 scrollbarHidden absolute md:top-24 top-60 flex-col space-y-1">
-                {filteredItems.length !== items.length ? (
+                {filteredItems.length != 0 ? (
                   filteredItems.map(item => (
                     <div
-                      onClick={(e)=> itemDetails(e,item.id)} 
-                      key={item.id}
+                      onClick={(e)=> itemDetails(e,item.productId)} 
+                      key={item.productId}
                       style={{border:'1px solid gray'}}
                       className="p-1 hover:bg-blue-100 bg-white text-black h-max flex border justify-between"
                       >
-                        <img className="h-10 w-auto" src={item.url} alt="img" />
-                        <p className="text-sm font-semibold">{item.heading}</p>
+                        <img className="h-10 w-auto" src={item.image} alt="img" />
+                        <p className="text-sm font-semibold">{item.name}</p>
                     </div>
                     ))
                     ) : ( null )
@@ -90,7 +88,7 @@ const Navbar = () => {
           <div className="text-white font-bold text-xl">
 
 
-            {userRe.id ? <p>Logged In : {userRe.id}</p> : <p>Logged Out</p>}
+            {/* {userRe.id ? <p>Logged In : {userRe.id}</p> : <p>Logged Out</p>} */}
 
             <img 
               onClick={()=> navigate('/')}
@@ -103,10 +101,10 @@ const Navbar = () => {
             <NavLink to={'/'} className="text-white hover:text-gray-300">
               Home
             </NavLink>
-            <NavLink to={'/dogsitem'} className="text-white hover:text-gray-300">
+            <NavLink to={'/dogsitem/food'} className="text-white hover:text-gray-300">
               Dogs
             </NavLink>
-            <NavLink to={'/catsitem'} className="text-white hover:text-gray-300">
+            <NavLink to={'/catsitem/food'} className="text-white hover:text-gray-300">
               Cats
             </NavLink>
             
@@ -116,30 +114,42 @@ const Navbar = () => {
           <div className="hidden md:block">
             <input
               style={{width:'270px'}}
+              value={query}
               type="text"
               placeholder="Search Items..."
               onChange={e => setQuery(e.target.value)}
               className="px-4 py-2 rounded-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
+
           {/* cart and profile */}
           <div className="flex flex-row justify-center items-center ">
-            <div onClick={handleCart} className="mx-8 text-center rounded-2xl p-2 hover:scale-105 transition-transform relative">
 
+            {/* Wishlist Icon */}
+            <div onClick={handleWishlist} className="text-center rounded-2xl  hover:scale-105 transition-transform relative">
+                {(loginStatus && wishlist.length != 0) ? (
+                  <div className="bg-red-600 font-bold text-white rounded-full h-4 w-4 text-xs absolute bottom-9 right-1">{wishlist.length}</div>
+                ):(null)
+                }
+                <i class="fa-solid fa-heart text-xl" style={{color:'white'}}></i>
+                <p className="text-white">Wishlist</p>
+            </div>
+
+            <div onClick={handleCart} className="mx-8 text-center rounded-2xl p-2 hover:scale-105 transition-transform relative">
               {/* Cart Notification */}
-                {(userId && cart.length != 0) ? (
+                {(loginStatus && cart.length != 0) ? (
                   <div className="bg-red-600 font-bold text-white rounded-full h-4 w-4 text-xs absolute top-1 left-6">{cart.length}</div>
                 ):(null)
                 }
                 <i class="fa-solid fa-cart-shopping" style={{color:'white'}}></i>
-                <p className="text-white">Cart</p>
+                <p className="text-white" >Cart</p>
             </div>
 
             {/* Conditional Rendering Based On User LoggedIn or Not */}
-            {userId ? (
+            {loginStatus ? (
               <div onClick={()=> navigate('/profile')} className="text-center rounded-2xl p-2 hover:scale-110 transition-transform">
                 <i class="fa-regular fa-user" style={{color:'white'}}></i>
-                <p className="text-white">{userName}</p>
+                <p className="text-white">Profile</p>
               </div>
               ):(
               <div onClick={()=> navigate('/login')} className="text-center rounded-2xl p-2 hover:scale-110 transition-transform">
@@ -166,7 +176,7 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="Search Items..."
-              onChange={(e) => setQuery(e.target.value)}
+              // onChange={(e) => setQuery(e.target.value)}
               className="block w-full px-4 py-2 mt-2 rounded-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>

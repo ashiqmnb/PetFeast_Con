@@ -13,18 +13,8 @@
       "username": "asshhq",
       "password": "asq123",
       "confirmPassword": "asq123",
-      "isAllowed": true,
+      "isAllowed": false,
       "cart": [
-        {
-          "id": "5",
-          "heading": "Wainwright's Sensitive Adult Dry Dog Food Atlantic Salmon With Superfoods",
-          "discription": "A hypoallergenic, balanced dry food with no added wheat, pork, dairy, or artificial additives, made from a single protein source.",
-          "url": "https://cdn.petsathome.com/public/images/products/900_7145754.jpg",
-          "catogory": "dog-food",
-          "price": 9.6,
-          "rating": 3.5,
-          "quantity": 1
-        },
         {
           "id": "40",
           "heading": "Dreamies Cat Treat Biscuits with Catnip 200g",
@@ -34,6 +24,16 @@
           "price": 3,
           "rating": 4.5,
           "quantity": 1
+        },
+        {
+          "id": "25",
+          "heading": "Purina ONE Adult Mini Fillets Wet Cat Food Gravy 40x85g",
+          "discription": "Supports gut balance with soluble fibres, nourishes bones, muscles, joint health, and promotes radiant skin and coat. Delicious, high-quality protein included.",
+          "url": "https://cdn.petsathome.com/public/images/products/900_7135257.jpg",
+          "catogory": "cat-food",
+          "price": "18",
+          "rating": 4.5,
+          "quantity": 2
         }
       ],
       "address": {

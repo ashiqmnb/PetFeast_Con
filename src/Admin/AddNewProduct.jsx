@@ -6,10 +6,9 @@ import access from '../assets/access.png';
 
 const AddNewProduct = () => {
 
+    const [role, setRole] = useState('');
     const navigate = useNavigate();
 
-    const [admin, setAdmin] = useState(false);
-    const id = localStorage.getItem('adminId')
     const [ formData, setFormData ] = useState({
         heading: '',
         discription: '',
@@ -59,17 +58,14 @@ const AddNewProduct = () => {
         }
     }
 
-    useEffect(()=>{
-        axios.get(`http://localhost:5000/users/${id}`)
-            .then((res)=>{
-                if(res.data?.isAdmin){
-                    setAdmin(true)
-                }
-            })
-            .catch((err)=> console.error(err))
-    },[id])
 
-    if(!id && !admin){
+    useEffect(()=>{
+        setRole(localStorage.getItem('role'));
+        console.log("Role ===", role)
+    },[])
+    
+
+    if(role === "Admin"){
         return(
             <div className='flex justify-center'>
                 <div className='text-center h-96 w-96 shadow-sm'>

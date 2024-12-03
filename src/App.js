@@ -6,8 +6,6 @@ import DogItems from './Pages/DogItems';
 import CatsItems from './Pages/CatsItems';
 import DogFood from './Components/DogFood';
 import DogBeds from './Components/DogBeds';
-import DogAll from './Components/DogAll';
-import CatAll from './Components/CatAll';
 import CatFood from './Components/CatFood';
 import CatTrats from './Components/CatTreats';
 import Registration from './Pages/Registration';
@@ -26,6 +24,7 @@ import ProductDetails from './Admin/ProductDetails';
 import UserDetails from './Admin/UserDetails';
 import Dashboard from './Admin/Dashboard';
 import UpdateProduct from './Admin/UpdateProduct';
+import Wishlist from './Components/Wishlist';
 
 
 function App() {
@@ -48,19 +47,22 @@ function App() {
         <Route path='/login' element={<LoginPage />}/>
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/wishlist' element={<Wishlist/>}/>
         <Route path='/payment' element={<Payment />} />
         <Route path='orderConfirm' element={<OrderConfirm />} />
         <Route path='/itemdetails/:id' element={<ItemDetails2 />} />
 
         <Route path='/dogsitem' element={<DogItems />}/>
-        <Route path='/dogsitem/' element={<DogAll />}/>
+        {/* <Route path='/dogsitem/' element={<DogAll />}/> */}
         <Route path='/dogsitem/food' element={<DogFood />}/>
         <Route path='/dogsitem/bed' element={<DogBeds />}/>
 
         <Route path='/catsitem' element={<CatsItems />}/>
-        <Route path='/catsitem/' element={<CatAll />}/>
+        {/* <Route path='/catsitem/' element={<CatAll />}/> */}
         <Route path='/catsitem/food' element={<CatFood />}/>
         <Route path='/catsitem/treats' element={<CatTrats />}/>
+
+
 
 
         {/* Admin */}

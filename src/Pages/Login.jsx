@@ -3,13 +3,17 @@ import logoImg from '../assets/logo.png'
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { MyContext } from '../Components/MyContext';
-import { setUser } from '../Redux/userSlice';
+import { setUser } from '../Redux/Slices/userSlice';
 import { useDispatch } from 'react-redux';
+import { loginUser } from '../Redux/Slices/AuthSlice';
+import { setUserData } from '../Redux/Slices/userDataSlice';
 
 const LoginPage = () => {
-  const [username, setUsername] = useState('') 
-  const [password, setPassword] = useState('') 
-  const [error, setError] = useState('')
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch()
 
@@ -18,40 +22,105 @@ const LoginPage = () => {
 
   const navigate = useNavigate()
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const validate = () => {
+    const newErrors = {};
 
-    try{
-      const response = await axios.get("http://localhost:5000/users")
-      const user = response.data.find((user)=> user.username === username && user.password === password );
-      const isAdmin = user.isAdmin;
-      
-      if(isAdmin){
-        localStorage.setItem("adminId",user.id)
-        alert("Admin Login Successfull");
-        navigate('/admin/dashboard')
-      }
-      else if(!user.isAllowed){
-        setError('You Are Restricted Or Blocked')
-      }
-      else if(user && user.isAllowed){
-        alert("login successfull");
-        localStorage.setItem('id',user.id)
-        localStorage.setItem('username',user.username)
-        setUserId(localStorage.getItem('id'))
-        dispatch(setUser({id:user.id, name:user.username}))
-        navigate('/')
-      }
-      else{
-        setError('Invalid username or password')
+    // Email Validation
+    if (!email) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = 'Email is invalid';
+    }
+
+    // Password Validation
+    if (!password) {
+      newErrors.password = 'Password is required';
+    } else if (password.length < 8) {
+      newErrors.password = 'Password must be at least 8 characters long';
+    } else {
+      const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      if (!regex.test(password)) {
+        newErrors.password = 'Password must contain at least one letter, one number, and one special character';
       }
     }
-    catch(err){
-      setError('Something went wrong. Please try again later.')
+
+    return newErrors;
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const validationErrors = await validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+    } 
+    else{
+      try{
+        const response =  await dispatch(loginUser({
+          email: email,
+          password: password
+        })).unwrap();
+
+        const userData = response.data;
+        console.log("userData",userData)
+        
+
+        if(userData.role === "Admin"){
+          localStorage.setItem("token", userData.token)
+          localStorage.setItem("role", userData.role)
+
+          dispatch(setUserData(userData));
+
+          alert("Admin Login Successfull");
+          navigate('/admin/dashboard')
+        }
+        else if(userData.isBlocked){
+          alert("You Are Restricted Or Blocked");
+        }
+        else{
+          localStorage.setItem("token", userData.token);
+          localStorage.setItem("role", userData.role);
+          localStorage.setItem("name", userData.name);
+          localStorage.setItem("email", userData.email);
+
+          // dispatch(setUserData({
+          //   name: userData.name,
+          //   email: userData.email,
+          // }));
+
+          dispatch(setUserData(userData));
+
+          alert("login successfull");
+          navigate('/')
+        }
+         
+        // if(isAdmin){
+        //   localStorage.setItem("adminId",user.id)
+        //   alert("Admin Login Successfull");
+        //   navigate('/admin/dashboard')
+        // }
+        // else if(!user.isAllowed){
+        //   setError('You Are Restricted Or Blocked')
+        // }
+        // else if(user && user.isAllowed){
+        //   alert("login successfull");
+        //   localStorage.setItem('id',user.id)
+        //   localStorage.setItem('username',user.username)
+        //   setUserId(localStorage.getItem('id'))
+        //   dispatch(setUser({id:user.id, name:user.username}))
+        //   navigate('/')
+        // }
+        // else{
+        //   setError('Invalid username or password')
+        // }
+      }
+      catch(err){
+        console.error("Login Error:", err);
+        alert(err?.error || "Something went wrong. Please try again later.");
+      }
     }
   };
 
-  useEffect(()=>{
+  useEffect(()=>{  
     if(adminId){
       navigate('/admin/dashboard')
     }
@@ -65,16 +134,17 @@ const LoginPage = () => {
         <h2 style={{color:'#052560'}} className="mb-6 text-2xl font-bold text-center text-blue-800">User Login</h2>
         <form onSubmit={handleLogin}>
           <div className="mb-4">
-            <label className="block text-gray-700" htmlFor="username">Username</label>
+            <label className="block text-gray-700" htmlFor="username">Email</label>
             <input
               style={{width:'400px'}}
               type="text"
-              id="username"
-              name="username"
-              value={username}
-              onChange={(e)=> setUsername(e.target.value)}
+              id="email"
+              name="email"
+              value={email}
+              onChange={(e)=> setEmail(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded mt-1"
             />
+            {errors.email && <span className="text-red-500 text-sm">{errors.email}</span>}
           </div>
           <div className="mb-4">
             <label className="block text-gray-700" htmlFor="password">Password</label>
@@ -86,10 +156,10 @@ const LoginPage = () => {
               onChange={(e)=> setPassword(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded mt-1"
             />
+            {errors.password && <span className="text-red-500 text-sm">{errors.password}</span>}
           </div>
 
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-
+          {/* {error && <p style={{ color: 'red' }}>{error}</p>} */}
 
           <button
           style={{backgroundColor:'#052560'}}

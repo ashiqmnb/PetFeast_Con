@@ -7,18 +7,17 @@ const CatFood = () => {
 
   const navigate = useNavigate()
     
-  const [data, setData] = useState([]);
+  const [poducts, setPoducts] = useState([]);
 
   useEffect(()=>{
-    axios.get('http://localhost:5000/items')
+    axios.get('https://localhost:7109/api/Product/productByCategory?categoryId=3')
     .then((res)=>{
-      setData(res.data)
+      setPoducts(res.data.data)
+      // console.log(res.data.data)
     })
       .catch((err)=>console.log(err))
   },[])
 
-//   console.log(data);
-  const CatFood = data.filter((item)=> item.catogory == "cat-food")
 
   const itemDetails = (id)=>{
     navigate(`/itemdetails/${id}`)
@@ -32,12 +31,12 @@ const CatFood = () => {
       </div>
             <h1 style={{color:'#052560'}} className='font-serif text-3xl font-bold'>Food Items For Dogs</h1>
             <div className='flex gap-4 flex-wrap justify-center mt-7 px-6'>
-                {CatFood.map((item)=>{
+                {poducts.map((item)=>{
                   return(
-                    <div key={item.id} onClick={()=> itemDetails(item.id)}  className='sm:w-72 w-44 rounded-2xl bg-white p-3 shadow-lg text-start'>
-                      <img src={item.url} alt="item" className='rounded-2xl hover:scale-105 transition-transform'/>
-                      <h1 className='font-sans text-lg mt-5 '>{item.heading}</h1>
-                      <h1 className='font-sans text-lg font-bold text-blue-950'>$ {item.price}</h1>
+                    <div key={item.productId} onClick={()=> itemDetails(item.productId)}  className='sm:w-72 w-44 rounded-2xl bg-white p-3 shadow-lg text-start'>
+                      <img src={item.image} alt="item" className='rounded-2xl hover:scale-105 transition-transform'/>
+                      <h1 className='font-sans text-lg mt-5 '>{item.name}</h1>
+                      <h1 className='font-sans text-lg font-bold text-blue-950'>₹ {item.price}</h1>
                     </div>
                   )
                 })}

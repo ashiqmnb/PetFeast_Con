@@ -10,18 +10,28 @@ import Footer from '../Components/Footer'
 import { MyContext }from '../Components/MyContext';
 import ProfilePage from '../Components/ProfilePage'
 import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchCart } from "../Redux/Slices/cartSlice";
+import { fetchWishlist } from '../Redux/Slices/WishlistSlice'
+
 
 const Home = () => {
-  // const {userId, setUserId} = useContext(MyContext)
-  const {userData, setUserData} = useContext(MyContext)
-  const [userId, setUserId] = useState(localStorage.getItem('id'))
+  
+  const loginStatus = localStorage.getItem("name")
+  const dispatch = useDispatch();
 
+  useEffect(()=>{
+    if(loginStatus){
+      dispatch(fetchCart());
+      dispatch(fetchWishlist());
+    }
+  })
 
-
+  
   return (
     <div>
         <HomeMainView />
-        { userId ? <h1>{null}</h1> : <ToLogin />}
+        { loginStatus ? <h1>{null}</h1> : <ToLogin />}
         <TopRatedProducts />
         {/* <Footer /> */}
     </div>

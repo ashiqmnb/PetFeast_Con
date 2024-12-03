@@ -3,57 +3,58 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import SideBar from './SideBar'
 import access from '../assets/access.png';
+import { useSelector } from 'react-redux';
+
 
 const Categories = () => {
+
+    const admin = useSelector(state => state.userData);
 
     const navigate = useNavigate()
     const [items, setItems] = useState([])
     const [dogFiltered, setDogFiltered] = useState([])
     const [catFiltered, setCatFiltered] = useState([])
-    const [admin, setAdmin] = useState(false);
-    const id = localStorage.getItem('adminId')
 
 
-    useEffect(()=>{
-        axios.get(`http://localhost:5000/items`)
-            .then((res)=> setItems(res.data))
-            .catch((err)=> console.log("aaa",err))
-    },[])
-
-    useEffect(()=>{
-        setDogFiltered(items.filter((item, index)=> item.catogory === 'dog-food' || item.catogory === 'dog-beds'))
-        setCatFiltered(items.filter((item, index)=> item.catogory === 'cat-food' || item.catogory === 'cat-treat'))
-    },[items])
-
-    useEffect(()=>{
-        axios.get(`http://localhost:5000/users/${id}`)
-            .then((res)=>{
-                if(res.data?.isAdmin){
-                    setAdmin(true)
-                }
-            })
-            .catch((err)=> console.error(err))
-    },[id])
 
 
     const handleDogCategory = (category)=>{
-        setDogFiltered(items.filter((item, index)=> item.catogory === category))
-    }
-
-    const setDogFilteredAll = (category1, category2)=>{
-        setDogFiltered(items.filter((item, index)=> item.catogory === category1 || item.catogory === category2))
+        setDogFiltered(items.filter((item, index)=> item.categoryName === category))
     }
 
     const handleCatCategory = (category)=>{
-        setCatFiltered(items.filter((item, index)=> item.catogory === category))
-    }
-
-    const setCatFilteredAll = (category1, category2)=>{
-        setCatFiltered(items.filter((item, index)=> item.catogory === category1 || item.catogory === category2))
+        setCatFiltered(items.filter((item, index)=> item.categoryName === category))
     }
 
 
-  if(!id && !admin){
+    useEffect(()=>{
+        axios.get("https://localhost:7109/api/Product")
+        .then((res)=> {
+            console.log("product fetch",res.data.data);
+            setItems(res.data.data);
+            // handleDogCategory("dog-food");
+            // handleCatCategory("cat-food");
+
+            // console.log("dogFiltered",dogFiltered);
+            // console.log("catFiltered", catFiltered);
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    },[])
+
+    useEffect(()=>{
+        handleDogCategory("dog-food");
+        handleCatCategory("cat-food");
+
+        console.log("dogFiltered",dogFiltered);
+        console.log("catFiltered", catFiltered);
+    },[items])
+
+
+
+
+  if(admin.role === "Admin"){
       return(
           <div className='flex justify-center'>
               <div className='text-center h-96 w-96 shadow-sm'>
@@ -81,11 +82,11 @@ const Categories = () => {
             
             {/* Navigation Buttons */}
             <div className='flex justify-center space-x-3'>
-                <button 
+                {/* <button 
                     onClick={()=>setDogFilteredAll('dog-food','dog-beds')}
                     className='bg-blue-500 p-2 px-3 text-white font-semibold rounded-lg hover:bg-blue-700 transition'>
                         All
-                </button>
+                </button> */}
                 <button
                     onClick={()=> handleDogCategory('dog-food')}
                     className='bg-blue-500 p-2 px-3 text-white font-semibold rounded-lg hover:bg-blue-700 transition'>
@@ -101,14 +102,14 @@ const Categories = () => {
 			<div className="space-y-5  max-h-[500px] overflow-auto bg-slate-100 scrollbarHidden">
 			{dogFiltered.map((item)=>(
 				<div
-					onClick={()=> navigate(`/admin/productdetails/${item.id}`)}
-					key={item.id}
+					onClick={()=> navigate(`/admin/productdetails/${item.productId}`)}
+					key={item.productId}
 					className="bg-white flex justify-start items-center p-3 border rounded-lg shadow space-x-2 hover:bg-slate-200">
 					<img 
 						className="h-20 w-auto" 
-						src={item.url} alt="img" />
+						src={item.image} alt="img" />
 					<div>
-						<h1 className="font-semibold">{item.heading}</h1>
+						<h1 className="font-semibold">{item.name}</h1>
 						<p className="font-semibold">Price: $ <span className="font-bold text-green-600">{item.price}</span></p>
 						<p className="font-semibold">⭐ {item.rating}</p>
 					</div>
@@ -127,11 +128,11 @@ const Categories = () => {
 
             {/* Navigation Buttons */}
             <div className='flex justify-center space-x-3'>
-                <button 
+                {/* <button 
                     onClick={()=>setCatFilteredAll('cat-food', 'cat-treat')}
                     className='bg-blue-500 p-2 px-3 text-white font-semibold rounded-lg hover:bg-blue-700 transition'>
                         All
-                </button>
+                </button> */}
                 <button
                     onClick={()=> handleCatCategory('cat-food')}
                     className='bg-blue-500 p-2 px-3 text-white font-semibold rounded-lg hover:bg-blue-700 transition'>
@@ -144,17 +145,17 @@ const Categories = () => {
                 </button>
             </div>
 
-			<div className="space-y-5  max-h-[500px] overflow-auto bg-slate-100 scrollbarHidden">
+			<div className="space-y-5  max-h-[500px] max-w-[510] min-w-[510] overflow-auto bg-slate-100 scrollbarHidden">
 			{catFiltered.map((item)=>(
 				<div
-					onClick={()=> navigate(`/admin/productdetails/${item.id}`)}
-					key={item.id}
-					className="bg-white flex justify-start items-center p-3 border rounded-lg shadow space-x-2 hover:bg-slate-200">
+					onClick={()=> navigate(`/admin/productdetails/${item.productId}`)}
+					key={item.productId}
+					className="bg-white w-[490] flex justify-start items-center p-3 border rounded-lg shadow space-x-2 hover:bg-slate-200">
 					<img 
 						className="h-20 w-auto" 
-						src={item.url} alt="img" />
+						src={item.image} alt="img" />
 					<div>
-						<h1 className="font-semibold">{item.heading}</h1>
+						<h1 className="font-semibold max-w-[380] min-w-[380]">{item.name}</h1>
 						<p className="font-semibold">Price: $ <span className="font-bold text-green-600">{item.price}</span></p>
 						<p className="font-semibold">⭐ {item.rating}</p>
 					</div>

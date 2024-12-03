@@ -2,27 +2,53 @@ import React, { useEffect, useState } from 'react';
 import { MdRemoveShoppingCart } from "react-icons/md";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { fetchCart, removeCart } from '../Redux/cartSlice'
+import { fetchCart, 
+        incrementQuantity, 
+        decrementQuantity,
+        removeFromCart } from '../Redux/Slices/cartSlice'
 import { useDispatch, useSelector } from 'react-redux';
+import { CiSquarePlus } from "react-icons/ci";
+import { CiSquareMinus } from "react-icons/ci";
+
+
 
 const Cart = () => {
 
-  const cartRe = useSelector(state => state.cart)
+  const cartRe = useSelector(state => state.cart.cart)
 
   const dispatch = useDispatch()
+
+  const handleIncrementQuantity = (id, qty)=>{
+    if(qty == 10){
+      alert("Maximum quantity limit reached..!!")
+    }
+    else{
+      dispatch(incrementQuantity(id));
+    }
+  }
+
+  const handleDecrementQuantity = (id)=>{
+    dispatch(decrementQuantity(id));
+  }
+
+  const handleRemoveFromCart = (id)=>{
+    dispatch(removeFromCart(id));
+  }
+
+  
   const [cart, setCart] = useState([])
   const userId = useSelector(state => state.user.id)
   const navigate = useNavigate()
 
-  const handleRemoveItem = async (id) => {
-    const removedCart = cartRe.filter(item => item.id !== id);
-    setCart(removedCart)
-    await axios.patch(`http://localhost:5000/users/${userId}`,{cart: removedCart})
-      .then((res)=> {
-        console.log("Removed ==>",res)
-        dispatch(fetchCart(userId))
-      })
-  };
+  // const handleRemoveItem = async (id) => {
+  //   const removedCart = cartRe.filter(item => item.id !== id);
+  //   setCart(removedCart)
+  //   await axios.patch(`http://localhost:5000/users/${userId}`,{cart: removedCart})
+  //     .then((res)=> {
+  //       console.log("Removed ==>",res)
+  //       dispatch(fetchCart(userId))
+  //     })
+  // };
 
   const calculateTotalPrice = () => {
     return cartRe.reduce((total, item) => total + item.price * Number(item.quantity), 0);
@@ -47,9 +73,8 @@ const Cart = () => {
   };
 
   useEffect(()=>{
-    //  axios.get(`http://localhost:5000/users/${userId}`)
-    //   .then((res)=> setCart(res.data.cart))
-    dispatch(fetchCart(userId))
+    dispatch(fetchCart());
+    console.log("cart from comp",cartRe)
   },[])
  
   return (
@@ -67,15 +92,23 @@ const Cart = () => {
         }
 
         {cartRe.map((item) => (
-          <div key={item.id} className="flex items-center justify-between border-b py-4">
-            <img onClick={()=>navigate(`/itemdetails/${item.id}`)} src={item.url} alt={item.title} className="w-20 h-20 object-cover rounded-lg hover:scale-110 transition-transform" />
+          <div key={item.productId} className="flex items-center justify-between border-b py-4">
+            <img onClick={()=>navigate(`/itemdetails/${item.productId}`)} src={item.image  } alt={item.productName} className="w-20 h-20 object-cover rounded-lg hover:scale-110 transition-transform" />
             <div className="flex-1 ml-4 space-y-2">
-              <h3 className="text-xl font-semibold">{item.heading}</h3>
-              <p className="text-gray-600">Quantity: {item.quantity}</p>
-              <p className="text-gray-800 font-bold">Total: ${(item.price * item.quantity).toFixed(2)}</p>
+              <h3 className="text-xl font-semibold">{item.productName}</h3>
+
+              {/* Quantity , increment and decrement buttons */}
+              <span className='flex space-x-1 align-middle'>
+                <span className='text-base'>Quantity:</span>
+                <div className='text-lg relative top-1 hover:scale-105 transition-transform cursor-pointer' onClick={()=>handleDecrementQuantity(item.productId)} ><CiSquareMinus /></div>
+                <span className='text-lg font-bold'>{item.quantity}</span>
+                <div className='text-lg relative top-1 hover:scale-105 transition-transform cursor-pointer' onClick={()=>handleIncrementQuantity(item.productId, item.quantity)}><CiSquarePlus /></div>
+              </span>
+
+              <p className="text-gray-800 font-bold">Total: ₹ {(item.price * item.quantity).toFixed(2)}</p>
             </div>
             <button
-              onClick={() => handleRemoveItem(item.id)}
+              onClick={()=>handleRemoveFromCart(item.productId)}
               className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
             >
               Remove

@@ -12,32 +12,19 @@ import { NavLink } from 'react-router-dom';
 import ProductChart from './Charts/ProductChart';
 import UserChart from './Charts/UserChart';
 import access from '../assets/access.png';
+import { useSelector } from 'react-redux';
 
 const Dashboard = () => {
 
+    const admin = useSelector(state => state.userData);
+
+
     const [products, setProducts] = useState([]);
-    const [admin, setAdmin] = useState(false);
-    const id = localStorage.getItem('adminId')
-
-    useEffect(()=>{
-		axios.get("http://localhost:5000/items")
-			.then((res)=> setProducts(res.data))
-			.catch((err)=> console.error(err))
-	},[])
-
-    useEffect(()=>{
-        axios.get(`http://localhost:5000/users/${id}`)
-            .then((res)=>{
-                if(res.data?.isAdmin){
-                    setAdmin(true)
-                }
-            })
-            .catch((err)=> console.error(err))
-    },[id])
-
     const mostSales = products.filter((item)=> item.rating > 4)
 
-    if(!id && !admin){
+
+
+    if(admin.role == "Admin"){
         return(
             <div className='flex justify-center'>
                 <div className='text-center h-96 w-96 shadow-sm'>
@@ -59,7 +46,7 @@ const Dashboard = () => {
         <div className='m-8 flex-col space-y-14 bg-blue-100' >
 
             {/* Charts */}
-            <div className='flex justify-center w-full flex-wrap h-96 bg-blue-100'>
+            {/* <div className='flex justify-center w-full flex-wrap h-96 bg-blue-100'>
                 <div className='h-auto w-full md:w-5/6 flex flex-col md:flex-row justify-center space-y-2 md:space-x-2 p-2 '>
                   <div className='h-96 w-full md:w-1/2 m-2 text-center rounded-lg border shadow-lg flex justify-center bg-white'>
                         <div>
@@ -74,7 +61,7 @@ const Dashboard = () => {
                         </div>
                   </div>
                 </div>
-            </div>
+            </div> */}
 
             {/* Order Dashboard */}
             {/* <div className='flex flex-wrap justify-center w-ful md:mt-2 mt-96'>
