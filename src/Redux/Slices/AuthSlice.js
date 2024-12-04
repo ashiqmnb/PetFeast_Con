@@ -46,8 +46,11 @@ const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers:{
+        // for perform logout
         logout: (state) => {
-            state.loginStatus = false;
+            state.registerData = initialState.registerData;
+            state.loginStatus = initialState.loginStatus;
+            state.error = initialState.error;
         }
     },
     extraReducers:(builder) => {

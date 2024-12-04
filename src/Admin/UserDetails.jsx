@@ -4,52 +4,58 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import SideBar from './SideBar';
 import access from '../assets/access.png';
+import { useSelector } from 'react-redux';
 
 const UserDetails = () => {
 
+  const admin = useSelector(state => state.userData);
+
   const [ userData, setUserData ] = useState({});
+
   const [ orderDetails, setOrderDetails ] = useState({});
   const [ orderItems, setOrderItems ] = useState([]);
   const [ address, setAddress ] = useState({})
-  const [admin, setAdmin] = useState(false);
-  const id = localStorage.getItem('adminId')
+
 
   const {userId} = useParams()
 
   const handleBlock = async()=>{
-  
-    await axios.patch(`http://localhost:5000/users/${userId}`,{isAllowed:!userData.isAllowed})
-      .then((res)=> console.log("bbb", res.data))
-      .catch((err)=> console.error(err))
-      
-    await axios.get(`http://localhost:5000/users/${userId}`)
-      .then((res)=> setUserData(res.data))
-      .catch((err)=> console.error("aaaa",err))
+    await axios.patch(`https://localhost:7109/api/User/BlockOrUnblock/${userId}`,
+      {}
+      ,{
+      headers:{
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+    })
+    .then((res)=>{
+      console.log("handleBlock ress", res)
+    })
+    fetchUserById();
+  }
+
+  const fetchUserById = ()=>{
+    axios.get(`https://localhost:7109/api/User/${userId}`,{
+      headers:{
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+    })
+    .then((res)=>{
+      console.log("userfetch res", res)
+      setUserData(res.data.data);
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
   }
 
   useEffect(()=>{
-    axios.get(`http://localhost:5000/users/${userId}`)
-			.then((res)=> {
-        setUserData(res.data);
-        setOrderDetails(res.data.orderDetails)
-        setOrderItems(res.data.orderDetails.items)
-        setAddress(res.data.address)
-      })
-			.catch((err)=> console.error("aaaa",err))
+    fetchUserById();
   },[])
 
-  useEffect(()=>{
-    axios.get(`http://localhost:5000/users/${id}`)
-        .then((res)=>{
-            if(res.data?.isAdmin){
-                setAdmin(true)
-            }
-        })
-        .catch((err)=> console.error(err))
-},[id])
 
 
-  if(!id && !admin){
+
+  if(admin.role === "Admin"){
     return(
         <div className='flex justify-center'>
             <div className='text-center h-96 w-96 shadow-sm'>
@@ -76,29 +82,29 @@ const UserDetails = () => {
             <h1 style={{color:'#052560'}} className="font-bold text-center text-xl mt-2">User Details</h1>
             <div className='flex justify-center'>
               <div className='bg-slate-400 h-24 w-24 text-lg text-center font-semibold rounded-full p-8 my-7'>
-                {userData.id}
+                {userData.userId}
               </div>
             </div>
             <div className='p-5 text-lg bg-white rounded-lg shadow-md relative'>
               <p className='font-semibold text-gray-600'>
                 Full Name :{" "}
-                <span className='text-black'>{userData.fullName}</span>
+                <span className='text-black'>{userData.name}</span>
               </p>
               <p className='font-semibold text-gray-600'>
                 Email :{" "}
                 <span className='text-black'>{userData.email}</span></p>
-              <p className='font-semibold text-gray-600'>
+              {/* <p className='font-semibold text-gray-600'>
                 Username :{" "}
-                <span className='text-black'>{userData.username}</span></p>
+                <span className='text-black'>{userData.username}</span></p> */}
 
 
               <button
                 onClick={handleBlock}
                 className={`mt-2 px-3 py-1 w-full rounded-lg text-white text-md font-semibold transition ${
-                userData.isAllowed ? 'bg-red-500' : 'bg-blue-500'
+                !userData.isBlocked ? 'bg-red-500' : 'bg-blue-500'
                 }`}
                  >
-                  {userData.isAllowed ? 'Block User' : 'Unblock User'}
+                  {!userData.isBlocked ? 'Block User' : 'Unblock User'}
               </button>
             </div>
 

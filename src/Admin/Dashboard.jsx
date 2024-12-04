@@ -22,6 +22,15 @@ const Dashboard = () => {
     const [products, setProducts] = useState([]);
     const mostSales = products.filter((item)=> item.rating > 4)
 
+    useEffect(()=>{
+        axios.get("https://localhost:7109/api/Product")
+        .then((res)=> {
+            setProducts(res.data.data);
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    },[])
 
 
     if(admin.role == "Admin"){
@@ -110,8 +119,8 @@ const Dashboard = () => {
             <div className='flex justify-center mb-16'>
                 <div style={{backgroundColor:'#052560'}} className='h-auto rounded-lg shadow flex justify-center flex-wrap p-3 gap-2'>
                     {mostSales.map((item,index)=>(
-                        <NavLink to={`/admin/productdetails/${item.id}`} className='h-40 w-40 bg-white rounded-lg'>
-                            <img className='h-40 rounded-lg p-3 hover:scale-105 transition' src={item.url} alt="product img" />
+                        <NavLink to={`/admin/productdetails/${item.productId}`} className='h-40 w-40 bg-white rounded-lg'>
+                            <img className='h-40 rounded-lg p-3 hover:scale-105 transition' src={item.image} alt="product img" />
                         </NavLink>
                     ))}
                 </div>

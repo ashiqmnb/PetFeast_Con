@@ -3,20 +3,24 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SideBar from './SideBar';
 import access from '../assets/access.png';
+import { useSelector } from 'react-redux';
 
 const AddNewProduct = () => {
 
-    const [role, setRole] = useState('');
+
+    const admin = useSelector(state => state.userData);
     const navigate = useNavigate();
 
     const [ formData, setFormData ] = useState({
-        heading: '',
+        name: '',
         discription: '',
-        url:'',
-        catogory: '',
+        // image:'',
+        catogory: null,
         price: '',
         rating: ''
     });
+
+    const [ image, setImage] = useState(null);
 
     const [errors, setErrors] = useState({});
 
@@ -24,14 +28,18 @@ const AddNewProduct = () => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
-    
+
+    const handleImage = (e)=>{
+        e.preventDefault();
+        console.log("image fileee". e.target)
+    }
 
     const validate = ()=>{
         const newErrors = {};
         
-        if(!formData.heading) newErrors.heading = 'heading is required';
+        if(!formData.name) newErrors.heading = 'heading is required';
         if(!formData.discription) newErrors.discription = 'discription is required';
-        if(!formData.url) newErrors.url = 'image url is required';
+        if(!formData.image) newErrors.image = 'image url is required';
         if(!formData.catogory) newErrors.catogory = 'catogory is required';
         if(!formData.price) newErrors.price = 'price is required';
         if(!formData.rating) newErrors.rating = 'rating is required';
@@ -59,13 +67,7 @@ const AddNewProduct = () => {
     }
 
 
-    useEffect(()=>{
-        setRole(localStorage.getItem('role'));
-        console.log("Role ===", role)
-    },[])
-    
-
-    if(role === "Admin"){
+    if(admin.role === "Admin"){
         return(
             <div className='flex justify-center'>
                 <div className='text-center h-96 w-96 shadow-sm'>
@@ -91,15 +93,15 @@ const AddNewProduct = () => {
             <form onSubmit={handleSubmit}>
                 <div className='px-5'>
                     <label className='text-lg font-semibold' htmlFor="">
-                        Heading
+                        Name
                     </label><br />
                     <input
                         onChange={handleChange}
                         name='heading'
-                        value={formData.heading}
+                        value={formData.name}
                         className='w-full p-1 rounded-lg placeholder:text-black'
                         type="text" />
-                        {errors.heading && <span className="text-red-500 text-sm">{errors.heading}</span>}
+                        {errors.name && <span className="text-red-500 text-sm">{errors.name}</span>}
                 </div>
 
                 <div className='p-5'>
@@ -117,14 +119,13 @@ const AddNewProduct = () => {
 
                 <div className='p-5'>
                     <label className='text-lg font-semibold' htmlFor="">
-                        Image Url
+                        Image
                     </label><br />
                     <input
-                        onChange={handleChange}
+                        onChange={handleImage}
                         name='url'
-                        value={formData.url}
                         className='w-full p-1 rounded-lg placeholder:text-black'
-                        type="text" />
+                        type="file" />
                         {errors.url && <span className="text-red-500 text-sm">{errors.url}</span>}
                 </div>
 
@@ -142,34 +143,16 @@ const AddNewProduct = () => {
                             name='catogory'
                             value={formData.catogory}>
 
-                            <option value={''}>Select Category</option>
-                            <option value={'dog-food'}>Dog Food</option>
-                            <option value={'dog-beds'}>Dog Bed</option>
-                            <option value={'cat-food'}>Cat Food</option>
-                            <option value={'cat-treat'}>Cat Treat</option>
+                            <option value={null}>Select Category</option>
+                            <option value={1}>Dog Food</option>
+                            <option value={2}>Dog Bed</option>
+                            <option value={3}>Cat Food</option>
+                            <option value={4}>Cat Treat</option>
                         </select>
                         {errors.catogory && <span className="text-red-500 text-sm">{errors.catogory}</span>}
                     </div>
                 </div>
 
-                {/* <div className='p-5'>
-                    <label className='text-lg font-semibold' htmlFor="">
-                        Category
-                    </label><br />
-                    <select
-                        onChange={handleChange}
-                        className='w-full p-1 rounded-lg placeholder:text-black'
-                        name='catogory'
-                        value={formData.catogory}>
-
-                        <option value={''}>Select Category</option>
-                        <option value={'dog-food'}>Dog Food</option>
-                        <option value={'dog-beds'}>Dog Bed</option>
-                        <option value={'cat-food'}>Cat Food</option>
-                        <option value={'cat-treat'}>Cat Treat</option>
-                    </select>
-                    {errors.catogory && <span className="text-red-500 text-sm">{errors.catogory}</span>}
-                </div> */}
 
                 {/* Price and Rating */}
                 <div className='flex '>

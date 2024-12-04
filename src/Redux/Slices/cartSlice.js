@@ -110,6 +110,13 @@ const initialState = {
 const cartSlice = createSlice({
     name:'cart',
     initialState,
+    reducers:{
+        // for perform logout
+        resetCart: (state)=>{
+            state.cart = initialState.cart;
+            state.error = initialState.error;
+        }
+    },
     extraReducers: (builder) => {
 
         builder
@@ -134,5 +141,5 @@ const cartSlice = createSlice({
     }
 })
 
-
-export default cartSlice.reducer
+export const { resetCart } = cartSlice.actions;
+export default cartSlice.reducer;

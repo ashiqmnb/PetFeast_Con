@@ -52,6 +52,13 @@ const initialState = {
 const wishlistSlice = createSlice({
     name: 'wishlist',
     initialState,
+    reducers:{
+        // for perform logout
+        resetWishlist: (state) => {
+            state.wishlist = initialState.wishlist;
+            state.error = initialState.error;
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchWishlist.fulfilled, (state, action) => {
@@ -64,5 +71,5 @@ const wishlistSlice = createSlice({
     }
 })
 
-
+export const { resetWishlist } = wishlistSlice.actions
 export default wishlistSlice.reducer;

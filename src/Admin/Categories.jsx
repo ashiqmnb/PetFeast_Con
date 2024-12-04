@@ -82,11 +82,6 @@ const Categories = () => {
             
             {/* Navigation Buttons */}
             <div className='flex justify-center space-x-3'>
-                {/* <button 
-                    onClick={()=>setDogFilteredAll('dog-food','dog-beds')}
-                    className='bg-blue-500 p-2 px-3 text-white font-semibold rounded-lg hover:bg-blue-700 transition'>
-                        All
-                </button> */}
                 <button
                     onClick={()=> handleDogCategory('dog-food')}
                     className='bg-blue-500 p-2 px-3 text-white font-semibold rounded-lg hover:bg-blue-700 transition'>
@@ -99,12 +94,12 @@ const Categories = () => {
                 </button>
             </div>
 
-			<div className="space-y-5  max-h-[500px] overflow-auto bg-slate-100 scrollbarHidden">
+			<div className="space-y-5 min-w-[500] max-h-[500px] overflow-auto bg-slate-100 scrollbarHidden">
 			{dogFiltered.map((item)=>(
 				<div
 					onClick={()=> navigate(`/admin/productdetails/${item.productId}`)}
 					key={item.productId}
-					className="bg-white flex justify-start items-center p-3 border rounded-lg shadow space-x-2 hover:bg-slate-200">
+					className="bg-white min-w-[490] flex justify-start items-center p-3 border rounded-lg shadow space-x-2 hover:bg-slate-200">
 					<img 
 						className="h-20 w-auto" 
 						src={item.image} alt="img" />
@@ -115,12 +110,11 @@ const Categories = () => {
 					</div>
 				</div>
 			))}
-			
 			</div>
 		</div>
 
 
-        
+
 
 		{/* Products for Cats */}
         <div className="md:w-1/2 w-full space-y-4 bg-slate-100 border rounded-lg shadow-lg p-2">
@@ -128,11 +122,7 @@ const Categories = () => {
 
             {/* Navigation Buttons */}
             <div className='flex justify-center space-x-3'>
-                {/* <button 
-                    onClick={()=>setCatFilteredAll('cat-food', 'cat-treat')}
-                    className='bg-blue-500 p-2 px-3 text-white font-semibold rounded-lg hover:bg-blue-700 transition'>
-                        All
-                </button> */}
+
                 <button
                     onClick={()=> handleCatCategory('cat-food')}
                     className='bg-blue-500 p-2 px-3 text-white font-semibold rounded-lg hover:bg-blue-700 transition'>
@@ -145,12 +135,12 @@ const Categories = () => {
                 </button>
             </div>
 
-			<div className="space-y-5  max-h-[500px] max-w-[510] min-w-[510] overflow-auto bg-slate-100 scrollbarHidden">
+			<div className="space-y-5 min-w-[500]  max-h-[500px] max-w-[510] overflow-auto bg-slate-100 scrollbarHidden">
 			{catFiltered.map((item)=>(
 				<div
 					onClick={()=> navigate(`/admin/productdetails/${item.productId}`)}
 					key={item.productId}
-					className="bg-white w-[490] flex justify-start items-center p-3 border rounded-lg shadow space-x-2 hover:bg-slate-200">
+					className="bg-white min-w-[490] flex justify-start items-center p-3 border rounded-lg shadow space-x-2 hover:bg-slate-200">
 					<img 
 						className="h-20 w-auto" 
 						src={item.image} alt="img" />
@@ -161,10 +151,9 @@ const Categories = () => {
 					</div>
 				</div>
 			))}
-
 			</div>
-			
 		</div>
+        
       </div>
     </div>
     </div>

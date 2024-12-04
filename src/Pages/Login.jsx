@@ -3,7 +3,6 @@ import logoImg from '../assets/logo.png'
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { MyContext } from '../Components/MyContext';
-import { setUser } from '../Redux/Slices/userSlice';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../Redux/Slices/AuthSlice';
 import { setUserData } from '../Redux/Slices/userDataSlice';
@@ -73,45 +72,18 @@ const LoginPage = () => {
           alert("Admin Login Successfull");
           navigate('/admin/dashboard')
         }
-        else if(userData.isBlocked){
-          alert("You Are Restricted Or Blocked");
-        }
+
         else{
           localStorage.setItem("token", userData.token);
           localStorage.setItem("role", userData.role);
           localStorage.setItem("name", userData.name);
           localStorage.setItem("email", userData.email);
 
-          // dispatch(setUserData({
-          //   name: userData.name,
-          //   email: userData.email,
-          // }));
-
           dispatch(setUserData(userData));
 
-          alert("login successfull");
+          alert("User login successfull");
           navigate('/')
         }
-         
-        // if(isAdmin){
-        //   localStorage.setItem("adminId",user.id)
-        //   alert("Admin Login Successfull");
-        //   navigate('/admin/dashboard')
-        // }
-        // else if(!user.isAllowed){
-        //   setError('You Are Restricted Or Blocked')
-        // }
-        // else if(user && user.isAllowed){
-        //   alert("login successfull");
-        //   localStorage.setItem('id',user.id)
-        //   localStorage.setItem('username',user.username)
-        //   setUserId(localStorage.getItem('id'))
-        //   dispatch(setUser({id:user.id, name:user.username}))
-        //   navigate('/')
-        // }
-        // else{
-        //   setError('Invalid username or password')
-        // }
       }
       catch(err){
         console.error("Login Error:", err);

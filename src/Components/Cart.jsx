@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { MdRemoveShoppingCart } from "react-icons/md";
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { fetchCart, 
         incrementQuantity, 
@@ -37,18 +36,7 @@ const Cart = () => {
 
   
   const [cart, setCart] = useState([])
-  const userId = useSelector(state => state.user.id)
   const navigate = useNavigate()
-
-  // const handleRemoveItem = async (id) => {
-  //   const removedCart = cartRe.filter(item => item.id !== id);
-  //   setCart(removedCart)
-  //   await axios.patch(`http://localhost:5000/users/${userId}`,{cart: removedCart})
-  //     .then((res)=> {
-  //       console.log("Removed ==>",res)
-  //       dispatch(fetchCart(userId))
-  //     })
-  // };
 
   const calculateTotalPrice = () => {
     return cartRe.reduce((total, item) => total + item.price * Number(item.quantity), 0);
