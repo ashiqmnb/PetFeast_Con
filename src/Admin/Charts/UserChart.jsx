@@ -33,24 +33,36 @@ const UserChart = () => {
 
 
     useEffect(()=>{
-        axios.get("http://localhost:5000/users")
-            .then((res)=> setUsers(res.data.filter((user,index)=> user.isAdmin !== true)))
-            .catch((err)=> console.error(err))
+        axios.get("https://localhost:7109/api/User/GetUsers",
+          {
+            headers:{
+              Authorization:  `Bearer ${localStorage.getItem("token")}`
+            }
+          })
+          .then((res)=>{
+            // console.log("user chaert res", res.data.data);
+            setUsers(res.data.data)
+            // console.log(users)
+          })
+          .catch((err)=>{
+            console.log("user chaert res", err)
+          })
+
     },[])
 
 
     const data = [
       {
-        "name": `Jul (${5})`,
+        "name": `Oct (${7})`,
         "users": 5
       },
       {
-        "name": `Aug (${7})`,
+        "name": `Nov (${8})`,
         "users": 7
       },
       {
-        "name": `Sep (${users.length - 12})`,
-        "users": users.length - 12
+        "name": `Dec (${users.length - 15})`,
+        "users": users.length - 15
       }
   ]
 

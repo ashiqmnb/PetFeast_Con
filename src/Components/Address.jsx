@@ -111,7 +111,7 @@ const Address = () => {
 
         {address.length === 0 ? (
             <div className='flex flex-col items-center text-center  p-10 rounded-lg space-y-3'>
-                <LiaAddressCardSolid className='h-14 w-14'/>
+                <LiaAddressCardSolid className='h-28 w-28'/>
                 <p style={{color:'#052560'}} className='font-semibold text-xl'>No Saved Addresses</p>
             </div>
         ):(null)}

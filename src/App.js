@@ -26,6 +26,7 @@ import Dashboard from './Admin/Dashboard';
 import UpdateProduct from './Admin/UpdateProduct';
 import Wishlist from './Components/Wishlist';
 import Address from './Components/Address';
+import Order from './Components/Order';
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/wishlist' element={<Wishlist/>}/>
+        <Route path='/order' element={<Order/>}/>
         <Route path='/payment' element={<Payment />} />
         <Route path='/orderConfirm' element={<OrderConfirm />} />
         <Route path='/itemdetails/:id' element={<ItemDetails2 />} />

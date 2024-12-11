@@ -72,7 +72,7 @@ const ProfilePage = () => {
             Saved Address
           </button>
           <button
-            // onClick={handleLogout}
+            onClick={()=> navigate('/order')}
             className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 w-1/2 transition"
           >
             Orders

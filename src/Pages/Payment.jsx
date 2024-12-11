@@ -203,6 +203,12 @@ const Payment = () => {
                   </option>
                 ))}
               </select>
+
+              <button
+                onClick={()=> navigate('/address')}
+                className="w-full bg-blue-500 text-white py-2 mt-6 rounded-lg hover:bg-blue-600">
+                Add New Address
+              </button>
             </div>
 
             {selectedAddress && (

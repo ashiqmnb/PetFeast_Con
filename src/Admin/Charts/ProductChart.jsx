@@ -35,14 +35,14 @@ const ProductChart = () => {
     const [ catTreat,setCatTreat] = useState(0)
 
     useEffect(()=>{
-        axios.get("http://localhost:5000/items")
+        axios.get("https://localhost:7109/api/Product")
             .then((res)=> {
-                const items = res.data;
-                console.log('from product chart');
-                setDogFood(items.filter((item)=> item.catogory === 'dog-food').length)
-                setDogBed(items.filter((item)=> item.catogory === 'dog-beds').length)
-                setCatFood(items.filter((item)=> item.catogory === 'cat-food').length)
-                setCatTreat(items.filter((item)=> item.catogory === 'cat-treat').length)
+                const items = res.data.data;
+                // console.log('from product chart', res.data.data);
+                setDogFood(items.filter((item)=> item.categoryName === 'dog-food').length)
+                setDogBed(items.filter((item)=> item.categoryName === 'dog-beds').length)
+                setCatFood(items.filter((item)=> item.categoryName === 'cat-food').length)
+                setCatTreat(items.filter((item)=> item.categoryName === 'cat-treat').length)
             })
     },[])
 
