@@ -16,7 +16,8 @@ import { useSelector } from 'react-redux';
 
 const Dashboard = () => {
 
-    const {role} = useSelector(state => state.userData);
+    // const {role} = useSelector(state => state.userData);
+    const role = localStorage.getItem('role');
 
 
     const [products, setProducts] = useState([]);

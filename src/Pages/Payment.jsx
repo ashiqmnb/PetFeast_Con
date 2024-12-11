@@ -259,12 +259,12 @@ const Payment = () => {
           Final Price: $ {calculateFinalPrice()}
         </p>
 
-        <h3 style={{ color: "#052560" }} className="text-2xl font-bold mb-4">
+        {/* <h3 style={{ color: "#052560" }} className="text-2xl font-bold mb-4">
           Select Payment Method
-        </h3>
+        </h3> */}
 
-        <div className="space-y-2 bg-blue-100 rounded-lg p-5">
-          {/* <div>
+        {/* <div className="space-y-2 bg-blue-100 rounded-lg p-5">
+          <div>
             <input
               type="radio"
               id="netBanking"
@@ -286,7 +286,7 @@ const Payment = () => {
               className="mr-2"
             />
             <label htmlFor="upi">UPI</label>
-          </div> */}
+          </div>
 
           <div>
             <input
@@ -312,7 +312,7 @@ const Payment = () => {
             <label htmlFor="card">Debit/Credit Card</label>
           </div>
           
-        </div>
+        </div> */}
 
         <button
           onClick={handleConfirmPayment}

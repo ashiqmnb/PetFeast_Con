@@ -8,7 +8,8 @@ import { useSelector } from "react-redux";
 
 const AdminHome = () => {
 
-	const {role} = useSelector(state => state.userData);
+	// const {role} = useSelector(state => state.userData);
+	const role = localStorage.getItem('role');
 
 	const [products, setProducts] = useState([]);
 	const [users, setUsers] = useState([]);

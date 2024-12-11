@@ -9,16 +9,26 @@ import { useSelector } from 'react-redux';
 const UpdateProduct = () => {
 
     const {itemId} = useParams();
-    const {role} = useSelector(state => state.userData);
+    // const {role} = useSelector(state => state.userData);
+    const role = localStorage.getItem('role');
  
     const [product, setProduct] = useState({
-        heading: "",
-        discription: "",
-        mrp: "",
-        catogory: "",
-        price: 0,
-        rating: 0,
+        // heading: "",
+        // discription: "",
+        // mrp: "",
+        // catogory: "",
+        // price: 0,
+        // rating: 0,
+        Name: '',
+        Description: '',
+        MRP: null,
+        CategoryId: null,
+        Price: null,
+        Rating: null,
+        Stock: null
     });
+
+    const [ Image, setImage] = useState(null);
 
     const navigate = useNavigate()
     const [error, setError] = useState("");
@@ -26,16 +36,33 @@ const UpdateProduct = () => {
     const id = localStorage.getItem('adminId')
 
     useEffect(() => {
-        axios.get(`https://localhost:7109/api/Product/${itemId}`) // Fetch product from JSON server
+        axios.get(`https://localhost:7109/api/Product/${itemId}`) 
           .then((res) => {
-            // console.log("____", res.data)
-            setProduct(res.data.data);
+            console.log("____", res.data.data)
+            // setProduct(res.data.data);
+
+            let categoryId
+            if(res.data.data.categoryName === "dog-food") categoryId = 1;
+            else if(res.data.data.categoryName === "dog-beds") categoryId = 2;
+            else if(res.data.data.categoryName === "cat-food") categoryId = 3;
+            else if(res.data.data.categoryName === "cat-treat") categoryId = 4;
+
+            setProduct({
+                Name: res.data.data.name,
+                Description: res.data.data.description,
+                MRP: res.data.data.mrp,
+                CategoryId: categoryId,
+                Price: res.data.data.price,
+                Rating: res.data.data.rating,
+                Stock: res.data.data.stock
+            })
+            
         })
           .catch((err) => {
             console.error("Error fetching product", err);
             setError("Failed to fetch product");
           });
-      }, []);
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -46,31 +73,28 @@ const UpdateProduct = () => {
     const validate = ()=>{
         const newErrors = {};
         
-        if(!product.heading) newErrors.heading = 'heading is required';
-        if(!product.discription) newErrors.discription = 'discription is required';
-        if(!product.mrp) newErrors.url = 'Mrp url is required';
-        if(!product.catogory) newErrors.catogory = 'catogory is required';
-        if(!product.price) newErrors.price = 'price is required';
-        if(!product.rating) newErrors.rating = 'rating is required';
-        if(product.rating > 5 || product.rating < 0) newErrors.rating = 'rating should be 0 - 5';
+        if(!product.Name) newErrors.Name = 'name is required';
+        if(!product.Description) newErrors.Description = 'discription is required';
+        if(!product.MRP) newErrors.MRP = 'mrp is required';
+        if(!product.CategoryId) newErrors.CategoryId = 'catogory is required';
+        if(!product.Price) newErrors.Price = 'price is required';
+        if(!product.Rating) newErrors.Rating = 'rating is required';
+        if(!product.Stock) newErrors.Stock = 'stock is required';
+        if(product.Stock < 1) newErrors.Stock = 'stock must greater than 1'
+        if(product.MRP < product.Price) newErrors.MRP = 'mrp must greater than price';
+        if(product.Rating > 5 || product.Rating < 0) newErrors.Rating = 'rating should be 0 - 5';
+        // if(!Image) newErrors.Image = 'image is required';
+
 
         return newErrors;
     }
 
 
-    useEffect(()=>{
-        axios.get(`http://localhost:5000/users/${id}`)
-            .then((res)=>{
-                
-                console.log("aaa",res.data.isAdmin);
-                // setUser(res.data)
-                if(res.data?.isAdmin){
-                    setAdmin(true)
-                }
-                console.log("bbbbbbbbb",admin);
-            })
-            .catch((err)=> console.error(err))
-    },[id])
+    const logFormData = (formData) => {
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
+    };
 
 
     const HandleUpdateProduct = (e) => {
@@ -81,17 +105,44 @@ const UpdateProduct = () => {
             setError(validationErrors)
         }
         else{
-            axios.put(`http://localhost:5000/items/${itemId}`, product)
-            .then((res) => {
-                alert("Product updated successfully");
-                navigate(`/admin/productdetails/${itemId}`,{ replace: true });
-            })
-            .catch((err) => {
-                console.error("Error updating product", err);
-                setError("Failed to update product");
-            });
+            const itemData = new FormData();
+
+            itemData.append("Name", product.Name);
+            itemData.append("Description", product.Description);
+            itemData.append("Price", product.Price);
+            itemData.append("Rating", product.Rating);
+            itemData.append("CategoryId", product.CategoryId);
+            itemData.append("Stock", product.Stock);
+            itemData.append("MRP", product.MRP);
+
+            itemData.append("Image", Image);
+
+
+            // logFormData(itemData);
+            axios.put(`https://localhost:7109/api/Product/UpdateProduct2/${itemId}`,
+                itemData,
+                {
+                    headers:{
+                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                    }
+                })
+                .then((res)=>{
+                    console.log("update product",res);
+                    alert("Product Updated successfully");
+                    navigate(`/admin/productdetails/${itemId}`)
+                })
+                .catch((err)=>{
+                    console.log("add producft err",err)
+                }
+            );
         }
     };
+
+    // useEffect(()=>{
+    //     console.log("UpdateProduct", product)
+    //     console.log("UpdateImage", Image)
+
+    // }, [product])
 
 
     if(role !== "Admin"){
@@ -123,31 +174,53 @@ const UpdateProduct = () => {
                     </label><br />
                     <input
                         onChange={handleChange}
-                        name='heading'
-                        value={product.name}
+                        name='Name'
+                        value={product.Name}
                         className='w-full p-1 rounded-lg placeholder:text-black'
                         type="text" />
-                        {error.heading && <span className="text-red-500 text-sm">{error.heading}</span>}
+                        {error.Name && <span className="text-red-500 text-sm">{error.Name}</span>}
                 </div>
 
                 <div className='p-5'>
                     <label className='text-lg font-semibold' htmlFor="">
-                        Discription
+                        Description
                     </label><br />
                     <textarea
                         onChange={handleChange}
-                        name='discription'
-                        value={product.description}
+                        name='Description'
+                        value={product.Description}
                         className='w-full p-1 rounded-lg placeholder:text-black'
                         ></textarea>
-                        {error.discription && <span className="text-red-500 text-sm">{error.discription}</span>}
+                        {error.Description && <span className="text-red-500 text-sm">{error.Description}</span>}
                 </div>
 
-                <div className='p-5'>
-                    <label className='text-lg font-semibold' htmlFor="">
-                        Image
-                    </label><br />
-                    <input type="file" name="" id="" />
+                {/* Image and stock */}
+                <div className='flex '>
+                    <div className='p-5 w-1/2'>
+                        <label className='text-lg font-semibold' htmlFor="">
+                            Image
+                        </label><br />
+                        <input
+                            onChange={(e)=> setImage(e.target.files[0])}
+                            name='Image'
+                            className='w-full p-1 rounded-lg placeholder:text-black'
+                            type="file" />
+                            {error.Image && <span className="text-red-500 text-sm">{error.Image}</span>}
+                    </div>
+
+                    <div className='p-5 w-1/2'>
+                        <label className='text-lg font-semibold' htmlFor="">
+                            Stock
+                        </label><br />
+                        <input
+                            onChange={handleChange}
+                            name='Stock'
+                            value={product.Stock}
+                            className='w-full p-1 rounded-lg placeholder:text-black'
+                            type="number" />
+                        {error.Stock && <span className="text-red-500 text-sm">{error.Stock}</span>}
+                    </div>
+
                 </div>
 
 
@@ -160,16 +233,16 @@ const UpdateProduct = () => {
                         <select
                             onChange={handleChange}
                             className='w-full p-1 rounded-lg placeholder:text-black'
-                            name='catogory'
-                            value={product.categoryName}>
+                            name='CategoryId'
+                            value={product.CategoryId}>
 
-                            <option value={''}>Select Category</option>
+                            <option value={null}>Select Category</option>
                             <option value={1}>Dog Food</option>
                             <option value={2}>Dog Bed</option>
                             <option value={3}>Cat Food</option>
                             <option value={4}>Cat Treat</option>
                         </select>
-                        {error.catogory && <span className="text-red-500 text-sm">{error.catogory}</span>}
+                        {error.CategoryId && <span className="text-red-500 text-sm">{error.CategoryId}</span>}
                     </div>
 
                     <div className='p-5 w-1/2'>
@@ -178,11 +251,11 @@ const UpdateProduct = () => {
                         </label><br />
                         <input
                             onChange={handleChange}
-                            name='rating'
-                            value={product.rating}
+                            name='Rating'
+                            value={product.Rating}
                             className='w-full p-1 rounded-lg placeholder:text-black'
-                            type="text" />
-                        {error.rating && <span className="text-red-500 text-sm">{error.rating}</span>}
+                            type="number" />
+                        {error.Rating && <span className="text-red-500 text-sm">{error.Rating}</span>}
                     </div>
                 </div>
 
@@ -195,11 +268,11 @@ const UpdateProduct = () => {
                         </label><br />
                         <input
                             onChange={handleChange}
-                            name='price'
-                            value={product.price}
+                            name='Price'
+                            value={product.Price}
                             className='w-full p-1 rounded-lg placeholder:text-black'
-                            type="text" />
-                        {error.price && <span className="text-red-500 text-sm">{error.price}</span>}
+                            type="number" />
+                        {error.Price && <span className="text-red-500 text-sm">{error.Price}</span>}
                     </div>
 
                     <div className='p-5 w-1/2'>
@@ -208,11 +281,11 @@ const UpdateProduct = () => {
                         </label><br />
                         <input
                             onChange={handleChange}
-                            name='rating'
-                            value={product.mrp}
+                            name='MRP'
+                            value={product.MRP}
                             className='w-full p-1 rounded-lg placeholder:text-black'
-                            type="text" />
-                        {error.mrp && <span className="text-red-500 text-sm">{error.mrp}</span>}
+                            type="number" />
+                        {error.MRP && <span className="text-red-500 text-sm">{error.MRP}</span>}
                     </div>
                 </div>
 

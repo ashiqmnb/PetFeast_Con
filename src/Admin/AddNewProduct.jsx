@@ -8,19 +8,21 @@ import { useSelector } from 'react-redux';
 const AddNewProduct = () => {
 
 
-    const {role} = useSelector(state => state.userData);
+    // const {role} = useSelector(state => state.userData);
+    const role = localStorage.getItem('role');
     const navigate = useNavigate();
 
     const [ formData, setFormData ] = useState({
-        name: '',
-        discription: '',
-        mrp:'',
-        catogory: null,
-        price: '',
-        rating: ''
+        Name: '',
+        Description: '',
+        MRP: null,
+        CategoryId: null,
+        Price: null,
+        Rating: null,
+        Stock: null
     });
 
-    const [ image, setImage] = useState(null);
+    const [ Image, setImage] = useState(null);
 
     const [errors, setErrors] = useState({});
 
@@ -33,18 +35,26 @@ const AddNewProduct = () => {
     const validate = ()=>{
         const newErrors = {};
         
-        if(!formData.name) newErrors.name = 'name is required';
-        if(!formData.discription) newErrors.discription = 'discription is required';
-        if(!formData.mrp) newErrors.mrp = 'mrp is required';
-        if(!formData.catogory) newErrors.catogory = 'catogory is required';
-        if(!formData.price) newErrors.price = 'price is required';
-        if(!formData.rating) newErrors.rating = 'rating is required';
-        if(formData.mrp < formData.price) newErrors.mrp = 'price must less than mrp'
-        if(formData.rating > 5 || formData.rating < 0) newErrors.rating = 'rating should be 0 - 5';
-        if(!image) newErrors.image = 'image is required';
+        if(!formData.Name) newErrors.Name = 'name is required';
+        if(!formData.Description) newErrors.Description = 'discription is required';
+        if(!formData.MRP) newErrors.MRP = 'mrp is required';
+        if(!formData.CategoryId) newErrors.CategoryId = 'catogory is required';
+        if(!formData.Price) newErrors.Price = 'price is required';
+        if(!formData.Rating) newErrors.Rating = 'rating is required';
+        if(!formData.Stock) newErrors.Stock = 'stock is required';
+        if(formData.Stock < 1) newErrors.Stock = 'stock must greater than 1'
+        if(formData.MRP < formData.Price) newErrors.MRP = 'mrp must greater than price';
+        if(formData.Rating > 5 || formData.Rating < 0) newErrors.Rating = 'rating should be 0 - 5';
+        if(!Image) newErrors.Image = 'image is required';
 
         return newErrors;
     }
+
+    const logFormData = (formData) => {
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
+    };
 
     const handleSubmit = (e)=>{
         e.preventDefault();
@@ -54,8 +64,37 @@ const AddNewProduct = () => {
             setErrors(validationErrors)
         }
         else{
-            console.log("product details", formData);
-            console.log("image===>", image)
+
+            const itemData = new FormData();
+
+            itemData.append("Name", formData.Name);
+            itemData.append("Description", formData.Description);
+            itemData.append("Price", formData.Price);
+            itemData.append("Rating", formData.Rating);
+            itemData.append("CategoryId", formData.CategoryId);
+            itemData.append("Stock", formData.Stock);
+            itemData.append("MRP", formData.MRP);
+
+            itemData.append("Image", Image);
+
+
+            // logFormData(itemData);
+
+            axios.post('https://localhost:7109/api/Product/AddProduct',
+                itemData,
+                {
+                    headers:{
+                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                    }
+                })
+                .then((res)=>{
+                    console.log("add producft",res);
+                    alert("Product added successfully");
+                    navigate('/admin/categories');
+                })
+                .catch((err)=>{
+                    console.log("add producft err",err)
+                })
         }
     }
 
@@ -90,11 +129,11 @@ const AddNewProduct = () => {
                     </label><br />
                     <input
                         onChange={handleChange}
-                        name='name'
-                        value={formData.name}
+                        name='Name'
+                        value={formData.Name}
                         className='w-full p-1 rounded-lg placeholder:text-black'
                         type="text" />
-                        {errors.name && <span className="text-red-500 text-sm">{errors.name}</span>}
+                        {errors.Name && <span className="text-red-500 text-sm">{errors.Name}</span>}
                 </div>
 
                 <div className='p-5'>
@@ -103,23 +142,41 @@ const AddNewProduct = () => {
                     </label><br />
                     <textarea
                         onChange={handleChange}
-                        name='discription'
-                        value={formData.discription}
+                        name='Description'
+                        value={formData.Description}
                         className='w-full p-1 rounded-lg placeholder:text-black'
                         ></textarea>
-                        {errors.discription && <span className="text-red-500 text-sm">{errors.discription}</span>}
+                        {errors.Description && <span className="text-red-500 text-sm">{errors.Description}</span>}
                 </div>
 
-                <div className='p-5'>
-                    <label className='text-lg font-semibold' htmlFor="">
-                        Image
-                    </label><br />
-                    <input
-                        onChange={(e)=> setImage(e.target.files[0])}
-                        name='image'
-                        className='w-full p-1 rounded-lg placeholder:text-black'
-                        type="file" />
-                        {errors.image && <span className="text-red-500 text-sm">{errors.image}</span>}
+
+                {/* Image and stock */}
+                <div className='flex '>
+                    <div className='p-5 w-1/2'>
+                        <label className='text-lg font-semibold' htmlFor="">
+                            Image
+                        </label><br />
+                        <input
+                            onChange={(e)=> setImage(e.target.files[0])}
+                            name='Image'
+                            className='w-full p-1 rounded-lg placeholder:text-black'
+                            type="file" />
+                            {errors.Image && <span className="text-red-500 text-sm">{errors.Image}</span>}
+                    </div>
+
+                    <div className='p-5 w-1/2'>
+                        <label className='text-lg font-semibold' htmlFor="">
+                            Stock
+                        </label><br />
+                        <input
+                            onChange={handleChange}
+                            name='Stock'
+                            value={formData.Stock}
+                            className='w-full p-1 rounded-lg placeholder:text-black'
+                            type="number" />
+                        {errors.Stock && <span className="text-red-500 text-sm">{errors.Stock}</span>}
+                    </div>
+
                 </div>
 
                 
@@ -133,11 +190,11 @@ const AddNewProduct = () => {
                         </label><br />
                         <input
                             onChange={handleChange}
-                            name='rating'
-                            value={formData.rating}
+                            name='Rating'
+                            value={formData.Rating}
                             className='w-full p-1 rounded-lg placeholder:text-black'
-                            type="text" />
-                        {errors.rating && <span className="text-red-500 text-sm">{errors.rating}</span>}
+                            type="number" />
+                        {errors.Rating && <span className="text-red-500 text-sm">{errors.Rating}</span>}
                     </div>
 
                     <div className='p-5 w-1/2'>
@@ -147,8 +204,8 @@ const AddNewProduct = () => {
                         <select
                             onChange={handleChange}
                             className='w-full p-1 rounded-lg placeholder:text-black'
-                            name='catogory'
-                            value={formData.catogory}>
+                            name='CategoryId'
+                            value={formData.CategoryId}>
 
                             <option value={null}>Select Category</option>
                             <option value={1}>Dog Food</option>
@@ -156,7 +213,7 @@ const AddNewProduct = () => {
                             <option value={3}>Cat Food</option>
                             <option value={4}>Cat Treat</option>
                         </select>
-                        {errors.catogory && <span className="text-red-500 text-sm">{errors.catogory}</span>}
+                        {errors.CategoryId && <span className="text-red-500 text-sm">{errors.CategoryId}</span>}
                     </div>
                 </div>
 
@@ -168,11 +225,11 @@ const AddNewProduct = () => {
                         </label><br />
                         <input
                             onChange={handleChange}
-                            name='price'
-                            value={formData.price}
+                            name='Price'
+                            value={formData.Price}
                             className='w-full p-1 rounded-lg placeholder:text-black'
-                            type="text" />
-                        {errors.price && <span className="text-red-500 text-sm">{errors.price}</span>}
+                            type="number" />
+                        {errors.Price && <span className="text-red-500 text-sm">{errors.Price}</span>}
                     </div>
 
                     <div className='p-5 w-1/2'>
@@ -181,11 +238,11 @@ const AddNewProduct = () => {
                         </label><br />
                         <input
                             onChange={handleChange}
-                            name='mrp'
-                            value={formData.mrp}
+                            name='MRP'
+                            value={formData.MRP}
                             className='w-full p-1 rounded-lg placeholder:text-black'
-                            type="text" />
-                        {errors.mrp && <span className="text-red-500 text-sm">{errors.mrp}</span>}
+                            type="number" />
+                        {errors.MRP && <span className="text-red-500 text-sm">{errors.MRP}</span>}
                     </div>
                 </div>
 

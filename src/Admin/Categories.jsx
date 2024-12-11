@@ -8,7 +8,8 @@ import { useSelector } from 'react-redux';
 
 const Categories = () => {
 
-    const {role} = useSelector(state => state.userData);
+    // const {role} = useSelector(state => state.userData);
+    const role = localStorage.getItem('role');
 
     const navigate = useNavigate()
     const [items, setItems] = useState([])
@@ -30,7 +31,7 @@ const Categories = () => {
     useEffect(()=>{
         axios.get("https://localhost:7109/api/Product")
         .then((res)=> {
-            console.log("product fetch",res.data.data);
+            // console.log("product fetch",res.data.data);
             setItems(res.data.data);
             // handleDogCategory("dog-food");
             // handleCatCategory("cat-food");
@@ -47,8 +48,8 @@ const Categories = () => {
         handleDogCategory("dog-food");
         handleCatCategory("cat-food");
 
-        console.log("dogFiltered",dogFiltered);
-        console.log("catFiltered", catFiltered);
+        // console.log("dogFiltered",dogFiltered);
+        // console.log("catFiltered", catFiltered);
     },[items])
 
 

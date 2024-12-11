@@ -5,10 +5,12 @@ import SideBar from './SideBar';
 import access from '../assets/access.png';
 import { useSelector } from 'react-redux';
 import { PiClockAfternoon } from 'react-icons/pi';
+import { cache } from 'react';
 
 const ProductDetails = () => {
   
-    const {role} = useSelector(state => state.userData);
+    // const {role} = useSelector(state => state.userData);
+    const role = localStorage.getItem('role');
 
   	const [item, setItem ] = useState({})
 
@@ -19,7 +21,7 @@ const ProductDetails = () => {
   useEffect(()=>{
     axios.get(`https://localhost:7109/api/Product/${itemId}`)
     .then((res)=>{
-      console.log("fetch product res", res.data.data)
+      // console.log("fetch product res", res.data.data)
       setItem(res.data.data)
     })
     .catch((err)=>{
@@ -30,13 +32,23 @@ const ProductDetails = () => {
 
 
   const handleRemoveProduct = async (itemId) => {
-    await axios.delete(`http://localhost:5000/items/${itemId}`)
-      .then((res)=>{
-        console.log(res);
-        alert("item deleted ");
-        navigate('/admin/categories');
+    // console.log("product id", itemId)
+    // console.log("token", localStorage.getItem("token"))
+    axios.delete(`https://localhost:7109/api/Product/DeleteProduct/${itemId}`,
+      // {},
+      {
+         headers:{
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+         }
       })
-      .catch((err)=> console.error(err))
+      .then((res)=>{
+         console.log("delete res", res)
+         alert("Product deleted successfully");
+         navigate('/admin/categories');
+      })
+      .catch((err)=>{
+         console.log("delete error", err)
+      })
   }
 
 
@@ -105,7 +117,7 @@ const ProductDetails = () => {
         <div className="flex-col space-y-3 mt-5">
           <button
               className="px-5 w-full bg-red-600 text-white font-semibold py-2 rounded hover:bg-red-700 transition"
-              onClick={()=> handleRemoveProduct(item.id)}>
+              onClick={()=> handleRemoveProduct(item.productId)}>
               Remove Product
           </button>
           <button
