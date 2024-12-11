@@ -7,6 +7,7 @@ import { logout } from '../Redux/Slices/AuthSlice'
 import { resetCart } from '../Redux/Slices/cartSlice';
 import { resetUserData } from '../Redux/Slices/userDataSlice';
 import { resetWishlist } from '../Redux/Slices/WishlistSlice';
+import { fetchAddress } from '../Redux/Slices/AddressSlice';
 
 
 
@@ -34,10 +35,14 @@ const ProfilePage = () => {
     alert("Logged Out");
   }
 
+  useEffect(()=>{
+    dispatch(fetchAddress());
+  },[])
+
 
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4 md:mt-24 mt-60">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4 md:mt-10 mt-60">
       <div className="w-full max-w-sm bg-white rounded-lg shadow-lg p-6">
         <h2 style={{color:'#052560'}} className="text-2xl font-bold mb-4 text-center">Profile</h2>
         {/* <div className="mb-4">
@@ -58,11 +63,27 @@ const ProfilePage = () => {
         </div>
 
         {/* Buttons */}
+
+        <div className="flex justify-evenly mt-6 space-x-4">
+          <button
+            onClick={()=> navigate('/address')}
+            className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 w-1/2 transition"
+          >
+            Saved Address
+          </button>
+          <button
+            // onClick={handleLogout}
+            className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 w-1/2 transition"
+          >
+            Orders
+          </button>
+        </div>
+
         <div className="flex justify-evenly mt-6">
-          <FaShoppingCart onClick={()=> navigate('/cart')} style={{color:'#052560'}} className='h-8 w-auto'/>
+          {/* <FaShoppingCart onClick={()=> navigate('/cart')} style={{color:'#052560'}} className='h-8 w-auto'/> */}
           <button
             onClick={handleLogout}
-            className="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-600"
+            className="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-600 transition"
           >
             Logout
           </button>

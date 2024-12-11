@@ -103,6 +103,8 @@ export const removeFromCart = createAsyncThunk(
 
 const initialState = {
     cart: [],
+    totalPrice: null,
+    totalItems: null,
     error: null
 }
 
@@ -122,7 +124,12 @@ const cartSlice = createSlice({
         builder
         .addCase(fetchCart.fulfilled, (state, action) => {
             if(!isEqual(state.cart, action.payload)){
-                state.cart = action.payload;
+                // console.log("cart==", action.payload.cartProducts);
+                // console.log("totalCount==", action.payload.totalCount);
+                // console.log("totalPrice==", action.payload.totalPrice);
+                state.cart = action.payload.cartProducts;
+                state.totalPrice = action.payload.totalPrice;
+                state.totalItems = action.payload.totalCount
             }
         })
         .addCase(fetchCart.rejected, (state, action) => {

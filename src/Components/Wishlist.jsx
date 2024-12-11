@@ -9,7 +9,7 @@ import { FcLike } from "react-icons/fc";
 
 const Wishlist = () => {
 
-    const wishlist = useSelector(state => state.wishlist.wishlist);
+    const {wishlist} = useSelector(state => state.wishlist);
     // console.log("from comp", wishlist)
     const navigate = useNavigate();
 

@@ -12,7 +12,8 @@ import ProfilePage from '../Components/ProfilePage'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchCart } from "../Redux/Slices/cartSlice";
-import { fetchWishlist } from '../Redux/Slices/WishlistSlice'
+import { fetchWishlist } from '../Redux/Slices/WishlistSlice';
+import { fetchAddress } from '../Redux/Slices/AddressSlice'
 
 
 const Home = () => {
@@ -24,6 +25,7 @@ const Home = () => {
     if(loginStatus){
       dispatch(fetchCart());
       dispatch(fetchWishlist());
+      dispatch(fetchAddress());
     }
   })
 

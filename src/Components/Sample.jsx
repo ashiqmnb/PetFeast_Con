@@ -263,3 +263,30 @@ const Checkout = () => {
 };
 
 export default Checkout;
+
+
+
+<div className="space-y-2 bg-blue-100 rounded-lg p-5">
+          <div>
+            <input
+              type="radio"
+              id="netBanking"
+              value="Net Banking"
+              name="paymentMethod"
+              onChange={handlePaymentChange}
+              className="mr-2"
+            />
+            <label htmlFor="netBanking">Net Banking</label>
+          </div>
+
+          <div>
+            <input
+              type="radio"
+              id="upi"
+              value="UPI"
+              name="paymentMethod"
+              onChange={handlePaymentChange}
+              className="mr-2"
+            />
+            <label htmlFor="upi">UPI</label>
+          </div>

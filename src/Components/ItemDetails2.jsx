@@ -12,8 +12,7 @@ import { addRemoveWishlist } from '../Redux/Slices/WishlistSlice';
 const ItemDetails2 = () => {
   
     const [isLiked, setIsLiked] = useState(false);
-    
-
+    const navigate = useNavigate();
   	const [item, setItem] = useState({});
     const loginStatus = localStorage.getItem("name");
     const dispatch = useDispatch();
@@ -29,7 +28,6 @@ const ItemDetails2 = () => {
     }
 
 
-  	const navigate = useNavigate()
 
   	const {id} = useParams();
 
@@ -63,11 +61,22 @@ const ItemDetails2 = () => {
       {/* Product Image and Title */}
       <div className="md:w-1/2 p-8 flex flex-col items-center border rounded-xl relative">
         <img src={item.image} alt="item" className="md:w-full h-auto w-2/3 object-cover rounded-lg" />
-        {isLiked ? (
-          <FcLike onClick={()=>handleRemoveWishlist(item.productId)} className='text-3xl absolute top-4 left-4 cursor-pointer'/>
-        ):(
-          <FaRegHeart onClick={()=>handleAddWishlist(item.productId)} className='text-3xl absolute top-4 left-4 cursor-pointer'/>
-        )}
+
+
+      {/* wishlist icon render based on loginStatus and isLiked */}
+      {loginStatus && (
+        isLiked ? (
+          <FcLike
+            onClick={() => handleRemoveWishlist(item.productId)}
+            className="text-3xl absolute top-4 left-4 cursor-pointer flex"
+          />
+        ) : (
+          <FaRegHeart
+            onClick={() => handleAddWishlist(item.productId)}
+            className="text-3xl absolute top-4 left-4 cursor-pointer flex"
+          />
+        )
+      )}
 
       </div>
 

@@ -8,13 +8,13 @@ import { useSelector } from 'react-redux';
 const AddNewProduct = () => {
 
 
-    const admin = useSelector(state => state.userData);
+    const {role} = useSelector(state => state.userData);
     const navigate = useNavigate();
 
     const [ formData, setFormData ] = useState({
         name: '',
         discription: '',
-        // image:'',
+        mrp:'',
         catogory: null,
         price: '',
         rating: ''
@@ -29,21 +29,19 @@ const AddNewProduct = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleImage = (e)=>{
-        e.preventDefault();
-        console.log("image fileee". e.target)
-    }
 
     const validate = ()=>{
         const newErrors = {};
         
-        if(!formData.name) newErrors.heading = 'heading is required';
+        if(!formData.name) newErrors.name = 'name is required';
         if(!formData.discription) newErrors.discription = 'discription is required';
-        if(!formData.image) newErrors.image = 'image url is required';
+        if(!formData.mrp) newErrors.mrp = 'mrp is required';
         if(!formData.catogory) newErrors.catogory = 'catogory is required';
         if(!formData.price) newErrors.price = 'price is required';
         if(!formData.rating) newErrors.rating = 'rating is required';
+        if(formData.mrp < formData.price) newErrors.mrp = 'price must less than mrp'
         if(formData.rating > 5 || formData.rating < 0) newErrors.rating = 'rating should be 0 - 5';
+        if(!image) newErrors.image = 'image is required';
 
         return newErrors;
     }
@@ -56,18 +54,13 @@ const AddNewProduct = () => {
             setErrors(validationErrors)
         }
         else{
-            console.log(formData);
-            axios.post("http://localhost:5000/items", {...formData})
-                .then((res)=> console.log(res))
-                .catch((err)=> console.error(err))
-
-            alert("Product Added Successfully")
-            navigate('/admin/home')
+            console.log("product details", formData);
+            console.log("image===>", image)
         }
     }
 
 
-    if(admin.role === "Admin"){
+    if(role !== "Admin"){
         return(
             <div className='flex justify-center'>
                 <div className='text-center h-96 w-96 shadow-sm'>
@@ -97,7 +90,7 @@ const AddNewProduct = () => {
                     </label><br />
                     <input
                         onChange={handleChange}
-                        name='heading'
+                        name='name'
                         value={formData.name}
                         className='w-full p-1 rounded-lg placeholder:text-black'
                         type="text" />
@@ -122,18 +115,32 @@ const AddNewProduct = () => {
                         Image
                     </label><br />
                     <input
-                        onChange={handleImage}
-                        name='url'
+                        onChange={(e)=> setImage(e.target.files[0])}
+                        name='image'
                         className='w-full p-1 rounded-lg placeholder:text-black'
                         type="file" />
-                        {errors.url && <span className="text-red-500 text-sm">{errors.url}</span>}
+                        {errors.image && <span className="text-red-500 text-sm">{errors.image}</span>}
                 </div>
 
-                <div className='flex justify-between p-5 space-x-10'>
-                    <div className='w-1/2 '>
-                        <img className='h-20 rounded-lg bg-white' src={formData.url} alt="Product Image" />
+                
+
+
+                {/* Category and Rating */}
+                <div className='flex '>
+                    <div className='p-5 w-1/2'>
+                        <label className='text-lg font-semibold' htmlFor="">
+                            Rating
+                        </label><br />
+                        <input
+                            onChange={handleChange}
+                            name='rating'
+                            value={formData.rating}
+                            className='w-full p-1 rounded-lg placeholder:text-black'
+                            type="text" />
+                        {errors.rating && <span className="text-red-500 text-sm">{errors.rating}</span>}
                     </div>
-                    <div className='w-1/2 '>
+
+                    <div className='p-5 w-1/2'>
                         <label className='text-lg font-semibold' htmlFor="">
                             Category
                         </label><br />
@@ -153,8 +160,7 @@ const AddNewProduct = () => {
                     </div>
                 </div>
 
-
-                {/* Price and Rating */}
+                {/* Price and MRP */}
                 <div className='flex '>
                     <div className='p-5 w-1/2'>
                         <label className='text-lg font-semibold' htmlFor="">
@@ -171,15 +177,15 @@ const AddNewProduct = () => {
 
                     <div className='p-5 w-1/2'>
                         <label className='text-lg font-semibold' htmlFor="">
-                            Rating
+                            MRP
                         </label><br />
                         <input
                             onChange={handleChange}
-                            name='rating'
-                            value={formData.rating}
+                            name='mrp'
+                            value={formData.mrp}
                             className='w-full p-1 rounded-lg placeholder:text-black'
                             type="text" />
-                        {errors.rating && <span className="text-red-500 text-sm">{errors.rating}</span>}
+                        {errors.mrp && <span className="text-red-500 text-sm">{errors.mrp}</span>}
                     </div>
                 </div>
 

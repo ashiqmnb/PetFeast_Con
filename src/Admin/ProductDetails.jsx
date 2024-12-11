@@ -8,7 +8,7 @@ import { PiClockAfternoon } from 'react-icons/pi';
 
 const ProductDetails = () => {
   
-    const admin = useSelector(state => state.userData);
+    const {role} = useSelector(state => state.userData);
 
   	const [item, setItem ] = useState({})
 
@@ -41,7 +41,7 @@ const ProductDetails = () => {
 
 
   
-  if(admin.role === "Admin"){
+  if(role !== "Admin"){
     return(
         <div className='flex justify-center'>
             <div className='text-center h-96 w-96 shadow-sm'>
@@ -109,7 +109,7 @@ const ProductDetails = () => {
               Remove Product
           </button>
           <button
-              onClick={()=> navigate(`/admin/updateproduct/${item.id}`)}
+              onClick={()=> navigate(`/admin/updateproduct/${item.productId}`)}
               className="w-full bg-green-600 text-white font-semibold py-2 rounded hover:bg-green-700 transition"
            >
             Edit Product

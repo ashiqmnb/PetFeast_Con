@@ -115,7 +115,7 @@ const LoginPage = () => {
               value={email}
               onChange={(e)=> setEmail(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded mt-1"
-            />
+            /> <br />
             {errors.email && <span className="text-red-500 text-sm">{errors.email}</span>}
           </div>
           <div className="mb-4">

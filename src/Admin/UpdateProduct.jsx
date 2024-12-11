@@ -3,16 +3,18 @@ import axios from 'axios';
 import SideBar from './SideBar';
 import { useNavigate, useParams } from 'react-router-dom';
 import access from '../assets/access.png';
+import { useSelector } from 'react-redux';
 
 
 const UpdateProduct = () => {
 
-    const {itemId} = useParams()
+    const {itemId} = useParams();
+    const {role} = useSelector(state => state.userData);
  
     const [product, setProduct] = useState({
         heading: "",
         discription: "",
-        url: "",
+        mrp: "",
         catogory: "",
         price: 0,
         rating: 0,
@@ -24,9 +26,10 @@ const UpdateProduct = () => {
     const id = localStorage.getItem('adminId')
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/items/${itemId}`) // Fetch product from JSON server
+        axios.get(`https://localhost:7109/api/Product/${itemId}`) // Fetch product from JSON server
           .then((res) => {
-            setProduct(res.data);
+            // console.log("____", res.data)
+            setProduct(res.data.data);
         })
           .catch((err) => {
             console.error("Error fetching product", err);
@@ -45,7 +48,7 @@ const UpdateProduct = () => {
         
         if(!product.heading) newErrors.heading = 'heading is required';
         if(!product.discription) newErrors.discription = 'discription is required';
-        if(!product.url) newErrors.url = 'image url is required';
+        if(!product.mrp) newErrors.url = 'Mrp url is required';
         if(!product.catogory) newErrors.catogory = 'catogory is required';
         if(!product.price) newErrors.price = 'price is required';
         if(!product.rating) newErrors.rating = 'rating is required';
@@ -91,7 +94,7 @@ const UpdateProduct = () => {
     };
 
 
-    if(!id && !admin){
+    if(role !== "Admin"){
         return(
             <div className='flex justify-center'>
                 <div className='text-center h-96 w-96 shadow-sm'>
@@ -116,12 +119,12 @@ const UpdateProduct = () => {
             <form onSubmit={HandleUpdateProduct}>
                 <div className='px-5'>
                     <label className='text-lg font-semibold' htmlFor="">
-                        Heading
+                        Name
                     </label><br />
                     <input
                         onChange={handleChange}
                         name='heading'
-                        value={product.heading}
+                        value={product.name}
                         className='w-full p-1 rounded-lg placeholder:text-black'
                         type="text" />
                         {error.heading && <span className="text-red-500 text-sm">{error.heading}</span>}
@@ -134,7 +137,7 @@ const UpdateProduct = () => {
                     <textarea
                         onChange={handleChange}
                         name='discription'
-                        value={product.discription}
+                        value={product.description}
                         className='w-full p-1 rounded-lg placeholder:text-black'
                         ></textarea>
                         {error.discription && <span className="text-red-500 text-sm">{error.discription}</span>}
@@ -142,23 +145,15 @@ const UpdateProduct = () => {
 
                 <div className='p-5'>
                     <label className='text-lg font-semibold' htmlFor="">
-                        Image Url
+                        Image
                     </label><br />
-                    <input
-                        onChange={handleChange}
-                        name='url'
-                        value={product.url}
-                        className='w-full p-1 rounded-lg placeholder:text-black'
-                        type="text" />
-                        {error.url && <span className="text-red-500 text-sm">{error.url}</span>}
+                    <input type="file" name="" id="" />
                 </div>
 
-                {/* Image and Category */}
-                <div className='flex justify-between p-5 space-x-10'>
-                    <div className='w-1/2 '>
-                        <img className='h-20 rounded-lg bg-white' src={product.url} alt="" />
-                    </div>
-                    <div className='w-1/2'>
+
+                {/* Category and Rating */}
+                <div className='flex '>
+                    <div className='p-5 w-1/2'>
                         <label className='text-lg font-semibold' htmlFor="">
                             Category
                         </label><br />
@@ -166,19 +161,33 @@ const UpdateProduct = () => {
                             onChange={handleChange}
                             className='w-full p-1 rounded-lg placeholder:text-black'
                             name='catogory'
-                            value={product.catogory}>
+                            value={product.categoryName}>
 
                             <option value={''}>Select Category</option>
-                            <option value={'dog-food'}>Dog Food</option>
-                            <option value={'dog-beds'}>Dog Bed</option>
-                            <option value={'cat-food'}>Cat Food</option>
-                            <option value={'cat-treat'}>Cat Treat</option>
+                            <option value={1}>Dog Food</option>
+                            <option value={2}>Dog Bed</option>
+                            <option value={3}>Cat Food</option>
+                            <option value={4}>Cat Treat</option>
                         </select>
                         {error.catogory && <span className="text-red-500 text-sm">{error.catogory}</span>}
                     </div>
+
+                    <div className='p-5 w-1/2'>
+                        <label className='text-lg font-semibold' htmlFor="">
+                            Rating
+                        </label><br />
+                        <input
+                            onChange={handleChange}
+                            name='rating'
+                            value={product.rating}
+                            className='w-full p-1 rounded-lg placeholder:text-black'
+                            type="text" />
+                        {error.rating && <span className="text-red-500 text-sm">{error.rating}</span>}
+                    </div>
                 </div>
 
-                {/* Price and Rating */}
+
+                {/* Price and MRP */}
                 <div className='flex '>
                     <div className='p-5 w-1/2'>
                         <label className='text-lg font-semibold' htmlFor="">
@@ -195,15 +204,15 @@ const UpdateProduct = () => {
 
                     <div className='p-5 w-1/2'>
                         <label className='text-lg font-semibold' htmlFor="">
-                            Rating
+                            MRP
                         </label><br />
                         <input
                             onChange={handleChange}
                             name='rating'
-                            value={product.rating}
+                            value={product.mrp}
                             className='w-full p-1 rounded-lg placeholder:text-black'
                             type="text" />
-                        {error.rating && <span className="text-red-500 text-sm">{error.rating}</span>}
+                        {error.mrp && <span className="text-red-500 text-sm">{error.mrp}</span>}
                     </div>
                 </div>
 

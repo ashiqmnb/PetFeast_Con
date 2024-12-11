@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 
 const Categories = () => {
 
-    const admin = useSelector(state => state.userData);
+    const {role} = useSelector(state => state.userData);
 
     const navigate = useNavigate()
     const [items, setItems] = useState([])
@@ -54,7 +54,7 @@ const Categories = () => {
 
 
 
-  if(admin.role === "Admin"){
+  if(role !== "Admin"){
       return(
           <div className='flex justify-center'>
               <div className='text-center h-96 w-96 shadow-sm'>
@@ -107,6 +107,11 @@ const Categories = () => {
 						<h1 className="font-semibold">{item.name}</h1>
 						<p className="font-semibold">Price: $ <span className="font-bold text-green-600">{item.price}</span></p>
 						<p className="font-semibold">⭐ {item.rating}</p>
+
+                        {item.stock <= 5 && (
+                            <span className="text-red-500 text-base font-semibold">Only few stock left...!!</span>
+                        )}
+
 					</div>
 				</div>
 			))}
@@ -148,6 +153,13 @@ const Categories = () => {
 						<h1 className="font-semibold max-w-[380] min-w-[380]">{item.name}</h1>
 						<p className="font-semibold">Price: $ <span className="font-bold text-green-600">{item.price}</span></p>
 						<p className="font-semibold">⭐ {item.rating}</p>
+
+                        {item.stock <= 5 && (
+                            <span className="text-red-500 text-base font-semibold">Only few stock left</span>
+                        )}
+
+
+
 					</div>
 				</div>
 			))}

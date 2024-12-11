@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux';
 
 const Dashboard = () => {
 
-    const admin = useSelector(state => state.userData);
+    const {role} = useSelector(state => state.userData);
 
 
     const [products, setProducts] = useState([]);
@@ -33,7 +33,7 @@ const Dashboard = () => {
     },[])
 
 
-    if(admin.role == "Admin"){
+    if(role !== "Admin"){
         return(
             <div className='flex justify-center'>
                 <div className='text-center h-96 w-96 shadow-sm'>

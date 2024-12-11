@@ -8,52 +8,85 @@ import { fetchCart,
 import { useDispatch, useSelector } from 'react-redux';
 import { CiSquarePlus } from "react-icons/ci";
 import { CiSquareMinus } from "react-icons/ci";
+import axios from 'axios';
+import { fetchWishlist } from '../Redux/Slices/WishlistSlice';
 
 
 
 const Cart = () => {
 
-  const cartRe = useSelector(state => state.cart.cart)
+  const {cart} = useSelector(state => state.cart);
+  const {totalItems} = useSelector(state => state.cart);
+  const {totalPrice} = useSelector(state => state.cart);
 
+  const [ items, setItems ] = useState([]);
+  const [errors, setErrors] = useState([]);
+
+  const chechStock = ()=>{
+    let updatedErrors = [...errors];
+    cart.forEach((cartItem, index) => {
+      const product = items.find(p => p.productId === cartItem.productId);
+
+      if(product){
+
+        updatedErrors[index] = cartItem.quantity <= product.stock;
+
+        // if(cartItem.quantity <= product.stock){
+        //   errors[index] = true;
+        //   return;
+        // }
+        // else{
+        //   errors[index] = false
+        //   return;
+        // }
+      }
+    });
+    setErrors(updatedErrors);
+  }
+
+  const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const handleIncrementQuantity = (id, qty)=>{
+  const handleIncrementQuantity = async (id, qty)=>{
     if(qty == 10){
       alert("Maximum quantity limit reached..!!")
     }
     else{
-      dispatch(incrementQuantity(id));
+      await dispatch(incrementQuantity(id));
+      await chechStock();
     }
   }
 
-  const handleDecrementQuantity = (id)=>{
-    dispatch(decrementQuantity(id));
+  const handleDecrementQuantity = async (id)=>{
+    await dispatch(decrementQuantity(id));
+    await chechStock();
   }
 
-  const handleRemoveFromCart = (id)=>{
-    dispatch(removeFromCart(id));
+  const handleRemoveFromCart = async (id)=>{
+    await dispatch(removeFromCart(id));
+    await chechStock();
   }
-
-  
-  const [cart, setCart] = useState([])
-  const navigate = useNavigate()
-
-  const calculateTotalPrice = () => {
-    return cartRe.reduce((total, item) => total + item.price * Number(item.quantity), 0);
-  };
 
   const calculateDiscount = () => {
-    return calculateTotalPrice() * 0.1;
+    return totalPrice * 0.1;
   };
 
   const calculateFinalPrice = () => {
-    return calculateTotalPrice() - calculateDiscount();
+    return totalPrice - calculateDiscount();
   };
 
   const handlePlaceOrder = () => {
-    if(cartRe.length > 0 ){
-      navigate('/payment')
-      console.log('Proceeding to checkout');
+    if(cart.length > 0){
+
+      const allInStock = errors.every(error => error === true);
+
+      if(allInStock){
+        navigate('/payment')
+      }
+      else{
+        alert("Product is out of stock")
+      }
+      // console.log('Proceeding to checkout');
     }
     else{
       alert("Your Cart is Empty")
@@ -61,9 +94,25 @@ const Cart = () => {
   };
 
   useEffect(()=>{
+    dispatch(fetchWishlist());
     dispatch(fetchCart());
-    console.log("cart from comp",cartRe)
+    // console.log("cart from comp",cart)
   },[])
+
+  useEffect(()=>{
+    axios.get("https://localhost:7109/api/Product")
+      .then((res)=>{
+        // console.log("ress",res.data.data);
+        setItems(res.data.data)
+        console.log("itemsss", items)
+      })
+    chechStock();
+  },[])
+
+  useEffect(()=>{
+    chechStock();
+    console.log("checck stock",errors)
+  },[cart, items])
  
   return (
         <div className="container mx-auto mb-24 p-4 flex justify-center flex-col md:flex-row gap-5 md:mt-44 mt-72">
@@ -71,7 +120,7 @@ const Cart = () => {
       <div style={{}} className="md:w-3/6 md:max-h-[400px] overflow-auto bg-white shadow-lg rounded-lg p-4 scrollbarHidden">
         <h2 style={{color:'#052560'}} className="text-2xl font-bold mb-4">Shopping Cart</h2>
         
-        {cartRe.length === 0 ? (
+        {cart.length === 0 ? (
           <div className='flex flex-col items-center text-center bg-gray-100 p-10 rounded-lg space-y-3'>
             <MdRemoveShoppingCart className='h-14 w-14'/>
             <p style={{color:'#052560'}} className='font-semibold text-xl'>Cart is Empty</p>
@@ -79,7 +128,7 @@ const Cart = () => {
           ):(null)
         }
 
-        {cartRe.map((item) => (
+        {cart.map((item, index) => (
           <div key={item.productId} className="flex items-center justify-between border-b py-4">
             <img onClick={()=>navigate(`/itemdetails/${item.productId}`)} src={item.image  } alt={item.productName} className="w-20 h-20 object-cover rounded-lg hover:scale-110 transition-transform" />
             <div className="flex-1 ml-4 space-y-2">
@@ -93,6 +142,11 @@ const Cart = () => {
                 <div className='text-lg relative top-1 hover:scale-105 transition-transform cursor-pointer' onClick={()=>handleIncrementQuantity(item.productId, item.quantity)}><CiSquarePlus /></div>
               </span>
 
+              {/* out of stock indcator */}
+              {!errors[index] && (
+                  <span className="text-red-500 text-base font-semibold">Out Of Stock</span>
+              )}
+              
               <p className="text-gray-800 font-bold">Total: ₹ {(item.price * item.quantity).toFixed(2)}</p>
             </div>
             <button
@@ -113,16 +167,16 @@ const Cart = () => {
       </div>
 
       {/* Cart Summary */}
-      {cartRe.length !== 0 ? (
+      {cart.length !== 0 ? (
         <div className="md:w-2/6 bg-white shadow-lg rounded-lg p-4">
         <h2 style={{color:'#052560'}} className="text-2xl font-bold mb-4">Cart Summary</h2>
         <div className="flex justify-between mb-2">
           <span>Total Items:</span>
-          <span>{cartRe.length}</span>
+          <span>{totalItems}</span>
         </div>
         <div className="flex justify-between mb-2">
           <span>Total Price:</span>
-          <span>${calculateTotalPrice().toFixed(2)}</span>
+          <span>${totalPrice.toFixed(2)}</span>
         </div>
         <div className="flex justify-between mb-2">
           <span>Discount:</span>

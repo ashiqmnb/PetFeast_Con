@@ -9,9 +9,8 @@ import { fetchCart } from "../Redux/Slices/cartSlice";
 
 const Navbar = () => {
 
-  const cart = useSelector(state => state.cart.cart);
-  const userRe = useSelector(state => state.user);
-  const wishlist = useSelector(state => state.wishlist.wishlist);
+  const {cart} = useSelector(state => state.cart);
+  const {wishlist} = useSelector(state => state.wishlist);
   const loginStatus = localStorage.getItem("name");
 
 
@@ -43,10 +42,13 @@ const Navbar = () => {
     // Filter the items based on the search query
     if(query.length > 0){
       axios.get(`https://localhost:7109/api/Product/SearchProduct?search=${query}`)
-    .then((res)=>{
-      // console.log("search res", res.data.data);
-      setFilteredItems(res.data.data);
-    })
+      .then((res)=>{
+        // console.log("search res", res.data.data);
+       setFilteredItems(res.data.data);
+      })
+    }
+    else{
+      setFilteredItems([]);
     }
   }, [query]);
 
