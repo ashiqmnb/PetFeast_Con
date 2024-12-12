@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserData } from "../Redux/Slices/userDataSlice";
-import { addAddress, fetchAddress } from "../Redux/Slices/AddressSlice";
+import { fetchAddress } from "../Redux/Slices/AddressSlice";
 import { fetchCart } from "../Redux/Slices/cartSlice";
 import { fetchWishlist } from "../Redux/Slices/WishlistSlice";
 
@@ -39,16 +38,6 @@ const Payment = () => {
 
   console.log("addres in payment", address)
 
-
-
-  const [paymentMethod, setPaymentMethod] = useState("Cash On Delivery")
-
-
-  const handlePaymentChange = (e) => {
-    console.log(e.target.value)
-    setPaymentMethod(e.target.value);
-  };
-
   const calculateDiscount = () => {
     return totalPrice* 0.1;
   };
@@ -75,7 +64,7 @@ const Payment = () => {
 
     // check address is selected
     if (!selectedAddress) {
-      alert("Please select an address before proceeding.");
+      alert("Select an address ");
       return;
     }
 

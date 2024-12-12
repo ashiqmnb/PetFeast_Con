@@ -16,7 +16,6 @@ const ProfilePage = () => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  // const userData = useSelector(state => state.userData)
 
   
   const name = localStorage.getItem("name");

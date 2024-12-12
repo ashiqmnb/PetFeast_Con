@@ -1,14 +1,11 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SideBar from './SideBar';
 import access from '../assets/access.png';
-import { useSelector } from 'react-redux';
 
 const AddNewProduct = () => {
 
-
-    // const {role} = useSelector(state => state.userData);
     const role = localStorage.getItem('role');
     const navigate = useNavigate();
 

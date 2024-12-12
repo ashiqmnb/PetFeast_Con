@@ -3,12 +3,10 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import SideBar from './SideBar'
 import access from '../assets/access.png';
-import { useSelector } from 'react-redux';
 
 
 const Categories = () => {
 
-    // const {role} = useSelector(state => state.userData);
     const role = localStorage.getItem('role');
 
     const navigate = useNavigate()
@@ -33,11 +31,6 @@ const Categories = () => {
         .then((res)=> {
             // console.log("product fetch",res.data.data);
             setItems(res.data.data);
-            // handleDogCategory("dog-food");
-            // handleCatCategory("cat-food");
-
-            // console.log("dogFiltered",dogFiltered);
-            // console.log("catFiltered", catFiltered);
         })
         .catch((err)=>{
             console.log(err)

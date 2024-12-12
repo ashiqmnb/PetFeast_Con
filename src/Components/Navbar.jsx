@@ -2,9 +2,10 @@ import React,{  useContext, useState, useEffect } from "react";
 import axios from "axios";
 import logo from '../assets/logo.png';
 import { NavLink, useNavigate } from "react-router-dom";
-import { MyContext } from "./MyContext";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCart } from "../Redux/Slices/cartSlice";
+import { fetchWishlist } from "../Redux/Slices/WishlistSlice";
+import { fetchAddress } from "../Redux/Slices/AddressSlice";
 
 
 const Navbar = () => {
@@ -55,6 +56,8 @@ const Navbar = () => {
   useEffect(()=>{
     if(loginStatus){
       dispatch(fetchCart());
+      dispatch(fetchWishlist());
+      dispatch(fetchAddress());
     }
   },[])
 

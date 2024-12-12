@@ -3,13 +3,10 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import SideBar from './SideBar';
 import access from '../assets/access.png';
-import { useSelector } from 'react-redux';
 import { PiClockAfternoon } from 'react-icons/pi';
-import { cache } from 'react';
 
 const ProductDetails = () => {
   
-    // const {role} = useSelector(state => state.userData);
     const role = localStorage.getItem('role');
 
   	const [item, setItem ] = useState({})
@@ -32,8 +29,6 @@ const ProductDetails = () => {
 
 
   const handleRemoveProduct = async (itemId) => {
-    // console.log("product id", itemId)
-    // console.log("token", localStorage.getItem("token"))
     axios.delete(`https://localhost:7109/api/Product/DeleteProduct/${itemId}`,
       // {},
       {

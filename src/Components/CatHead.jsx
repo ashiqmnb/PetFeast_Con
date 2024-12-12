@@ -1,7 +1,4 @@
 import React from 'react'
-import catFood from '../assets/cat_food.png'
-import catTreat from '../assets/cat_treats1.png'
-import catAll from '../assets/cat_all.png'
 import { NavLink } from 'react-router-dom'
 
 const CatHead = () => {

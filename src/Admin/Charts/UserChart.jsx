@@ -53,16 +53,16 @@ const UserChart = () => {
 
     const data = [
       {
-        "name": `Oct (${7})`,
-        "users": 5
+        "name": `Oct (${6})`,
+        "users": 6
       },
       {
         "name": `Nov (${8})`,
-        "users": 7
+        "users": 8
       },
       {
-        "name": `Dec (${users.length - 15})`,
-        "users": users.length - 15
+        "name": `Dec (${users.length - 14})`,
+        "users": users.length - 14
       }
   ]
 

@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import logoImg from '../assets/logo.png'
 import { NavLink, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { MyContext } from '../Components/MyContext';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../Redux/Slices/AuthSlice';
@@ -11,14 +10,11 @@ const LoginPage = () => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
   const [errors, setErrors] = useState({});
 
-  const dispatch = useDispatch()
-
-  const {userId, setUserId} = useContext(MyContext)
   const adminId = localStorage.getItem("adminId")
-
+  
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const validate = () => {

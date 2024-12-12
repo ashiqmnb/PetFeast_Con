@@ -30,15 +30,7 @@ const Cart = () => {
       if(product){
 
         updatedErrors[index] = cartItem.quantity <= product.stock;
-
-        // if(cartItem.quantity <= product.stock){
-        //   errors[index] = true;
-        //   return;
-        // }
-        // else{
-        //   errors[index] = false
-        //   return;
-        // }
+        
       }
     });
     setErrors(updatedErrors);
@@ -86,7 +78,6 @@ const Cart = () => {
       else{
         alert("Product is out of stock")
       }
-      // console.log('Proceeding to checkout');
     }
     else{
       alert("Your Cart is Empty")

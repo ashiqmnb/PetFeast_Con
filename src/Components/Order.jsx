@@ -8,7 +8,6 @@ const Order = () => {
 
   const [ orders, setOrders ] = useState([])
 
-
   useEffect(()=>{
     axios.get('https://localhost:7109/api/Order/GetOrderDetails',
       {
@@ -51,6 +50,7 @@ const Order = () => {
                           <p className='text-base font-bold'>{item.productName}</p>
                           <p>Order id : {item.orderId}</p>
                           <p>Order Date : {item.orderDate.substring(0, 10)}</p>
+                          <p>Quantity : {item.quantity}</p>
                           <p>Total Price : {item.totalPrice}</p>
                         </div>
 

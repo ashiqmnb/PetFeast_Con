@@ -76,13 +76,14 @@ const Address = () => {
         }
       };
 
-    const handleAddressDelete = (addressId)=>{
+    const handleAddressDelete = async (addressId)=>{
         try{
-            dispatch(deleteAddress(addressId));
-            alert("Address deleted successfully")
+          await dispatch(deleteAddress(addressId)).unwrap();
+          alert("Address deleted successfully")
         }
         catch(err){
             console.log("delete address error", err)
+            alert("Something went wrong, Please try again")
         }
     }
 

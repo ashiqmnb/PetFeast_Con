@@ -3,12 +3,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SideBar from "./SideBar";
 import access from '../assets/access.png';
-import { useSelector } from "react-redux";
 
 
 const AdminHome = () => {
 
-	// const {role} = useSelector(state => state.userData);
 	const role = localStorage.getItem('role');
 
 	const [products, setProducts] = useState([]);
@@ -117,7 +115,7 @@ const AdminHome = () => {
 				<div 
 					key={user.userId}
 					onClick={()=> navigate(`/admin/userdetails/${user.userId}`)}
-					className={` flex justify-start items-center p-3 border rounded-lg shadow space-x-3 bg-white  ${user.isBlocked ? 'hover:bg-green-200' : 'hover:bg-red-200'}`}>
+					className={` flex justify-start items-center p-3 border rounded-lg shadow space-x-3 bg-white  ${user.isBlocked ? 'hover:bg-red-200' : 'hover:bg-green-200'}`}>
 						{/* ${user.isAllowed ? 'bg-green-200 hover:bg-green-400' : 'bg-red-200 hover:bg-red-400'} */}
 						{/* ${user.isAllowed ? 'hover:bg-green-400' : 'hover:bg-red-400'} */}
 						<div 

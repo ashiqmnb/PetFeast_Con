@@ -12,7 +12,6 @@ import { NavLink } from 'react-router-dom';
 import ProductChart from './Charts/ProductChart';
 import UserChart from './Charts/UserChart';
 import access from '../assets/access.png';
-import { useSelector } from 'react-redux';
 
 const Dashboard = () => {
 
@@ -48,19 +47,19 @@ const Dashboard = () => {
                 console.log("totalRevenue error",err)
             })
 
-            axios.get('https://localhost:7109/api/Order/TotalProductsPurchased',
-                {
-                    headers:{
-                        Authorization: `Bearer ${localStorage.getItem("token")}`
-                    }
-                })
-                .then((res)=>{
-                    // console.log("totalOrder", res.data.data)
-                    setTotalOrder(res.data.data);
-                })
-                .catch((err)=>{
-                    console.log("totalOrder error",err)
-                })
+        axios.get('https://localhost:7109/api/Order/TotalProductsPurchased',
+            {
+                headers:{
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            })
+            .then((res)=>{
+                // console.log("totalOrder", res.data.data)
+                setTotalOrder(res.data.data);
+            })
+            .catch((err)=>{
+                console.log("totalOrder error",err)
+            })
     },[])
 
 

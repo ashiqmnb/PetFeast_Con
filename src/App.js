@@ -14,10 +14,8 @@ import ItemDetails2 from './Components/ItemDetails2';
 import ProfilePage from './Components/ProfilePage';
 import Cart from './Components/Cart';
 import Payment from './Pages/Payment';
-import OrderConfirm from './Pages/OrderConfirm';
 import Footer from './Components/Footer';
 import AdminHome from './Admin/AdminHome';
-import SideBar from './Admin/SideBar';
 import Categories from './Admin/Categories';
 import AddNewProduct from './Admin/AddNewProduct';
 import ProductDetails from './Admin/ProductDetails';
@@ -52,7 +50,6 @@ function App() {
         <Route path='/wishlist' element={<Wishlist/>}/>
         <Route path='/order' element={<Order/>}/>
         <Route path='/payment' element={<Payment />} />
-        <Route path='/orderConfirm' element={<OrderConfirm />} />
         <Route path='/itemdetails/:id' element={<ItemDetails2 />} />
         <Route path='/address' element={<Address />} />
 

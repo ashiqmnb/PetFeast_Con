@@ -1,21 +1,18 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import SideBar from './SideBar';
 import access from '../assets/access.png';
-import { useSelector } from 'react-redux';
+import { FaBoxOpen } from "react-icons/fa";
 
 const UserDetails = () => {
 
-  // const {role} = useSelector(state => state.userData);
   const role = localStorage.getItem('role');
-
+  const navigate = useNavigate();
   const [ userData, setUserData ] = useState({});
 
-  const [ orderDetails, setOrderDetails ] = useState({});
-  const [ orderItems, setOrderItems ] = useState([]);
-  const [ address, setAddress ] = useState({})
+  const [ orderDetails, setOrderDetails ] = useState([]);
 
 
   const {userId} = useParams()
@@ -41,7 +38,7 @@ const UserDetails = () => {
       }
     })
     .then((res)=>{
-      console.log("userfetch res", res)
+      // console.log("userfetch res", res)
       setUserData(res.data.data);
     })
     .catch((err)=>{
@@ -51,6 +48,20 @@ const UserDetails = () => {
 
   useEffect(()=>{
     fetchUserById();
+
+    axios.get(`https://localhost:7109/api/Order/GetOrdersByUserId?userId=${userId}`,
+      {
+        headers:{
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+      .then((res)=>{
+        console.log("fetch order", res.data.data)
+        setOrderDetails(res.data.data)
+      })
+      .catch((err)=>{
+        console.log("fetch order", err)
+      })
   },[])
 
 
@@ -76,10 +87,10 @@ const UserDetails = () => {
 
 
         <div className="flex justify-center my-16 md:ms-44">
-      <div className="w-4/6 lg:space-y-0 space-y-7 lg:flex block">
-        
+      <div className="w-5/6 h-[550px] lg:space-y-0 space-y-7 lg:flex gap-5 block">
+      
         {/* User Details */}
-        <div className='bg-slate-100 rounded-lg shadow-lg border lg:w-1/2 w-full space-y-1 p-2'>
+        <div className='bg-slate-100 rounded-lg shadow-lg border lg:w-5/12 w-full space-y-1 p-2'>
             <h1 style={{color:'#052560'}} className="font-bold text-center text-xl mt-2">User Details</h1>
             <div className='flex justify-center'>
               <div className='bg-slate-400 h-24 w-24 text-lg text-center font-semibold rounded-full p-8 my-7'>
@@ -94,11 +105,7 @@ const UserDetails = () => {
               <p className='font-semibold text-gray-600'>
                 Email :{" "}
                 <span className='text-black'>{userData.email}</span></p>
-              {/* <p className='font-semibold text-gray-600'>
-                Username :{" "}
-                <span className='text-black'>{userData.username}</span></p> */}
-
-
+                
               <button
                 onClick={handleBlock}
                 className={`mt-2 px-3 py-1 w-full rounded-lg text-white text-md font-semibold transition ${
@@ -109,83 +116,56 @@ const UserDetails = () => {
               </button>
             </div>
 
-            {/* Shipping Address */}
-            {Object.keys(address).length > 0 ? (
-              <div>
-              <h1 style={{color:'#052560'}} className="font-bold text-center text-xl py-2" >Shipping Address</h1>
-              <div className='p-5 text-lg bg-white rounded-lg shadow-md'>
-                <p className='font-semibold text-gray-600'>
-                  Full Name :{" "}
-                  <span className='text-black'>{address.fullName}</span>
-                </p>
-                <p className='font-semibold text-gray-600'>
-                  Phone Number :{" "}
-                  <span className='text-black'>{address.phoneNumber}</span></p>
-                <p className='font-semibold text-gray-600'>
-                  Pincode :{" "}
-                  <span className='text-black'>{address.pincode}</span></p>
-                <p className='font-semibold text-gray-600'>
-                  House Name :{" "}
-                  <span className='text-black'>{address.houseName}</span></p>
-                <p className='font-semibold text-gray-600'>
-                  Place :{" "}
-                  <span className='text-black'>{address.place}</span></p>
-                <p className='font-semibold text-gray-600'>
-                  Post Office :{" "}
-                  <span className='text-black'>{address.postOffice}</span></p>
-                <p className='font-semibold text-gray-600'>
-                  Land Mark :{" "}
-                  <span className='text-black'>{address.landMark}</span></p>
-              </div>
-            </div>
-            ) : (null)}
+            
         </div>
 
         {/* Order Details */}
-        <div className='bg-slate-100 max-h-[650px] rounded-lg shadow-lg border lg:w-1/2 w-full space-y-5 p-2 overflow-auto scrollbarHidden'>
+        <div className='bg-slate-100 max-h-[650px] rounded-lg shadow-lg border lg:w-6/12 w-full space-y-5 p-2 overflow-auto scrollbarHidden'>
         <h1 style={{color:'#052560'}} className="font-bold text-center text-xl mt-2">Order Details</h1>
-          {/* Order Details */}
-          {orderDetails ? (
-            <div className='p-5 text-lg bg-white rounded-lg shadow-md'>
-            <p className='font-semibold text-gray-600'>
-                  Payment Method :{" "}
-                  <span className='text-black'>{orderDetails.paymentMethod}</span></p>
-            <p className='font-semibold text-gray-600'>
-                  Total Price :{" "}
-                  <span className='text-black'>{orderDetails.totalPrice}</span></p>
-            <p className='font-semibold text-gray-600'>
-                  Number of Items :{" "}
-                  <span className='text-black'>{orderItems.length}</span></p>
-            <p className='font-semibold text-gray-600'>
-                  Order Date :{" "}
-                  <span className='text-black'>{orderDetails.orderDate}</span></p>
-            <p className='font-semibold text-gray-600'>
-                  Order Time :{" "}
-                  <span className='text-black'>{orderDetails.orderTime}</span></p>
-          </div>
-          ) : (
-            <h1 className='text-center text-red-600 font-bold text-xl'>
-              No Orders</h1>
-          )}
 
-          {/* Order Items Details */}
-          <div className='p-2 text-lg bg-white rounded-lg shadow-lg space-y-2'>
-            {orderItems.map((item)=>(
-              <div
-                key={item.id}
-                className="bg-white flex justify-start items-center p-3 border rounded-lg shadow-md space-x-2">
-                <img 
-                  className="h-16 w-auto" 
-                  src={item.url} alt="img" />
-                <div>
-                  <h1 className="font-semibold">{item.heading}</h1>
-                  <p className="font-semibold">Price: $ <span className="font-bold text-green-600">{item.price}</span></p>
-              </div>
+        {orderDetails.length === 0 ? (
+            <div className='flex flex-col items-center text-center p-10 rounded-lg space-y-3'>
+                <FaBoxOpen className='h-20 w-20'/>
+                <p style={{color:'#052560'}} className='font-semibold text-xl'>No Orders</p>
             </div>
-            ))}
-          </div>
-        </div>
+        ):(null)}
 
+          {/* Order Details */}
+          {orderDetails.map((order, index)=>{
+            return(
+              <div className='bg-white p-5 rounded-lg shadow-sm border'>
+
+                <div className='text-base space-y-1'>
+                  <p>
+                    <span>Order Id : </span>
+                    <span className='font-semibold'>{order.orderId}</span>
+                  </p>
+                  <p>
+                    <span>Order Date : </span>
+                    <span className='font-semibold'>{order.orderDate.substring(0, 10)}</span>
+                  </p>
+                  <p>
+                    <span>Transaction Id : </span>
+                    <span className='font-semibold'>{order.transactionId}</span>
+                  </p>
+                </div>
+
+                {/* Product images */}
+                <div className='flex justify-start pt-4 space-x-2'>
+                  {order.orderProducts.map((item, index)=>{
+                    return(
+                      <img 
+                        onClick={()=> navigate(`/admin/productdetails/${item.productId}`)}
+                        className='h-20 w-20 hover:scale-105 transition-transform shadow-lg' src={item.image} alt="product image" />
+                    )
+                  })}
+                </div>
+
+              </div>
+            )
+          })}
+
+        </div>
       </div>
     </div>
     </div>

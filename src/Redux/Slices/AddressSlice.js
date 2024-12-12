@@ -53,7 +53,8 @@ export const deleteAddress = createAsyncThunk(
         }
         catch(error){
             console.log("delete address error", error)
-            // rejectWithValue(error);
+            // return rejectWithValue(error);
+            return rejectWithValue(error.response?.data || error.message);
         }
     }
 )

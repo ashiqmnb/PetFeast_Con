@@ -3,22 +3,14 @@ import axios from 'axios';
 import SideBar from './SideBar';
 import { useNavigate, useParams } from 'react-router-dom';
 import access from '../assets/access.png';
-import { useSelector } from 'react-redux';
 
 
 const UpdateProduct = () => {
 
     const {itemId} = useParams();
-    // const {role} = useSelector(state => state.userData);
     const role = localStorage.getItem('role');
  
     const [product, setProduct] = useState({
-        // heading: "",
-        // discription: "",
-        // mrp: "",
-        // catogory: "",
-        // price: 0,
-        // rating: 0,
         Name: '',
         Description: '',
         MRP: null,
@@ -32,8 +24,6 @@ const UpdateProduct = () => {
 
     const navigate = useNavigate()
     const [error, setError] = useState("");
-    const [admin, setAdmin] = useState(false);
-    const id = localStorage.getItem('adminId')
 
     useEffect(() => {
         axios.get(`https://localhost:7109/api/Product/${itemId}`) 
@@ -83,18 +73,17 @@ const UpdateProduct = () => {
         if(product.Stock < 1) newErrors.Stock = 'stock must greater than 1'
         if(product.MRP < product.Price) newErrors.MRP = 'mrp must greater than price';
         if(product.Rating > 5 || product.Rating < 0) newErrors.Rating = 'rating should be 0 - 5';
-        // if(!Image) newErrors.Image = 'image is required';
 
 
         return newErrors;
     }
 
 
-    const logFormData = (formData) => {
-        for (let [key, value] of formData.entries()) {
-            console.log(`${key}:`, value);
-        }
-    };
+    // const logFormData = (formData) => {
+    //     for (let [key, value] of formData.entries()) {
+    //         console.log(`${key}:`, value);
+    //     }
+    // };
 
 
     const HandleUpdateProduct = (e) => {
@@ -137,12 +126,6 @@ const UpdateProduct = () => {
             );
         }
     };
-
-    // useEffect(()=>{
-    //     console.log("UpdateProduct", product)
-    //     console.log("UpdateImage", Image)
-
-    // }, [product])
 
 
     if(role !== "Admin"){
@@ -291,15 +274,14 @@ const UpdateProduct = () => {
 
                 <div className='flex justify-center'>
                     <button 
-                        className="bg-green-500 p-2 px-3 text-white font-semibold rounded-lg hover:bg-green-700 transition"
+                        className="bg-blue-500 p-2 px-3 text-white font-semibold rounded-lg hover:bg-blue-700 transition"
                         type="submit">
-                        Add Product
+                        Update Product
                     </button>
                 </div>
             </form>
         </div>
     </div>
-    {/* <ToastContainer /> */}  
     </div>
   )
 }
