@@ -36,7 +36,6 @@ const Payment = () => {
     setSelectedAddress(selectedAddr);
   };
 
-  console.log("addres in payment", address)
 
   const calculateDiscount = () => {
     return totalPrice* 0.1;
@@ -83,7 +82,6 @@ const Payment = () => {
       console.log("order id", orderId);
 
       // add razorpay options
-      
       const options = {
         key: "rzp_test_5ePU4l3xfvzrx2", // Razorpay API key
         amount: totalPrice * 100, // amount in paise
@@ -112,7 +110,7 @@ const Payment = () => {
                 }
               });
               
-            console.log("222222222222");
+            // console.log("222222222222");
             await axios.post("https://localhost:7109/api/Order/PlaceOrder",
               {
                 addressId: selectedAddress.addressId,
@@ -132,7 +130,6 @@ const Payment = () => {
           }
           catch(error){
             console.log("==>",error.response)
-            // alert("Payment verification failed. Please try again");
             alert(error.response.data.error)
           }
         },
@@ -245,13 +242,13 @@ const Payment = () => {
           Order Summary
         </h2>
         <p className="text-lg font-semibold mb-4 bg-slate-100 p-2 rounded-lg">
-          Total Price: $ {totalPrice}
+          Total Price: ₹ {totalPrice}
         </p>
         <p className="text-lg font-semibold mb-4 bg-slate-100 p-2 rounded-lg">
-          Discount: $ {calculateDiscount()}
+          Discount: ₹ {calculateDiscount()}
         </p>
         <p className="text-lg font-semibold mb-4 bg-green-300 p-2 rounded-lg">
-          Final Price: $ {calculateFinalPrice()}
+          Final Price: ₹ {calculateFinalPrice()}
         </p>
 
         {/* <h3 style={{ color: "#052560" }} className="text-2xl font-bold mb-4">

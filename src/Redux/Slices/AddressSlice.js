@@ -47,7 +47,7 @@ export const deleteAddress = createAsyncThunk(
                         Authorization: `Bearer ${localStorage.getItem("token")}`
                     }
                 });
-            console.log("delete address res", response);
+            // console.log("delete address res", response);
             dispatch(fetchAddress());
 
         }

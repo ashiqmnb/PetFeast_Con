@@ -84,20 +84,22 @@ const ItemDetails2 = () => {
       <div className="md:w-1/2 p-4 flex flex-col justify-between rounded-xl border">
         <div>
 
-        <h1 className="md:text-2xl text-lg font-semibold font-se mt-4">{item.name}</h1>
+          <h1 className="md:text-2xl text-lg font-semibold font-sans mt-4">{item.name}</h1>
 
-          <p className="md:text-2xl text-lg mb-4">{item.description}</p>
+          <p className="md:text-xl text-lg my-2">{item.description}</p>
 
           {/* Product Rating */}
-          <div className="flex items-center mb-4">
-            <span className=" text-xl mr-2">⭐{item.rating}</span>
+          <div className="flex items-center">
+            <span className="text-2xl font-bold">⭐
+              <span className='ms-1'>{item.rating}</span>
+            </span>
           </div>
 
 
           {/* Old Price*/}
-          <div >
-            <span className='text-base font-semibold'>Old Price</span>
-            <span className="text-xl font-bold mb-4 "> ₹ 
+          <div className='opacity-50'>
+            <span className='font-semibold'>Old Price</span>
+            <span className="font-bold"> ₹ 
               <strike className=" text-red-600 ml-2">{item.mrp}</strike>
             </span>
           </div>
@@ -111,8 +113,11 @@ const ItemDetails2 = () => {
           </div>
 
           {/* COD */}
-          <p className="text-lg mb-4 font-serif text-green-600">Cash On Delivery Available</p>
+          <p className="text-lg  font-serif text-green-600">Cash On Delivery Available</p>
 
+          {item.stock <= 5 && (
+              <span className="text-red-500 mb-4 text-base  font-semibold">Only few stock left...!!</span>
+          )}
         </div>
 
         {/* Action Buttons */}

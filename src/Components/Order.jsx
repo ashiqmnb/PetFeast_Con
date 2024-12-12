@@ -30,8 +30,8 @@ const Order = () => {
         <h2 style={{color:'#052560'}} className="text-2xl font-bold mt-6 mb-6 text-center">Orders</h2>
 
         {orders.length === 0 ? (
-            <div className='flex flex-col items-center text-center  p-10 rounded-lg space-y-3'>
-                <FaBoxOpen className='h-28 w-28'/>
+            <div className='flex flex-col items-center text-center p-10 rounded-lg space-y-3'>
+                <FaBoxOpen className='h-28 w-28 '/>
                 <p style={{color:'#052560'}} className='font-semibold text-xl'>No Orders</p>
             </div>
         ):(null)}
@@ -40,8 +40,8 @@ const Order = () => {
           <div className=' w-5/6 flex flex-wrap items-center justify-center gap-3'>
               {orders.map((item, index)=>{
                 return(
-                  <div className='w-2/5 h-48 border bg-white shadow-md rounded-lg'>
-                      <div className='flex p-3'>
+                  <div className='w-2/5 h-52 border bg-white shadow-md rounded-lg'>
+                      <div className='flex px-2 py-4'>
                         {/* Product image */}
                         <img className='h-40 w-40 hover:scale-95 transition-transform' src={item.productImage} alt="" />
 

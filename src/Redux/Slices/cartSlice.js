@@ -52,7 +52,7 @@ export const incrementQuantity = createAsyncThunk(
                 },
             });
             dispatch(fetchCart());
-            console.log("incrementQuantity response",response)
+            // console.log("incrementQuantity response",response)
         }
         catch(error){
             console.log("incrementQuantity error",error)
@@ -72,7 +72,7 @@ export const decrementQuantity = createAsyncThunk(
                 },
             });
             dispatch(fetchCart());
-            console.log("incrementQuantity response",response)
+            // console.log("incrementQuantity response",response)
         }
         catch(error){
             console.log("incrementQuantity error",error)
@@ -92,10 +92,28 @@ export const removeFromCart = createAsyncThunk(
                 },
             });
             dispatch(fetchCart());
-            console.log("removeFromCart response",response)
+            // console.log("removeFromCart response",response)
         }
         catch(error){
             console.log("removeFromCart error",error)
+        }
+    }
+)
+
+export const removeAllItems = createAsyncThunk(
+    'cart/removeAllItems', async(_, {dispatch, rejectWithValue})=>{
+        try{
+            const response = await axios.delete("https://localhost:7109/api/Cart/RemoveAllItems",
+                {
+                    headers:{
+                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                    }
+                })
+                dispatch(fetchCart());
+                // console.log("removeAllFromCart response",response)
+        }
+        catch(error){
+            console.log("removeAllFromCart error",error)
         }
     }
 )

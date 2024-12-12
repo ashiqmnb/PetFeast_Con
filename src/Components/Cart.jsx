@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { fetchCart, 
         incrementQuantity, 
         decrementQuantity,
-        removeFromCart } from '../Redux/Slices/cartSlice'
+        removeFromCart, 
+        removeAllItems} from '../Redux/Slices/cartSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import { CiSquarePlus } from "react-icons/ci";
 import { CiSquareMinus } from "react-icons/ci";
@@ -19,8 +20,10 @@ const Cart = () => {
   const {totalItems} = useSelector(state => state.cart);
   const {totalPrice} = useSelector(state => state.cart);
 
+  // handle out of stock indicaters
   const [ items, setItems ] = useState([]);
   const [errors, setErrors] = useState([]);
+  //
 
   const chechStock = ()=>{
     let updatedErrors = [...errors];
@@ -28,9 +31,7 @@ const Cart = () => {
       const product = items.find(p => p.productId === cartItem.productId);
 
       if(product){
-
         updatedErrors[index] = cartItem.quantity <= product.stock;
-        
       }
     });
     setErrors(updatedErrors);
@@ -87,7 +88,6 @@ const Cart = () => {
   useEffect(()=>{
     dispatch(fetchWishlist());
     dispatch(fetchCart());
-    // console.log("cart from comp",cart)
   },[])
 
   useEffect(()=>{
@@ -149,12 +149,27 @@ const Cart = () => {
           </div>
           
         ))}
-        <button
-              onClick={()=> navigate('/')}
-              className="w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-700 transition"
-              >
-              Add Products to Your Cart
+
+
+        {/* Buttons */}
+        <div className='flex space-x-2'>
+          <button
+            onClick={()=> navigate('/')}
+            className="w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-800 transition"
+            >
+            Add Products to Your Cart
+          </button>
+        
+          {cart.length !== 0 ? (
+            <button
+              onClick={()=> dispatch(removeAllItems())}
+              className="w-full bg-red-500 text-white py-2 rounded hover:bg-red-700 transition"
+            >
+              Remove All Items
             </button>
+          ):(null)}
+          
+        </div>
       </div>
 
       {/* Cart Summary */}
@@ -167,15 +182,15 @@ const Cart = () => {
         </div>
         <div className="flex justify-between mb-2">
           <span>Total Price:</span>
-          <span>${totalPrice.toFixed(2)}</span>
+          <span>₹ {totalPrice.toFixed(2)}</span>
         </div>
         <div className="flex justify-between mb-2">
           <span>Discount:</span>
-          <span>-${calculateDiscount().toFixed(2)}</span>
+          <span>₹ -{calculateDiscount().toFixed(2)}</span>
         </div>
         <div className="flex justify-between font-bold text-lg mb-4">
           <span>Final Price:</span>
-          <span>${calculateFinalPrice().toFixed(2)}</span>
+          <span>₹ {calculateFinalPrice().toFixed(2)}</span>
         </div>
         <button
           onClick={handlePlaceOrder}

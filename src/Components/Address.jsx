@@ -111,9 +111,9 @@ const Address = () => {
         </div>
 
         {address.length === 0 ? (
-            <div className='flex flex-col items-center text-center  p-10 rounded-lg space-y-3'>
-                <LiaAddressCardSolid className='h-28 w-28'/>
-                <p style={{color:'#052560'}} className='font-semibold text-xl'>No Saved Addresses</p>
+            <div className='flex flex-col items-center text-center mt-20 mb-40 p-10 rounded-lg space-y-3'>
+                <LiaAddressCardSolid className='h-36 w-36'/>
+                <p style={{color:'#052560'}} className='font-semibold text-2xl'>No Saved Addresses</p>
             </div>
         ):(null)}
 
@@ -121,7 +121,7 @@ const Address = () => {
             addressForm ? 'filter blur-xl' : ''
         }`}>
             {address.map((add, index)=>(
-                <div className='h-96 w-[400px] rounded-xl shadow-lg border border-b-slate-100'>
+                <div className='h-[430px] w-[400px] rounded-xl shadow-lg border border-b-slate-100'>
                     <h4 style={{color:'#052560'}} className='text-center font-semibold text-xl mt-5'>Address {index+1}</h4>
                     <div className='m-5 space-y-2'>
 
@@ -179,7 +179,8 @@ const Address = () => {
       <div>
         {addressForm && (
           <form
-          className="space-y-4 absolute top-10 left-96 h-[500px] w-3/6 bg-blue-100 p-10 rounded-xl z-1"
+            style={{ backgroundColor: "#a49bfa" }}
+            className="space-y-4 absolute top-10 left-96 h-[500px]  w-3/6  p-10 rounded-xl z-1 shadow-md"
             onSubmit={handleAddrssSubmit}
             >
             <div className="flex items-center gap-4">
@@ -304,9 +305,9 @@ const Address = () => {
           <div className="flex space-x-3">
             <button
               type="submit"
-              className="w-4/6 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+              className="w-4/6 bg-blue-700 text-white py-2 rounded-lg hover:bg-blue-900"
             >
-              Confirm Address
+              Add Address
             </button>
             <button
               onClick={()=> setAddressForm(false)}
