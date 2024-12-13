@@ -166,14 +166,14 @@ const Payment = () => {
 
 
       {/* Delivery Address */}
-      <div className={`w-full md:w-1/2 bg-white p-6 rounded-lg shadow-lg `}>
-        <h2 style={{ color: "#052560" }} className="text-2xl font-bold mb-6">
+      <div className={`w-full md:w-1/2 bg-white pt-0 p-6 rounded-lg shadow-lg `}>
+        {/* <h2 style={{ color: "#052560" }} className="text-2xl font-bold mb-6">
           Delivery Address
-        </h2>
+        </h2> */}
 
 
         <div className="p-6 max-w-md mx-auto bg-white shadow rounded-lg space-y-4">
-          <h2 style={{ color: "#052560" }} className="text-lg font-semibold text-gray-700">Select an Address</h2>
+          <h2 style={{ color: "#052560" }} className="text-2xl font-semibold text-gray-700">Select an Address</h2> 
             <div className="space-y-3">
               <select
                 onChange={handleDropdownChange}
@@ -198,35 +198,35 @@ const Payment = () => {
             </div>
 
             {selectedAddress && (
-              <div className="mt-4 p-4 bg-gray-100 rounded-lg shadow-md">
-                <h3 className="font-bold text-gray-700">Selected Address Details</h3>
+              <div  className="mt-4 p-4 bg-gray-100 rounded-lg shadow-lg border-blue-100 border-2">
+                <h3 style={{ backgroundColor: "#052560" }} className="font-bold p-2 text-white rounded-lg text-center mb-2">Selected Shipping Address</h3>
                 <p>
-                  <span className="font-medium">Full Name:</span>{" "}
-                  {selectedAddress.fullName}
+                  <span>Full Name : </span>
+                  <span className="font-semibold ">{selectedAddress.fullName}</span>
                 </p>
                 <p>
-                  <span className="font-medium">House Name:</span>{" "}
-                  {selectedAddress.houseName}
+                  <span>House Name: </span>
+                  <span className="font-medium">{selectedAddress.houseName}</span>
                 </p>
                 <p>
-                  <span className="font-medium">Landmark:</span>{" "}
-                  {selectedAddress.landMark}
+                  <span>Landmark : </span>
+                  <span className="font-medium">{selectedAddress.landMark}</span>
                 </p>
                 <p>
-                  <span className="font-medium">Phone Number:</span>{" "}
-                  {selectedAddress.phoneNumber}
+                  <span>Phone Number : </span>
+                  <span className="font-medium">{selectedAddress.phoneNumber}</span>
                 </p>
                 <p>
-                  <span className="font-medium">Pincode:</span>{" "}
-                  {selectedAddress.pincode}
+                  <span>Pincode : </span>
+                  <span className="font-medium">{selectedAddress.pincode}</span>
                 </p>
                 <p>
-                  <span className="font-medium">Place:</span>{" "}
-                  {selectedAddress.place}
+                  <span>Place : </span>
+                  <span className="font-medium">{selectedAddress.place}</span>
                 </p>
                 <p>
-                  <span className="font-medium">Post Office:</span>{" "}
-                  {selectedAddress.postOffice}
+                  <span>Post Office : </span>
+                  <span className="font-medium">{selectedAddress.postOffice}</span>
                 </p>
               </div>
             )}
@@ -238,7 +238,7 @@ const Payment = () => {
 
       {/* Right Side: Payment Section */}
       <div className={`w-full md:w-1/2 bg-white p-6 rounded-lg shadow-lg mt-8 md:mt-0 md:ml-4`}>
-        <h2 style={{ color: "#052560" }} className="text-2xl font-bold mb-6">
+        <h2 style={{ color: "#052560" }} className="text-2xl font-semibold mb-6">
           Order Summary
         </h2>
         <p className="text-lg font-semibold mb-4 bg-slate-100 p-2 rounded-lg">

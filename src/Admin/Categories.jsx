@@ -102,8 +102,12 @@ const Categories = () => {
 						<p className="font-semibold">Price: $ <span className="font-bold text-green-600">{item.price}</span></p>
 						<p className="font-semibold">⭐ {item.rating}</p>
 
-                        {item.stock <= 5 && (
-                            <span className="text-red-500 text-base font-semibold">Only few stock left...!!</span>
+                        {item.stock == 0 ? (
+                            <span className="text-red-500 text-base font-semibold">No stock left..!!</span>
+                        ):(
+                            item.stock <= 5 ? (
+                                <span className="text-red-500 text-base font-semibold">Only few stock left..!!</span>
+                            ):(null)
                         )}
 
 					</div>
@@ -148,11 +152,14 @@ const Categories = () => {
 						<p className="font-semibold">Price: $ <span className="font-bold text-green-600">{item.price}</span></p>
 						<p className="font-semibold">⭐ {item.rating}</p>
 
-                        {item.stock <= 5 && (
-                            <span className="text-red-500 text-base font-semibold">Only few stock left</span>
+
+                        {item.stock == 0 ? (
+                            <span className="text-red-500 text-base font-semibold">No stock left..!!</span>
+                        ):(
+                            item.stock <= 5 ? (
+                                <span className="text-red-500 text-base font-semibold">Only few stock left..!!</span>
+                            ):(null)
                         )}
-
-
 
 					</div>
 				</div>

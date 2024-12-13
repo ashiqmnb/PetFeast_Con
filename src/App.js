@@ -25,6 +25,7 @@ import UpdateProduct from './Admin/UpdateProduct';
 import Wishlist from './Components/Wishlist';
 import Address from './Components/Address';
 import Order from './Components/Order';
+import OrderAdmin from './Admin/OrdersAdmin';
 
 
 function App() {
@@ -75,6 +76,8 @@ function App() {
         <Route path='/admin/userdetails/:userId' element={<UserDetails />} />
         <Route path='/admin/dashboard' element={<Dashboard />} />
         <Route path='/admin/updateproduct/:itemId' element={<UpdateProduct />} />
+        <Route path='/admin/order' element={<OrderAdmin />} />
+
 
       </Routes>
 

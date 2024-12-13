@@ -2,14 +2,13 @@ import React, { useState } from 'react'
 import logo from '../assets/logo.png'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { MdDashboard } from "react-icons/md";
-import { IoMdHome } from "react-icons/io";
-import { IoBag, IoBagAdd } from "react-icons/io5";
+import { IoBagAdd } from "react-icons/io5";
 import { FaUserCircle } from "react-icons/fa";
 import { IoMdCloseCircle } from "react-icons/io";
 import { BiLogOut } from "react-icons/bi";
-import { FaThList } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa";
 import { AiFillProduct } from "react-icons/ai";
+import { BsFillCartCheckFill } from "react-icons/bs";
 
 
 
@@ -53,6 +52,11 @@ const SideNew = () => {
           <NavLink to={'/admin/addnewproduct'} className='flex space-x-2 p-2 ps-5 mx-3 bg-blue-900 hover:bg-blue-700 rounded-md'>
             <IoBagAdd className='text-3xl' />
             <p className='font-semibold text-xl hidden md:block'>Add New Product</p>
+          </NavLink>
+
+          <NavLink to={'/admin/order'} className='flex space-x-2 p-2 ps-5 mx-3 bg-blue-900 hover:bg-blue-700 rounded-md'>
+            <BsFillCartCheckFill className='text-3xl' />
+            <p className='font-semibold text-xl hidden md:block'>Orders</p>
           </NavLink>
 
           {/* Log Out Button */}

@@ -57,7 +57,8 @@ const UserDetails = () => {
       })
       .then((res)=>{
         console.log("fetch order", res.data.data)
-        setOrderDetails(res.data.data)
+        const reversedOrders = [...res.data.data].reverse();
+        setOrderDetails(reversedOrders)
       })
       .catch((err)=>{
         console.log("fetch order", err)

@@ -123,7 +123,7 @@ const AdminHome = () => {
 							{user.userId}
 						</div>
 						<div>
-							<h1 className="font-semibold text-lg">Full name : {user.name}</h1>
+							<h1 className="font-semibold text-lg">Customer Name : {user.name}</h1>
 							<p className="font-semibold">Email : {user.email}</p>
 							{/* <p className="font-semibold text-sm">User Name : {user.username}</p> */}
 							{user.isBlocked ? <p className="font-semibold">Status : <span className="font-bold text-md text-red-600">Blocked</span></p> : <p className="font-semibold">Status : <span className="font-bold text-md text-green-600">Active</span></p>}
