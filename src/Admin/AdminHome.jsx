@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SideBar from "./SideBar";
 import access from '../assets/access.png';
+import { FaUser } from "react-icons/fa";
+<FaUser />
 
 
 const AdminHome = () => {
@@ -120,7 +122,8 @@ const AdminHome = () => {
 						{/* ${user.isAllowed ? 'hover:bg-green-400' : 'hover:bg-red-400'} */}
 						<div 
 							className=" rounded-full bg-slate-300 py-4 text-center h-14 w-14 font-semibold my-2">
-							{user.userId}
+							{/* {user.userId} */}
+							<FaUser className="ms-4 text-xl"/>
 						</div>
 						<div>
 							<h1 className="font-semibold text-lg">Customer Name : {user.name}</h1>

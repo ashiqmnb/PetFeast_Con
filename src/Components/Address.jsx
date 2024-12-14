@@ -15,7 +15,6 @@ const Address = () => {
     const {address} = useSelector(state => state.address);
     const [ addressForm, setAddressForm ] = useState(false);
 
-    console.log("Addressc from add page==>", address);
 
     const [errors, setErrors] = useState({});
     
