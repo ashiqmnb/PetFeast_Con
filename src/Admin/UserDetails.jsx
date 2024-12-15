@@ -152,15 +152,29 @@ const UserDetails = () => {
                 </div>
 
                 {/* Product images */}
-                <div className='flex justify-start pt-4 space-x-2'>
+                <div className='flex justify-start pt-4 space-x-2 mb-4'>
                   {order.orderProducts.map((item, index)=>{
                     return(
                       <img 
                         onClick={()=> navigate(`/admin/productdetails/${item.productId}`)}
-                        className='h-20 w-20 hover:scale-105 transition-transform shadow-lg' src={item.image} alt="product image" />
+                        className='h-20 w-20 rounded-md hover:scale-105 transition-transform shadow-lg' src={item.image} alt="product image" />
                     )
                   })}
                 </div>
+                
+                <span className={` rounded-lg font-semibold px-4 py-1 mt-4 ${
+                      order.orderStatus === 'Pending'
+                        ? 'bg-gray-500'
+                        : order.orderStatus === 'Shipped'
+                        ? 'bg-blue-500'
+                        : order.orderStatus === 'Delivered'
+                        ? 'bg-green-500'
+                        : order.orderStatus === 'Cancelled'
+                        ? 'bg-red-500'
+                        : ''
+                        } text-white`}>
+                    Order {order.orderStatus}
+                  </span>
 
               </div>
             )
