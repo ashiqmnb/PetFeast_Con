@@ -11,6 +11,7 @@ const Order = () => {
   const navigate = useNavigate();
 
 
+
   const fetchOrder = ()=>{
     axios.get('https://localhost:7109/api/Order/GetOrderDetails',
       {
@@ -88,9 +89,9 @@ const Order = () => {
                           </p>
 
                           {/* Product details */}
-                          <div className='bg-blue-100 flex p-2 rounded-lg gap-2'>
+                          <div className=' flex  rounded-lg gap-2'>
                             {order.orderProducts.map((item, index)=>(
-                              <div key={index}>
+                              <div key={index} className='bg-blue-100 p-3 rounded-lg'>
                                 <img 
                                   onClick={()=>navigate(`/itemdetails/${item.productId}`)}
                                   className='h-20 w-20 rounded-lg hover:scale-105 transition-transform' src={item.image} alt="" />

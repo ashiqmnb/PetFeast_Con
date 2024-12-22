@@ -16,6 +16,9 @@ const OrdersAdmin = () => {
   const navigate = useNavigate();
 
   const [ orderDetails, setOrderDetails ] = useState([]);
+  const [ filter, setFilter ] = useState([]);
+  const [ filterStatus, setFilterStatus ] = useState("All");
+
   const [ updateStatus, setUpdateStatus ] = useState(false);
   const [ currentOrder, setCurrentOrder ] = useState({});
   const [ orderStatus, setOrderStatus] = useState("");
@@ -29,11 +32,13 @@ const OrdersAdmin = () => {
       })
       .then((res)=>{
         // console.log("order res",res.data.data)
-        setOrderDetails(res.data.data)
+        setOrderDetails(res.data.data);
+
+        setFilter(res.data.data);
       })
       .catch((err)=>{
         console.log("order err", err)
-      })
+      });
   },[])
 
   const showUpdateModal = (id)=>{
@@ -69,13 +74,23 @@ const OrdersAdmin = () => {
           .catch((err)=>{
             console.log("order err", err)
           })
-
-        
         setUpdateStatus(false)
       })
       .catch((err)=>{
         console.log("order update err", err)
       })
+  }
+
+
+  const handleOrderFilter = (value)=>{
+    console.log("value",value);
+    setFilterStatus(value);
+    
+    if(value === "All"){
+      setFilter(orderDetails);
+      return;
+    }
+    setFilter(orderDetails.filter((item)=> item.orderstatus === value))
   }
 
 
@@ -101,6 +116,21 @@ const OrdersAdmin = () => {
         <SideBar/>
       </div>
 
+      {/* Filter Order */}
+      <div className='absolute top-14 right-10 flex justify-between gap-2'>
+        <label className='font-semibold'>Filter Order</label>
+        <select
+          className='w-32 border border-gray-300 rounded-lg'
+          onChange={(e) => handleOrderFilter(e.target.value)}
+          value={filterStatus}>
+            <option value="All">All</option>
+            <option value="Cancelled">Cancelled</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Pending">Pending</option>
+            <option value="Shipped">Shipped</option>
+        </select>
+      </div>
+      
       {/* Update Order Status Modal */}
       {updateStatus ? (
         <div className='absolute text-lg bg-blue-200 h-[350px] p-5 w-[600px] top-40 left-1/3 z-10 rounded-lg shadow-lg space-y-1'>
@@ -132,7 +162,6 @@ const OrdersAdmin = () => {
           <h1 className='pt-3 font-semibold'>Select Order Status :</h1>
           <div className='flex justify-between gap-2'>
             <select
-              // onChange={handleDropdownChange}
               className="w-72 border border-gray-300 rounded-lg"
               value={orderStatus}
               onChange={(e) => setOrderStatus(e.target.value)}
@@ -161,8 +190,8 @@ const OrdersAdmin = () => {
         }`}>
         <h1 style={{color:'#052560'}} className='text-center font-bold text-2xl'>Recent Orders</h1>
         <div className='w-full p-10  flex gap-4 justify-center flex-wrap'>
-            {orderDetails.map((order, index)=>(
-              <div className='w-5/12 bg-blue-100 p-5 rounded-lg shadow-lg space-y-1'>
+            {filter.map((order, index)=>(
+              <div key={index} className='w-5/12 bg-blue-100 p-5 rounded-lg shadow-lg space-y-1'>
 
                 <p style={{background:'#052560'}} className='text-white p-2 rounded-lg shadow-m mb-2'>
                   <span>Customer Name : </span>
